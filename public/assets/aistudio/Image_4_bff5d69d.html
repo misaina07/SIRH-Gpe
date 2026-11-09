@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-card":"#FFFFFF","secondary-fixed":"#d8e3fb","surface-container-low":"#f2f3ff","info-sky":"#0EA5E9","on-background":"#131b2e","tertiary-container":"#5b606b","surface-tint":"#4d44e3","bg-canvas":"#F8FAFC","surface-dim":"#d2d9f4","surface":"#faf8ff","tertiary-fixed":"#dee2ef","success-emerald":"#10B981","tertiary-fixed-dim":"#c2c6d3","inverse-surface":"#283044","primary-container":"#4f46e5","on-primary-fixed-variant":"#3323cc","warning-text":"#78350F","primary-hover":"#4338CA","outline":"#777587","inverse-on-surface":"#eef0ff","secondary":"#545f73","surface-container-highest":"#dae2fd","error":"#ba1a1a","on-tertiary-fixed-variant":"#424751","primary-fixed-dim":"#c3c0ff","warning-amber":"#F59E0B","on-secondary-container":"#586377","surface-variant":"#dae2fd","on-primary-container":"#dad7ff","on-surface":"#131b2e","inverse-primary":"#c3c0ff","success-dark":"#047857","primary":"#3525cd","on-tertiary-fixed":"#171c25","on-error-container":"#93000a","on-tertiary":"#ffffff","text-primary":"#0F172A","primary-subtle":"#EEF2FF","tertiary":"#434853","text-muted":"#94A3B8","on-secondary-fixed-variant":"#3c475a","text-secondary":"#475569","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","surface-container":"#eaedff","sidebar-surface":"#1E293B","on-tertiary-container":"#d7dbe8","on-surface-variant":"#464555","on-error":"#ffffff","on-primary-fixed":"#0f0069","on-primary":"#ffffff","surface-bright":"#faf8ff","border-default":"#E2E8F0","surface-container-high":"#e2e7ff","background":"#faf8ff","outline-variant":"#c7c4d8","secondary-fixed-dim":"#bcc7de","secondary-container":"#d5e0f8","on-secondary-fixed":"#111c2d","danger-red":"#DC2626","error-container":"#ffdad6","primary-fixed":"#e2dfff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin":"1.5rem","space-lg":"1.5rem","space-xl":"2rem"},fontFamily:{"headline-sm":["Inter"],"headline-lg-mobile":["Inter"],"body-default":["Inter"],"body-semibold":["Inter"],"label-default":["Inter"],"caption-medium":["Inter"],"body-medium":["Inter"],"headline-lg":["Inter"],"caption":["Inter"],"headline-md":["Inter"]},fontSize:{"headline-sm":["18px",{lineHeight:"26px",fontWeight:"500"}],"headline-lg-mobile":["22px",{lineHeight:"30px",fontWeight:"600"}],"body-default":["14px",{lineHeight:"22px",fontWeight:"400"}],"body-semibold":["14px",{lineHeight:"22px",fontWeight:"600"}],"label-default":["14px",{lineHeight:"20px",fontWeight:"500"}],"caption-medium":["12px",{lineHeight:"18px",fontWeight:"500"}],"body-medium":["14px",{lineHeight:"22px",fontWeight:"500"}],"headline-lg":["28px",{lineHeight:"36px",fontWeight:"600"}],"caption":["12px",{lineHeight:"18px",fontWeight:"400"}],"headline-md":["22px",{lineHeight:"30px",fontWeight:"600"}]}}}}</script></head><body class="bg-bg-canvas font-body-default text-text-primary antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-sidebar-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between border-b border-slate-700/60"><div class="flex items-center gap-space-sm"><img alt="Logo SIRH" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WGo5K86fGA261TLWE2cszuh0E5VQNByaEplC_7oIXgWjsz0TcQH1ZRe3c929_HaeIpBACBqXsxkNhguMLMIpQGshT0U3McPeMvNxAeJsLhKPharNCMxE878ce9JKczrz0csLE4jRJkKKM3tWDUcgjHB3aB9OO06v-85SNt1ZD82DNuVf9y62gozmsJthRe7GbyxeF5CTKrQ2RZjMlStX7Dn1weDnEPQ5aO4Yyh6yLQ3dmboX0UuPg7Z6Q"/><span class="font-headline-sm text-headline-sm text-white tracking-wide">SIRH</span></div><button aria-label="Réduire le menu" class="text-text-muted hover:text-white transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><div class="px-space-md py-space-sm"><span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-muted px-space-sm">Navigation</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-primary-container text-white font-body-semibold rounded-lg shadow-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-white font-body-semibold rounded-lg shadow-sm" data-path="tableau-de-bord" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-medium text-body-medium">Tableau de bord</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="mes-demandes" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-medium text-body-medium">Mes demandes</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="nouvelle-demande" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="font-body-medium text-body-medium">Nouvelle demande</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="recrutement" href="#"><span class="material-symbols-outlined text-[20px]">person_search</span><span class="font-body-medium text-body-medium">Recrutement</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="validation-finance" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-body-medium text-body-medium">Validation &amp; Finance</span></div><span class="bg-warning-amber text-warning-text px-space-xs py-0.5 rounded-full font-caption-medium text-caption-medium">5</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="employes-contrats" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-medium text-body-medium">Employés &amp; Contrats</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="onboarding" href="#"><span class="material-symbols-outlined text-[20px]">how_to_reg</span><span class="font-body-medium text-body-medium">Onboarding</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="referentiels-admin" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-medium text-body-medium">Référentiels &amp; Admin</span></a></nav></div><div class="p-space-md border-t border-slate-700/60"><div class="bg-slate-800/80 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-info-sky text-[18px]">verified_user</span><div class="flex flex-col"><span class="font-caption-medium text-caption-medium text-white">Portail Conforme</span><span class="font-caption text-caption text-text-muted">RGPD &amp; CSE</span></div></div><span class="material-symbols-outlined text-text-muted text-[16px]">info</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-card/90 backdrop-blur-xl z-40 border-b border-border-default shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-0"><div class="hidden lg:flex items-center gap-space-xs text-text-secondary font-caption-medium text-caption-medium whitespace-nowrap"><span class="hover:text-text-primary cursor-pointer transition-colors">Portail SIRH</span><span class="material-symbols-outlined text-[14px] text-text-muted">chevron_right</span><span class="text-text-primary font-body-semibold">Vue opérationnelle</span></div><div class="relative w-64 md:w-80 lg:w-96"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[18px]">search</span><input class="w-full h-9 pl-9 pr-space-md bg-bg-canvas border border-border-default rounded-lg font-body-default text-body-default text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent transition-all" placeholder="Rechercher une demande, un candidat, un employé… (Cmd+K)" type="text"/></div></div><div class="flex items-center gap-space-md"><div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-success-dark font-caption-medium text-caption-medium"><span class="inline-block w-2 h-2 rounded-full bg-success-emerald"></span><span>SLA Recrutement 98.4%</span></div><div class="relative"><button aria-label="Notifications" class="p-space-xs text-text-secondary hover:text-text-primary hover:bg-bg-canvas rounded-lg transition-colors relative flex items-center justify-center" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-0.5 right-0.5 inline-flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-danger-red text-white font-caption-medium text-[10px] leading-none">3</span></button></div><div class="h-6 w-px bg-border-default hidden sm:block"></div><div class="relative flex items-center gap-space-sm pl-space-xs group"><div class="flex items-center gap-space-sm cursor-pointer"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-border-default" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvHn7ByONVuWkUfXdHtm55rnRCgM68Z9Dz8p0kbux9QnTRzIpsdjtjjPi6pWgjgUofwAJT0lft84zbYZc6Xnrvmb81DVbMea_lQ5H0MMWMV022jownE5B4vJCiXtYd20aWr1RU3kZ8On2FD8tsOBUXXjsP1uUHrqPzKPBaOHXnUWkqnAy6Umi33tg3bIWXh7hFNl9bh9KNmmRhKdNUSLXewEFCrnQYdny7CM4NNkMa-0OR8R-rioHP"/><div class="hidden md:flex flex-col text-left"><span class="font-body-semibold text-body-semibold text-text-primary leading-tight">Claire Delorme</span><span class="font-caption text-caption text-text-secondary leading-tight">Responsable RH &amp; Recrutement</span></div><span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-text-primary transition-colors">expand_more</span></div><div class="absolute right-0 top-full mt-2 w-56 bg-surface-card border border-border-default rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-space-xs hidden group-hover:block transition-all z-50"><div class="px-space-md py-space-sm border-b border-border-default"><p class="font-body-semibold text-body-semibold text-text-primary">Claire Delorme</p><p class="font-caption text-caption text-text-muted truncate">c.delorme@entreprise.fr</p></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-text-secondary hover:bg-bg-canvas hover:text-text-primary transition-colors" data-path="mon-profil" href="#"><span class="material-symbols-outlined text-[18px]">person</span>Mon profil</a><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-text-secondary hover:bg-bg-canvas hover:text-text-primary transition-colors" data-path="preferences" href="#"><span class="material-symbols-outlined text-[18px]">tune</span>Préférences</a><div class="my-space-xs border-t border-border-default"></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-danger-red hover:bg-red-50 transition-colors" data-path="connexion" href="#"><span class="material-symbols-outlined text-[18px]">logout</span>Déconnexion</a></div></div></div></div></header><main class="w-full pt-16 bg-bg-canvas flex-1"><div class="flex flex-col w-full">
+<div class="w-full max-w-7xl mx-auto px-margin py-space-lg flex flex-col gap-space-lg">
+<!-- Top Greeting & Header Bar -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md bg-surface-card p-space-lg rounded-xl shadow-sm relative overflow-hidden">
+<div class="absolute -right-8 -top-12 w-64 h-64 bg-primary-subtle rounded-full blur-2xl pointer-events-none opacity-60"></div>
+<div class="flex flex-col gap-space-xs relative z-10">
+<div class="flex items-center gap-space-xs text-text-muted font-caption-medium text-caption-medium uppercase tracking-wider">
+<span class="inline-block w-2 h-2 rounded-full bg-success-emerald"></span>
+<span>Tableau de bord RH</span>
+<span>•</span>
+<span class="text-text-secondary">Pôle Recrutement &amp; Mobilité</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Bonjour, Claire Delorme</h1>
+<p class="font-body-default text-body-default text-text-secondary max-w-2xl">
+          Voici un aperçu de vos recrutements, demandes à qualifier et intégrations en cours.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm relative z-10 shrink-0">
+<button class="inline-flex items-center gap-space-xs px-space-md h-9 bg-bg-canvas hover:bg-surface-container rounded-lg font-body-semibold text-body-semibold text-text-secondary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span>Semaine 44</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md h-9 bg-primary-container hover:bg-primary-hover text-white rounded-lg font-body-semibold text-body-semibold shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Nouvelle action</span>
+</button>
+</div>
+</div>
+<!-- Top KPI Row (4 Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-primary-subtle flex items-center justify-center text-primary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">assignment_turned_in</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary-subtle text-primary font-caption-medium text-caption-medium">
+            +2 aujourd'hui
+          </span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">4</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary mt-1">Demandes à qualifier</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-sky-50 flex items-center justify-center text-info-sky group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">group</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-red-50 text-danger-red font-caption-medium text-caption-medium">
+            3 urgentes
+          </span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">18</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary mt-1">Candidatures à traiter</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-success-emerald group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">event_available</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-emerald-50 text-success-dark font-caption-medium text-caption-medium">
+            2 aujourd'hui
+          </span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">7</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary mt-1">Entretiens cette semaine</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">person_add</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 font-caption-medium text-caption-medium">
+            1 arrivée lundi
+          </span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">5</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary mt-1">Onboardings en cours</p>
+</div>
+</div>
+</div>
+<!-- Main Content Area: 2/3 Left + 1/3 Right -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- LEFT PANEL (2/3 width) -->
+<div class="lg:col-span-2 flex flex-col gap-space-lg min-w-0">
+<!-- Task List Card (À traiter en priorité) -->
+<div class="bg-surface-card rounded-lg shadow-sm flex flex-col overflow-hidden">
+<div class="px-space-lg py-space-md bg-surface-card flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">bolt</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">À traiter en priorité</h2>
+<span class="px-2 py-0.5 rounded-full bg-bg-canvas text-text-secondary font-caption-medium text-caption-medium tabular-nums">4 tâches actives</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="p-1 text-text-muted hover:text-text-primary rounded hover:bg-bg-canvas transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+<button class="p-1 text-text-muted hover:text-text-primary rounded hover:bg-bg-canvas transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-bg-canvas text-text-secondary font-caption-medium text-caption-medium uppercase tracking-wider">
+<th class="py-space-sm px-space-md">N° Référence</th>
+<th class="py-space-sm px-space-md">Intitulé du poste / Candidat</th>
+<th class="py-space-sm px-space-md">Demandeur / Service</th>
+<th class="py-space-sm px-space-md">Étape &amp; SLA</th>
+<th class="py-space-sm px-space-md text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Row 1 -->
+<tr class="bg-surface-card hover:bg-bg-canvas transition-colors">
+<td class="py-3 px-space-md whitespace-nowrap">
+<span class="font-body-semibold text-body-semibold text-primary font-mono text-[13px]">REQ-2026-0042</span>
+</td>
+<td class="py-3 px-space-md min-w-[200px]">
+<div class="font-body-semibold text-body-semibold text-text-primary">Ingénieur DevSecOps</div>
+<div class="font-caption text-caption text-text-muted">CDI • Cadre • Paris</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="font-body-default text-body-default text-text-primary">Marc Lefebvre</div>
+<div class="font-caption text-caption text-text-secondary">Direction DSI</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-success-dark font-caption-medium text-caption-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-success-emerald"></span>
+<span>En attente Finance</span>
+</div>
+<div class="font-caption text-caption text-text-muted mt-0.5 pl-3 tabular-nums">48h restantes</div>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="h-8 px-space-md bg-surface-card hover:bg-bg-canvas text-text-primary font-body-semibold text-body-semibold rounded-lg shadow-sm transition-all" type="button">
+                      Ouvrir
+                    </button>
+</td>
+</tr>
+<!-- Row 2 (Flagged: Amber accent bar) -->
+<tr class="bg-surface-card hover:bg-bg-canvas transition-colors relative">
+<td class="py-3 px-space-md whitespace-nowrap relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-warning-amber"></div>
+<span class="font-body-semibold text-body-semibold text-primary font-mono text-[13px] pl-1">REQ-2026-0045</span>
+</td>
+<td class="py-3 px-space-md min-w-[200px]">
+<div class="font-body-semibold text-body-semibold text-text-primary">Chef de Projet RH</div>
+<div class="font-caption text-caption text-text-muted">Création de poste • Lyon</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="font-body-default text-body-default text-text-primary">Sophie Martin</div>
+<div class="font-caption text-caption text-text-secondary">Pôle RH Corporate</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-warning-text font-caption-medium text-caption-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-amber"></span>
+<span>À qualifier RH</span>
+</div>
+<div class="font-caption text-caption text-danger-red mt-0.5 pl-3 font-medium">Échéance : J-0</div>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="h-8 px-space-md bg-primary-container hover:bg-primary-hover text-white font-body-semibold text-body-semibold rounded-lg shadow-sm transition-all" type="button">
+                      Qualifier
+                    </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="bg-surface-card hover:bg-bg-canvas transition-colors">
+<td class="py-3 px-space-md whitespace-nowrap">
+<span class="font-body-semibold text-body-semibold text-text-primary font-mono text-[13px]">CAND-2026-0318</span>
+</td>
+<td class="py-3 px-space-md min-w-[200px]">
+<div class="font-body-semibold text-body-semibold text-text-primary">Julien Vasseur</div>
+<div class="font-caption text-caption text-text-secondary">DevSecOps • Profil Senior</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="font-body-default text-body-default text-text-primary font-mono text-[13px]">OFF-2026-0012</div>
+<div class="font-caption text-caption text-text-muted">Équipe Plateforme</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-800 font-caption-medium text-caption-medium">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>Note 4.8 / 5</span>
+</div>
+<div class="font-caption text-caption text-text-muted mt-0.5">Test technique validé</div>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="h-8 px-space-md bg-surface-card hover:bg-bg-canvas text-text-primary font-body-semibold text-body-semibold rounded-lg shadow-sm transition-all" type="button">
+                      Décider
+                    </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-surface-card hover:bg-bg-canvas transition-colors">
+<td class="py-3 px-space-md whitespace-nowrap">
+<span class="font-body-semibold text-body-semibold text-text-primary font-mono text-[13px]">OFF-2026-0021</span>
+</td>
+<td class="py-3 px-space-md min-w-[200px]">
+<div class="font-body-semibold text-body-semibold text-text-primary">Sarah Benali</div>
+<div class="font-caption text-caption text-text-muted">Proposition envoyée (58k €)</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="font-body-default text-body-default text-text-primary">Juridique &amp; Finance</div>
+<div class="font-caption text-caption text-text-secondary">Contrat validé</div>
+</td>
+<td class="py-3 px-space-md whitespace-nowrap">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 font-caption-medium text-caption-medium">
+<span class="material-symbols-outlined text-[14px]">outgoing_mail</span>
+<span>Attente signature</span>
+</div>
+<div class="font-caption text-caption text-warning-text mt-0.5 pl-1 tabular-nums">Délai : J-2</div>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="h-8 px-space-md bg-surface-card hover:bg-bg-canvas text-text-primary font-body-semibold text-body-semibold rounded-lg shadow-sm transition-all" type="button">
+                      Suivre
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-sm bg-bg-canvas flex items-center justify-between text-text-secondary font-caption text-caption">
+<span>Affichage de 4 éléments sur 14 demandes et actions en cours</span>
+<a class="font-caption-medium text-caption-medium text-primary hover:underline flex items-center gap-1" href="#">
+<span>Voir tout le registre des requêtes</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Recruitment Funnel Widget -->
+<div class="bg-surface-card p-space-lg rounded-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">filter_alt</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Entonnoir de conversion global</h2>
+</div>
+<span class="text-text-muted font-caption text-caption">Campagnes Q4 2026</span>
+</div>
+<!-- Graphic Horizontal Funnel Sequence -->
+<div class="grid grid-cols-5 gap-2 pt-2 items-center">
+<!-- Stage 1 -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-bg-canvas relative">
+<div class="flex items-center justify-between text-text-muted font-caption text-[11px] font-medium uppercase tracking-wider">
+<span>Étape 1</span>
+<span class="material-symbols-outlined text-[14px]">inbox</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary font-semibold tabular-nums">142</div>
+<div class="font-caption-medium text-caption-medium text-text-secondary truncate">Reçues</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-indigo-600 h-full w-full"></div>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-bg-canvas relative">
+<div class="flex items-center justify-between text-text-muted font-caption text-[11px] font-medium uppercase tracking-wider">
+<span class="text-primary font-semibold">31.7%</span>
+<span class="material-symbols-outlined text-[14px]">fact_check</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary font-semibold tabular-nums">45</div>
+<div class="font-caption-medium text-caption-medium text-text-secondary truncate">Présélectionnés</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-indigo-500 h-full w-[32%]"></div>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-bg-canvas relative">
+<div class="flex items-center justify-between text-text-muted font-caption text-[11px] font-medium uppercase tracking-wider">
+<span class="text-primary font-semibold">40.0%</span>
+<span class="material-symbols-outlined text-[14px]">support_agent</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary font-semibold tabular-nums">18</div>
+<div class="font-caption-medium text-caption-medium text-text-secondary truncate">Entretiens</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-indigo-400 h-full w-[13%]"></div>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-bg-canvas relative">
+<div class="flex items-center justify-between text-text-muted font-caption text-[11px] font-medium uppercase tracking-wider">
+<span class="text-primary font-semibold">33.3%</span>
+<span class="material-symbols-outlined text-[14px]">thumb_up</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary font-semibold tabular-nums">6</div>
+<div class="font-caption-medium text-caption-medium text-text-secondary truncate">Retenus / Offres</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-sky-500 h-full w-[4%]"></div>
+</div>
+</div>
+<!-- Stage 5 -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-emerald-50/70 relative">
+<div class="flex items-center justify-between text-emerald-800 font-caption text-[11px] font-medium uppercase tracking-wider">
+<span class="text-success-dark font-semibold">66.7%</span>
+<span class="material-symbols-outlined text-[14px] text-success-emerald">how_to_reg</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-success-dark font-semibold tabular-nums">4</div>
+<div class="font-caption-medium text-caption-medium text-success-dark truncate">Embauchés</div>
+<div class="w-full bg-emerald-200 h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-success-emerald h-full w-[100%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-text-secondary font-caption text-caption">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                Délai moyen d'embauche : <strong class="text-text-primary font-semibold tabular-nums">28 jours</strong>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-success-emerald"></span>
+                Taux de concrétisation offre : <strong class="text-text-primary font-semibold tabular-nums">85%</strong>
+</span>
+</div>
+<a class="text-primary font-caption-medium text-caption-medium hover:underline" href="#">Rapport d'efficacité</a>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL (1/3 width) -->
+<div class="flex flex-col gap-space-lg">
+<!-- Quick Shortcuts Bar -->
+<div class="bg-surface-card p-space-md rounded-lg shadow-sm flex flex-col gap-space-sm">
+<span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-muted px-1">Raccourcis Opérations</span>
+<div class="flex flex-col gap-1.5">
+<button class="w-full flex items-center justify-between p-2.5 rounded-lg bg-bg-canvas hover:bg-primary-subtle hover:text-primary transition-all text-left group" type="button">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px]">post_add</span>
+<span class="font-body-semibold text-body-semibold text-text-primary group-hover:text-primary">Nouvelle offre d'emploi</span>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary text-[16px]">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-2.5 rounded-lg bg-bg-canvas hover:bg-primary-subtle hover:text-primary transition-all text-left group" type="button">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-info-sky text-[20px]">video_call</span>
+<span class="font-body-semibold text-body-semibold text-text-primary group-hover:text-primary">Planifier un entretien</span>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary text-[16px]">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-2.5 rounded-lg bg-bg-canvas hover:bg-primary-subtle hover:text-primary transition-all text-left group" type="button">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-purple-600 text-[20px]">description</span>
+<span class="font-body-semibold text-body-semibold text-text-primary group-hover:text-primary">Générer une proposition</span>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Onboardings Prévus Card -->
+<div class="bg-surface-card p-space-lg rounded-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-purple-600 text-[20px]">flight_land</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Arrivées &amp; Onboarding</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 font-caption-medium text-caption-medium">14 prochains jours</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Item 1: Thomas Garcia -->
+<div class="p-space-md rounded-lg bg-bg-canvas flex flex-col gap-space-sm hover:shadow-sm transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary-container text-white flex items-center justify-center font-body-semibold text-body-semibold">
+                    TG
+                  </div>
+<div>
+<div class="font-body-semibold text-body-semibold text-text-primary">Thomas Garcia</div>
+<div class="font-caption text-caption text-text-secondary">DSI • Développeur Fullstack</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-amber-50 text-warning-text font-caption-medium text-caption-medium tabular-nums">
+                  J-5
+                </span>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-text-muted mt-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                  Arrivée le 03/11/2026
+                </span>
+<span class="font-medium text-text-primary tabular-nums">8/12 tâches (67%)</span>
+</div>
+<!-- Checklist Progress Bar -->
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500" style="width: 67%;"></div>
+</div>
+</div>
+<!-- Item 2: Amélie Morin -->
+<div class="p-space-md rounded-lg bg-bg-canvas flex flex-col gap-space-sm hover:shadow-sm transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-indigo-100 text-primary-container flex items-center justify-center font-body-semibold text-body-semibold">
+                    AM
+                  </div>
+<div>
+<div class="font-body-semibold text-body-semibold text-text-primary">Amélie Morin</div>
+<div class="font-caption text-caption text-text-secondary">Finance • Responsable Paie</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-bg-canvas text-text-secondary font-caption-medium text-caption-medium tabular-nums">
+                  J-12
+                </span>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-text-muted mt-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                  Arrivée le 10/11/2026
+                </span>
+<span class="font-medium text-text-primary tabular-nums">4/12 tâches (33%)</span>
+</div>
+<!-- Checklist Progress Bar -->
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500" style="width: 33%;"></div>
+</div>
+</div>
+</div>
+<a class="w-full py-2 bg-surface-card hover:bg-bg-canvas text-primary font-caption-medium text-caption-medium rounded-lg text-center transition-colors" href="#">
+            Voir le planning d'intégration complet
+          </a>
+</div>
+<!-- Audit & Activity Timeline Card -->
+<div class="bg-surface-card p-space-lg rounded-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-text-secondary text-[20px]">history</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Flux d'activité récent</h2>
+</div>
+<span class="material-symbols-outlined text-text-muted text-[18px] cursor-pointer hover:text-text-primary">refresh</span>
+</div>
+<!-- Vertical Timeline with 2px line -->
+<div class="relative pl-6 flex flex-col gap-space-lg">
+<div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-surface-container"></div>
+<!-- Activity 1 -->
+<div class="relative flex flex-col gap-0.5">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-primary-container ring-4 ring-surface-card"></span>
+<p class="font-body-default text-body-default text-text-primary leading-tight">
+<strong>Marc L.</strong> a soumis la demande <span class="font-mono text-primary font-medium text-[13px]">REQ-2026-0042</span>
+</p>
+<span class="font-caption text-caption text-text-muted">il y a 2h • Portail Manager</span>
+</div>
+<!-- Activity 2 -->
+<div class="relative flex flex-col gap-0.5">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-success-emerald ring-4 ring-surface-card"></span>
+<p class="font-body-default text-body-default text-text-primary leading-tight">
+<strong>Sarah B.</strong> a signé sa proposition d'embauche
+              </p>
+<span class="font-caption text-caption text-text-muted">il y a 4h • Signature électronique DocuSign</span>
+</div>
+<!-- Activity 3 -->
+<div class="relative flex flex-col gap-0.5">
+<span class="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-info-sky ring-4 ring-surface-card"></span>
+<p class="font-body-default text-body-default text-text-primary leading-tight">
+                Entretien technique validé pour <span class="font-mono text-text-primary font-medium text-[13px]">CAND-2026-0318</span>
+</p>
+<span class="font-caption text-caption text-text-muted">hier à 16:45 • Évaluateur : Thomas D.</span>
+</div>
+</div>
+<div class="pt-space-xs text-center">
+<button class="font-caption-medium text-caption-medium text-text-muted hover:text-text-primary transition-colors" type="button">
+              Journal d'audit complet (18 événements)
+            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

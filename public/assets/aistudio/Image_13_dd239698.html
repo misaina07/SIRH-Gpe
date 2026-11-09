@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-card":"#FFFFFF","secondary-fixed":"#d8e3fb","surface-container-low":"#f2f3ff","info-sky":"#0EA5E9","on-background":"#131b2e","tertiary-container":"#5b606b","surface-tint":"#4d44e3","bg-canvas":"#F8FAFC","surface-dim":"#d2d9f4","surface":"#faf8ff","tertiary-fixed":"#dee2ef","success-emerald":"#10B981","tertiary-fixed-dim":"#c2c6d3","inverse-surface":"#283044","primary-container":"#4f46e5","on-primary-fixed-variant":"#3323cc","warning-text":"#78350F","primary-hover":"#4338CA","outline":"#777587","inverse-on-surface":"#eef0ff","secondary":"#545f73","surface-container-highest":"#dae2fd","error":"#ba1a1a","on-tertiary-fixed-variant":"#424751","primary-fixed-dim":"#c3c0ff","warning-amber":"#F59E0B","on-secondary-container":"#586377","surface-variant":"#dae2fd","on-primary-container":"#dad7ff","on-surface":"#131b2e","inverse-primary":"#c3c0ff","success-dark":"#047857","primary":"#3525cd","on-tertiary-fixed":"#171c25","on-error-container":"#93000a","on-tertiary":"#ffffff","text-primary":"#0F172A","primary-subtle":"#EEF2FF","tertiary":"#434853","text-muted":"#94A3B8","on-secondary-fixed-variant":"#3c475a","text-secondary":"#475569","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","surface-container":"#eaedff","sidebar-surface":"#1E293B","on-tertiary-container":"#d7dbe8","on-surface-variant":"#464555","on-error":"#ffffff","on-primary-fixed":"#0f0069","on-primary":"#ffffff","surface-bright":"#faf8ff","border-default":"#E2E8F0","surface-container-high":"#e2e7ff","background":"#faf8ff","outline-variant":"#c7c4d8","secondary-fixed-dim":"#bcc7de","secondary-container":"#d5e0f8","on-secondary-fixed":"#111c2d","danger-red":"#DC2626","error-container":"#ffdad6","primary-fixed":"#e2dfff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin":"1.5rem","space-lg":"1.5rem","space-xl":"2rem"},fontFamily:{"headline-sm":["Inter"],"headline-lg-mobile":["Inter"],"body-default":["Inter"],"body-semibold":["Inter"],"label-default":["Inter"],"caption-medium":["Inter"],"body-medium":["Inter"],"headline-lg":["Inter"],"caption":["Inter"],"headline-md":["Inter"]},fontSize:{"headline-sm":["18px",{lineHeight:"26px",fontWeight:"500"}],"headline-lg-mobile":["22px",{lineHeight:"30px",fontWeight:"600"}],"body-default":["14px",{lineHeight:"22px",fontWeight:"400"}],"body-semibold":["14px",{lineHeight:"22px",fontWeight:"600"}],"label-default":["14px",{lineHeight:"20px",fontWeight:"500"}],"caption-medium":["12px",{lineHeight:"18px",fontWeight:"500"}],"body-medium":["14px",{lineHeight:"22px",fontWeight:"500"}],"headline-lg":["28px",{lineHeight:"36px",fontWeight:"600"}],"caption":["12px",{lineHeight:"18px",fontWeight:"400"}],"headline-md":["22px",{lineHeight:"30px",fontWeight:"600"}]}}}}</script></head><body class="bg-bg-canvas font-body-default text-text-primary antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-sidebar-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between border-b border-slate-700/60"><div class="flex items-center gap-space-sm"><img alt="Logo SIRH" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WGo5K86fGA261TLWE2cszuh0E5VQNByaEplC_7oIXgWjsz0TcQH1ZRe3c929_HaeIpBACBqXsxkNhguMLMIpQGshT0U3McPeMvNxAeJsLhKPharNCMxE878ce9JKczrz0csLE4jRJkKKM3tWDUcgjHB3aB9OO06v-85SNt1ZD82DNuVf9y62gozmsJthRe7GbyxeF5CTKrQ2RZjMlStX7Dn1weDnEPQ5aO4Yyh6yLQ3dmboX0UuPg7Z6Q"/><span class="font-headline-sm text-headline-sm text-white tracking-wide">SIRH</span></div><button aria-label="Réduire le menu" class="text-text-muted hover:text-white transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><div class="px-space-md py-space-sm"><span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-muted px-space-sm">Navigation</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-primary-container text-white font-body-semibold rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="tableau-de-bord" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-medium text-body-medium">Tableau de bord</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="mes-demandes" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-medium text-body-medium">Mes demandes</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="nouvelle-demande" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="font-body-medium text-body-medium">Nouvelle demande</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="recrutement" href="#"><span class="material-symbols-outlined text-[20px]">person_search</span><span class="font-body-medium text-body-medium">Recrutement</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="validation-finance" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-body-medium text-body-medium">Validation &amp; Finance</span></div><span class="bg-warning-amber text-warning-text px-space-xs py-0.5 rounded-full font-caption-medium text-caption-medium">5</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="employes-contrats" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-medium text-body-medium">Employés &amp; Contrats</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="onboarding" href="#"><span class="material-symbols-outlined text-[20px]">how_to_reg</span><span class="font-body-medium text-body-medium">Onboarding</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="referentiels-admin" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-medium text-body-medium">Référentiels &amp; Admin</span></a></nav></div><div class="p-space-md border-t border-slate-700/60"><div class="bg-slate-800/80 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-info-sky text-[18px]">verified_user</span><div class="flex flex-col"><span class="font-caption-medium text-caption-medium text-white">Portail Conforme</span><span class="font-caption text-caption text-text-muted">RGPD &amp; CSE</span></div></div><span class="material-symbols-outlined text-text-muted text-[16px]">info</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-card/90 backdrop-blur-xl z-40 border-b border-border-default shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-0"><div class="hidden lg:flex items-center gap-space-xs text-text-secondary font-caption-medium text-caption-medium whitespace-nowrap"><span class="hover:text-text-primary cursor-pointer transition-colors">Portail SIRH</span><span class="material-symbols-outlined text-[14px] text-text-muted">chevron_right</span><span class="text-text-primary font-body-semibold">Vue opérationnelle</span></div><div class="relative w-64 md:w-80 lg:w-96"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[18px]">search</span><input class="w-full h-9 pl-9 pr-space-md bg-bg-canvas border border-border-default rounded-lg font-body-default text-body-default text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent transition-all" placeholder="Rechercher une demande, un candidat, un employé… (Cmd+K)" type="text"/></div></div><div class="flex items-center gap-space-md"><div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-success-dark font-caption-medium text-caption-medium"><span class="inline-block w-2 h-2 rounded-full bg-success-emerald"></span><span>SLA Recrutement 98.4%</span></div><div class="relative"><button aria-label="Notifications" class="p-space-xs text-text-secondary hover:text-text-primary hover:bg-bg-canvas rounded-lg transition-colors relative flex items-center justify-center" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-0.5 right-0.5 inline-flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-danger-red text-white font-caption-medium text-[10px] leading-none">3</span></button></div><div class="h-6 w-px bg-border-default hidden sm:block"></div><div class="relative flex items-center gap-space-sm pl-space-xs group"><div class="flex items-center gap-space-sm cursor-pointer"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-border-default" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvHn7ByONVuWkUfXdHtm55rnRCgM68Z9Dz8p0kbux9QnTRzIpsdjtjjPi6pWgjgUofwAJT0lft84zbYZc6Xnrvmb81DVbMea_lQ5H0MMWMV022jownE5B4vJCiXtYd20aWr1RU3kZ8On2FD8tsOBUXXjsP1uUHrqPzKPBaOHXnUWkqnAy6Umi33tg3bIWXh7hFNl9bh9KNmmRhKdNUSLXewEFCrnQYdny7CM4NNkMa-0OR8R-rioHP"/><div class="hidden md:flex flex-col text-left"><span class="font-body-semibold text-body-semibold text-text-primary leading-tight">Claire Delorme</span><span class="font-caption text-caption text-text-secondary leading-tight">Responsable RH &amp; Recrutement</span></div><span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-text-primary transition-colors">expand_more</span></div><div class="absolute right-0 top-full mt-2 w-56 bg-surface-card border border-border-default rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-space-xs hidden group-hover:block transition-all z-50"><div class="px-space-md py-space-sm border-b border-border-default"><p class="font-body-semibold text-body-semibold text-text-primary">Claire Delorme</p><p class="font-caption text-caption text-text-muted truncate">c.delorme@entreprise.fr</p></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-text-secondary hover:bg-bg-canvas hover:text-text-primary transition-colors" data-path="mon-profil" href="#"><span class="material-symbols-outlined text-[18px]">person</span>Mon profil</a><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-text-secondary hover:bg-bg-canvas hover:text-text-primary transition-colors" data-path="preferences" href="#"><span class="material-symbols-outlined text-[18px]">tune</span>Préférences</a><div class="my-space-xs border-t border-border-default"></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-danger-red hover:bg-red-50 transition-colors" data-path="connexion" href="#"><span class="material-symbols-outlined text-[18px]">logout</span>Déconnexion</a></div></div></div></div></header><main class="w-full pt-16 bg-bg-canvas flex-1"><div class="flex flex-col w-full">
+<div class="w-full max-w-7xl mx-auto px-margin py-space-lg flex flex-col gap-space-lg pb-28">
+<!-- PAGE HEADER TITLE & METADATA -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-card p-space-lg rounded-xl shadow-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-muted">Réf. REQ-2026-0042</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-primary-subtle text-primary font-caption-medium text-caption-medium">
+<span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+            Validée Finance · En attente Direction
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-high text-text-secondary font-caption-medium text-caption-medium">
+<span class="material-symbols-outlined text-[14px]">security</span>
+            Poste Clé / NIS2
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+          Approbation finale Direction Générale
+        </h1>
+<p class="font-body-default text-body-default text-text-secondary">
+          Demande d'ouverture de recrutement : <span class="font-body-semibold text-text-primary">Ingénieur DevSecOps Senior (DSI)</span> · Contrat CDI Temps Plein
+        </p>
+</div>
+<!-- Quick Action Reference & Avatar stack -->
+<div class="flex items-center gap-space-md bg-bg-canvas px-space-md py-space-sm rounded-lg self-start lg:self-center">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-block h-8 w-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-semibold" title="Marc Lefebvre (Manager)">ML</div>
+<div class="inline-block h-8 w-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-semibold" title="Claire Delorme (RH)">CD</div>
+<div class="inline-block h-8 w-8 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs font-semibold" title="Gilles Vaudon (Finance)">GV</div>
+</div>
+<div class="flex flex-col text-left">
+<span class="font-caption-medium text-caption-medium text-text-primary">3 visas recueillis</span>
+<span class="font-caption text-caption text-success-dark flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">check_circle</span> Conforme aux statuts
+          </span>
+</div>
+</div>
+</div>
+<!-- WORKFLOW STEPPER (STEP 4 ACTIVE) -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<!-- Step 1 -->
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<div class="w-8 h-8 rounded-full bg-success-emerald text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption-medium text-caption-medium text-text-muted">Étape 1 · Manager</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Marc Lefebvre</span>
+<span class="font-caption text-caption text-text-secondary">Validé le 14/10/2026</span>
+</div>
+</div>
+<div class="hidden md:block flex-1 h-0.5 bg-success-emerald mx-space-sm"></div>
+<!-- Step 2 -->
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<div class="w-8 h-8 rounded-full bg-success-emerald text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption-medium text-caption-medium text-text-muted">Étape 2 · Ressources Humaines</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Claire Delorme</span>
+<span class="font-caption text-caption text-text-secondary">Validé le 16/10/2026</span>
+</div>
+</div>
+<div class="hidden md:block flex-1 h-0.5 bg-success-emerald mx-space-sm"></div>
+<!-- Step 3 -->
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<div class="w-8 h-8 rounded-full bg-success-emerald text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption-medium text-caption-medium text-text-muted">Étape 3 · Arbitrage Finance</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Gilles Vaudon</span>
+<span class="font-caption text-caption text-warning-text font-medium">Dérogation accordée le 18/10</span>
+</div>
+</div>
+<div class="hidden md:block flex-1 h-0.5 bg-primary mx-space-sm"></div>
+<!-- Step 4 (Current) -->
+<div class="flex items-center gap-space-sm w-full md:w-auto bg-primary-subtle px-space-md py-space-sm rounded-lg">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0 font-body-semibold text-body-semibold shadow-sm animate-pulse">
+            4
+          </div>
+<div class="flex flex-col">
+<span class="font-caption-medium text-caption-medium text-primary font-bold">Étape 4 · Décision Finale</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Direction Générale</span>
+<span class="font-caption text-caption text-primary">En cours d'arbitrage final</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4 KPI SUMMARY CARDS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption-medium text-caption-medium text-text-secondary uppercase tracking-wider">Coût annuel total employeur</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-primary">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</span>
+</div>
+<div class="mt-space-md flex flex-col gap-0.5">
+<div class="font-headline-lg text-headline-lg text-text-primary tabular-nums tracking-tight">60 480,00 €</div>
+<span class="font-caption text-caption text-text-muted">Charges patronales 40% incluses · 3 600 € max/mois brut</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption-medium text-caption-medium text-text-secondary uppercase tracking-wider">Impact budgétaire DSI</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-info-sky">
+<span class="material-symbols-outlined text-[20px]">pie_chart</span>
+</span>
+</div>
+<div class="mt-space-md flex flex-col gap-0.5">
+<div class="font-headline-lg text-headline-lg text-text-primary tabular-nums tracking-tight">50,4 %</div>
+<span class="font-caption text-caption text-warning-text font-medium">Dépassement de 480,00 € couvert par la tolérance (10%)</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption-medium text-caption-medium text-text-secondary uppercase tracking-wider">Résultat analyse financière</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-warning-amber">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</span>
+</div>
+<div class="mt-space-md flex flex-col gap-1.5">
+<div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-warning-text font-caption-medium text-caption-medium">
+<span class="material-symbols-outlined text-[13px]">warning</span>
+              À MODIFIER (Dérogation accordée)
+            </span>
+</div>
+<span class="font-caption text-caption text-text-secondary">Visa Finance accordé au vu de la rareté du profil</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption-medium text-caption-medium text-text-secondary uppercase tracking-wider">Date d'embauche souhaitée</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-success-emerald">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</span>
+</div>
+<div class="mt-space-md flex flex-col gap-0.5">
+<div class="font-headline-lg text-headline-lg text-text-primary tabular-nums tracking-tight">01/12/2026</div>
+<span class="font-caption text-caption text-text-muted">Délai de recrutement projeté : 45 jours calendaires</span>
+</div>
+</div>
+</div>
+<!-- MAIN TWO-COLUMN SPLIT (60% DETAILS & ARBITRAGE / 40% AUDIT TRAIL) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: 7 OF 12 COLS -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- COMPENSATIVE BENCHMARK & RANGE COMPARISON WIDGET -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">finance_mode</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Arbitrage salarial &amp; Enveloppes budgétaires</h2>
+</div>
+<span class="font-caption-medium text-caption-medium text-text-secondary">Base Mensuelle Brute</span>
+</div>
+<p class="font-body-default text-body-default text-text-secondary">
+            Comparaison multi-niveaux : Positionnement du profil ciblé vis-à-vis des grilles conventionnelles de l'entreprise.
+          </p>
+<!-- Visual Horizontal Bar Metric -->
+<div class="flex flex-col gap-space-md mt-space-sm bg-bg-canvas p-space-md rounded-lg">
+<!-- Scale Reference Axis (2 000€ à 4 000€) -->
+<div class="flex justify-between font-caption text-caption text-text-muted px-1">
+<span>2 000 €</span>
+<span>2 500 €</span>
+<span>3 000 €</span>
+<span>3 500 €</span>
+<span>4 000 €</span>
+</div>
+<!-- Row 1: Grade Conventionnel G5 -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-body-medium text-text-secondary">Grade G5 (SYNTEC / Interne)</span>
+<span class="font-body-medium tabular-nums text-text-primary">2 500 € — 3 500 €</span>
+</div>
+<div class="relative w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+<!-- 2500 - 3500 => Left 25%, Width 50% -->
+<div class="absolute top-0 bottom-0 left-[25%] w-[50%] bg-secondary rounded-full"></div>
+</div>
+</div>
+<!-- Row 2: Grille Département DSI -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-body-medium text-text-secondary">Grille Métier DSI 2026</span>
+<span class="font-body-medium tabular-nums text-text-primary">2 600 € — 3 400 €</span>
+</div>
+<div class="relative w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+<!-- 2600 - 3400 => Left 30%, Width 40% -->
+<div class="absolute top-0 bottom-0 left-[30%] w-[40%] bg-info-sky rounded-full"></div>
+</div>
+</div>
+<!-- Row 3: Demande Retenue (Out-of-range) -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-1.5">
+<span class="font-body-semibold text-text-primary">Proposition retenue (REQ-2026-0042)</span>
+<span class="inline-flex items-center text-[11px] font-semibold text-warning-text bg-amber-100 px-1.5 rounded">+100 €/m plancher max</span>
+</div>
+<span class="font-body-semibold tabular-nums text-primary">3 000 € — 3 600 €</span>
+</div>
+<div class="relative w-full h-4 bg-surface-container-high rounded-full overflow-hidden">
+<!-- 3000 - 3500 (in max normal) => Left 50%, Width 25% in Primary, 3500-3600 => Width 5% in Danger -->
+<div class="absolute top-0 bottom-0 left-[50%] w-[25%] bg-primary"></div>
+<div class="absolute top-0 bottom-0 left-[75%] w-[5%] bg-warning-amber" title="Dépassement autorisé par dérogation RH/Finance"></div>
+</div>
+</div>
+</div>
+<!-- Financial Breakdown Table -->
+<div class="overflow-x-auto mt-space-sm">
+<table class="w-full text-left font-body-default text-body-default">
+<thead>
+<tr class="bg-bg-canvas text-text-secondary text-xs uppercase tracking-wider">
+<th class="py-2.5 px-3 rounded-l-lg">Poste budgétaire</th>
+<th class="py-2.5 px-3">Mensuel Brut</th>
+<th class="py-2.5 px-3">Charges Patronales (40%)</th>
+<th class="py-2.5 px-3 rounded-r-lg text-right">Annuel Total Chargé</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-xs">
+<tr class="bg-surface-card">
+<td class="py-2 px-3 font-body-medium text-text-primary">Salaire Fourchette Basse</td>
+<td class="py-2 px-3 tabular-nums">3 000,00 €</td>
+<td class="py-2 px-3 tabular-nums">1 200,00 €</td>
+<td class="py-2 px-3 tabular-nums text-right font-medium">50 400,00 €</td>
+</tr>
+<tr class="bg-primary-subtle font-body-semibold text-primary">
+<td class="py-2 px-3">Plafond Dérogatoire Accordé</td>
+<td class="py-2 px-3 tabular-nums">3 600,00 €</td>
+<td class="py-2 px-3 tabular-nums">1 440,00 €</td>
+<td class="py-2 px-3 tabular-nums text-right font-bold text-text-primary">60 480,00 €</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- STRATEGIC SYNTHESIS & BUSINESS CASE -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">assignment_turned_in</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Synthèse stratégique &amp; Business Case</h2>
+</div>
+<div class="space-y-space-md font-body-default text-body-default text-text-secondary leading-relaxed">
+<div class="bg-bg-canvas p-space-md rounded-lg flex flex-col gap-1">
+<span class="font-caption-medium text-caption-medium uppercase text-text-muted tracking-wider">Justification opérationnelle DSI</span>
+<p class="text-text-primary">
+                La mise en conformité réglementaire <span class="font-body-semibold">NIS 2</span> et le déploiement de l'architecture Cloud Souverain exigent une expertise pointue en automatisation CI/CD sécurisée. Le gel de ce recrutement reporte le jalon d'homologation de production du T1 2027 au S2 2027, exposant l'organisation à un risque de non-conformité contractuelle.
+              </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-text-primary font-body-semibold text-body-semibold">
+<span class="material-symbols-outlined text-info-sky text-[18px]">bolt</span>
+                  Impact sur la vélocité
+                </div>
+<p class="font-caption text-caption text-text-secondary">
+                  Absorption de 320 jours/homme d'audits de code automatisés par an, déchargeant 3 leads techniques actuellement saturés.
+                </p>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-text-primary font-body-semibold text-body-semibold">
+<span class="material-symbols-outlined text-success-emerald text-[18px]">verified_user</span>
+                  Couverture du risque
+                </div>
+<p class="font-caption text-caption text-text-secondary">
+                  Suppression de la dépendance externe prestataire actuelle (facturée 850 € HT/jour, soit une économie brute estimée de 42 k€/an).
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm text-xs text-text-muted bg-surface-card p-2 rounded-lg">
+<span class="material-symbols-outlined text-[16px]">info</span>
+              Fiche de poste standardisée n° FP-DSI-2026-11 certifiée par le comité RH et validée sans réserve par le CSE.
+            </div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: 5 OF 12 COLS - AUDIT TIMELINE & DECISION CONTEXT -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- VERTICAL AUDIT TIMELINE & CONSECUTIVE VISAS -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">history_edu</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Piste d'audit &amp; Visas</h2>
+</div>
+<span class="inline-flex items-center gap-1 text-[11px] font-semibold text-success-dark bg-emerald-50 px-2 py-0.5 rounded-full">
+              Horodatage certifié
+            </span>
+</div>
+<div class="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-surface-container-high">
+<!-- Milestone 1: Manager -->
+<div class="relative flex flex-col gap-1">
+<div class="absolute -left-[19px] top-1 w-3.5 h-3.5 rounded-full bg-success-emerald ring-4 ring-surface-card"></div>
+<div class="flex items-center justify-between">
+<span class="font-body-semibold text-body-semibold text-text-primary">Étape 1 · Création du besoin</span>
+<span class="font-caption text-caption text-text-muted">14/10/2026 à 09:15</span>
+</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary">
+<span class="text-text-primary font-medium">Marc Lefebvre</span> (Manager Technique DevSecOps)
+              </p>
+<div class="bg-bg-canvas p-space-sm rounded-lg text-xs text-text-secondary mt-1">
+                « Ouverture prioritaire pour relève d'astreinte et pilotage du durcissement Kubernetes. »
+              </div>
+</div>
+<!-- Milestone 2: RH -->
+<div class="relative flex flex-col gap-1">
+<div class="absolute -left-[19px] top-1 w-3.5 h-3.5 rounded-full bg-success-emerald ring-4 ring-surface-card"></div>
+<div class="flex items-center justify-between">
+<span class="font-body-semibold text-body-semibold text-text-primary">Étape 2 · Éligibilité RH</span>
+<span class="font-caption text-caption text-text-muted">16/10/2026 à 14:30</span>
+</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary">
+<span class="text-text-primary font-medium">Claire Delorme</span> (Responsable RH Recrutement)
+              </p>
+<div class="bg-bg-canvas p-space-sm rounded-lg text-xs text-text-secondary mt-1">
+                Fiche de poste qualifiée Grade G5. Disponibilité de vivier externe confirmée avec tension forte sur le profil.
+              </div>
+</div>
+<!-- Milestone 3: Finance Derogation -->
+<div class="relative flex flex-col gap-1">
+<div class="absolute -left-[19px] top-1 w-3.5 h-3.5 rounded-full bg-warning-amber ring-4 ring-surface-card"></div>
+<div class="flex items-center justify-between">
+<span class="font-body-semibold text-body-semibold text-warning-text">Étape 3 · Arbitrage Finance (Dérogation)</span>
+<span class="font-caption text-caption text-text-muted">18/10/2026 à 11:20</span>
+</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary">
+<span class="text-text-primary font-medium">Gilles Vaudon</span> (Contrôleur de Gestion DSI)
+              </p>
+<div class="bg-amber-50/70 p-space-sm rounded-lg text-xs text-warning-text mt-1">
+<span class="font-semibold">Motif officiel consigné :</span> « Dépassement de grille (+480 €) validé au titre du caractère critique en cybersécurité pour la société. Les enveloppes d'astreintes prévisionnelles sont ajustées en conséquence. »
+              </div>
+</div>
+<!-- Milestone 4: Direction (Pending) -->
+<div class="relative flex flex-col gap-1">
+<div class="absolute -left-[19px] top-1 w-3.5 h-3.5 rounded-full bg-primary ring-4 ring-surface-card animate-ping"></div>
+<div class="flex items-center justify-between">
+<span class="font-body-semibold text-body-semibold text-primary">Étape 4 · Signature Direction</span>
+<span class="font-caption text-caption text-primary font-medium">En attente active</span>
+</div>
+<p class="font-caption-medium text-caption-medium text-text-secondary">
+                Direction Générale · Décision exécutive finale requise pour déclenchement des publications.
+              </p>
+</div>
+</div>
+<div class="mt-space-sm pt-space-sm bg-bg-canvas p-space-md rounded-lg flex items-center justify-between">
+<span class="font-caption text-caption text-text-secondary">ID Transaction Blockchain interne</span>
+<span class="font-caption-medium text-caption-medium font-mono text-text-primary">0x8F94…b44D</span>
+</div>
+</div>
+<!-- CANDIDATE SOURCING PREVIEW CARD -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col gap-space-sm">
+<span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-muted">Vivier &amp; Canaux de sourcing</span>
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary-subtle text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">hub</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-semibold text-body-semibold text-text-primary">3 pré-candidatures qualifiées</span>
+<span class="font-caption text-caption text-text-secondary">Cabinet partenaire et cooptations en attente d'arbitrage</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-xs">
+<span class="text-text-muted">Disponibilité moyenne</span>
+<span class="font-semibold text-text-primary">Sous 60 jours</span>
+</div>
+</div>
+</div>
+</div>
+<!-- PERSISTENT / STICKY BOTTOM DECISION BAR -->
+<div class="fixed bottom-0 left-64 right-0 bg-surface-card/95 backdrop-blur-md px-gutter py-3.5 z-30 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="p-2 rounded-lg bg-surface-container-high hidden sm:flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm truncate">
+<span class="font-body-semibold text-body-semibold text-text-primary truncate">Décision Direction Générale</span>
+<span class="font-caption text-caption text-text-muted hidden md:inline">· REQ-2026-0042 (DevSecOps)</span>
+</div>
+<span class="font-caption text-caption text-text-secondary truncate">
+            La validation engagera le budget employeur annuel de <span class="font-semibold tabular-nums text-text-primary">60 480,00 €</span>.
+          </span>
+</div>
+</div>
+<div class="flex items-center gap-space-md shrink-0">
+<!-- Consultation link -->
+<a class="hidden xl:inline-flex items-center gap-1 font-body-default text-body-default text-text-secondary hover:text-text-primary transition-colors pr-2" href="#">
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+          Consulter le dossier d'audit complet
+        </a>
+<!-- Rejet Button (Danger Outline) -->
+<button class="h-9 px-space-md rounded-lg font-body-semibold text-body-semibold text-danger-red bg-surface-card hover:bg-red-50 focus:outline-none transition-colors flex items-center gap-1.5" id="btn-reject" onclick="handleRejectClick()" title="Les fonds réservés de 60 480 € seront automatiquement débloqués" type="button">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Rejeter la demande</span>
+</button>
+<!-- Validation Button (Success Green Fill #047857) -->
+<button class="h-9 px-space-lg rounded-lg font-body-semibold text-body-semibold text-white bg-success-dark hover:bg-emerald-800 shadow-sm focus:outline-none transition-all flex items-center gap-1.5" id="btn-approve" onclick="handleApproveClick()" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Valider l'ouverture du recrutement</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function handleApproveClick() {
+    const btn = document.getElementById('btn-approve');
+    if (!btn) return;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Validation en cours...';
+    btn.classList.add('opacity-80', 'pointer-events-none');
+    
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span> Offre publiée avec succès';
+      btn.classList.remove('bg-success-dark', 'hover:bg-emerald-800');
+      btn.classList.add('bg-emerald-600');
+    }, 1200);
+  }
+
+  function handleRejectClick() {
+    const confirmed = confirm("Confirmez-vous le rejet de cette demande ?\\nLes fonds réservés de 60 480 € seront automatiquement restitués au budget DSI non-alloué.");
+    if (confirmed) {
+      const btn = document.getElementById('btn-reject');
+      if (!btn) return;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span> Demande clôturée';
+      btn.classList.add('opacity-50', 'pointer-events-none');
+    }
+  }
+</script></main></div></body></html>

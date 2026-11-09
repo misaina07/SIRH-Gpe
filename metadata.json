@@ -1,0 +1,6 @@
+{
+  "name": "SIRH Recrutement & Arbitrage Budgétaire",
+  "description": "Portail RH opérationnel et gouvernance budgétaire des recrutements, qualification salariale et parcours d'approbation CODIR.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

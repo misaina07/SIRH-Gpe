@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-card":"#FFFFFF","secondary-fixed":"#d8e3fb","surface-container-low":"#f2f3ff","info-sky":"#0EA5E9","on-background":"#131b2e","tertiary-container":"#5b606b","surface-tint":"#4d44e3","bg-canvas":"#F8FAFC","surface-dim":"#d2d9f4","surface":"#faf8ff","tertiary-fixed":"#dee2ef","success-emerald":"#10B981","tertiary-fixed-dim":"#c2c6d3","inverse-surface":"#283044","primary-container":"#4f46e5","on-primary-fixed-variant":"#3323cc","warning-text":"#78350F","primary-hover":"#4338CA","outline":"#777587","inverse-on-surface":"#eef0ff","secondary":"#545f73","surface-container-highest":"#dae2fd","error":"#ba1a1a","on-tertiary-fixed-variant":"#424751","primary-fixed-dim":"#c3c0ff","warning-amber":"#F59E0B","on-secondary-container":"#586377","surface-variant":"#dae2fd","on-primary-container":"#dad7ff","on-surface":"#131b2e","inverse-primary":"#c3c0ff","success-dark":"#047857","primary":"#3525cd","on-tertiary-fixed":"#171c25","on-error-container":"#93000a","on-tertiary":"#ffffff","text-primary":"#0F172A","primary-subtle":"#EEF2FF","tertiary":"#434853","text-muted":"#94A3B8","on-secondary-fixed-variant":"#3c475a","text-secondary":"#475569","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","surface-container":"#eaedff","sidebar-surface":"#1E293B","on-tertiary-container":"#d7dbe8","on-surface-variant":"#464555","on-error":"#ffffff","on-primary-fixed":"#0f0069","on-primary":"#ffffff","surface-bright":"#faf8ff","border-default":"#E2E8F0","surface-container-high":"#e2e7ff","background":"#faf8ff","outline-variant":"#c7c4d8","secondary-fixed-dim":"#bcc7de","secondary-container":"#d5e0f8","on-secondary-fixed":"#111c2d","danger-red":"#DC2626","error-container":"#ffdad6","primary-fixed":"#e2dfff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","margin":"1.5rem","space-lg":"1.5rem","space-xl":"2rem"},fontFamily:{"headline-sm":["Inter"],"headline-lg-mobile":["Inter"],"body-default":["Inter"],"body-semibold":["Inter"],"label-default":["Inter"],"caption-medium":["Inter"],"body-medium":["Inter"],"headline-lg":["Inter"],"caption":["Inter"],"headline-md":["Inter"]},fontSize:{"headline-sm":["18px",{lineHeight:"26px",fontWeight:"500"}],"headline-lg-mobile":["22px",{lineHeight:"30px",fontWeight:"600"}],"body-default":["14px",{lineHeight:"22px",fontWeight:"400"}],"body-semibold":["14px",{lineHeight:"22px",fontWeight:"600"}],"label-default":["14px",{lineHeight:"20px",fontWeight:"500"}],"caption-medium":["12px",{lineHeight:"18px",fontWeight:"500"}],"body-medium":["14px",{lineHeight:"22px",fontWeight:"500"}],"headline-lg":["28px",{lineHeight:"36px",fontWeight:"600"}],"caption":["12px",{lineHeight:"18px",fontWeight:"400"}],"headline-md":["22px",{lineHeight:"30px",fontWeight:"600"}]}}}}</script></head><body class="bg-bg-canvas font-body-default text-text-primary antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-sidebar-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between border-b border-slate-700/60"><div class="flex items-center gap-space-sm"><img alt="Logo SIRH" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WGo5K86fGA261TLWE2cszuh0E5VQNByaEplC_7oIXgWjsz0TcQH1ZRe3c929_HaeIpBACBqXsxkNhguMLMIpQGshT0U3McPeMvNxAeJsLhKPharNCMxE878ce9JKczrz0csLE4jRJkKKM3tWDUcgjHB3aB9OO06v-85SNt1ZD82DNuVf9y62gozmsJthRe7GbyxeF5CTKrQ2RZjMlStX7Dn1weDnEPQ5aO4Yyh6yLQ3dmboX0UuPg7Z6Q"/><span class="font-headline-sm text-headline-sm text-white tracking-wide">SIRH</span></div><button aria-label="Réduire le menu" class="text-text-muted hover:text-white transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><div class="px-space-md py-space-sm"><span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-muted px-space-sm">Navigation</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-primary-container text-white font-body-semibold rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="tableau-de-bord" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-medium text-body-medium">Tableau de bord</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="mes-demandes" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-medium text-body-medium">Mes demandes</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="nouvelle-demande" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="font-body-medium text-body-medium">Nouvelle demande</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="recrutement" href="#"><span class="material-symbols-outlined text-[20px]">person_search</span><span class="font-body-medium text-body-medium">Recrutement</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="validation-finance" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-body-medium text-body-medium">Validation &amp; Finance</span></div><span class="bg-warning-amber text-warning-text px-space-xs py-0.5 rounded-full font-caption-medium text-caption-medium">5</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="employes-contrats" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-body-medium text-body-medium">Employés &amp; Contrats</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="onboarding" href="#"><span class="material-symbols-outlined text-[20px]">how_to_reg</span><span class="font-body-medium text-body-medium">Onboarding</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-slate-800 hover:text-white transition-colors" data-path="referentiels-admin" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-medium text-body-medium">Référentiels &amp; Admin</span></a></nav></div><div class="p-space-md border-t border-slate-700/60"><div class="bg-slate-800/80 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-info-sky text-[18px]">verified_user</span><div class="flex flex-col"><span class="font-caption-medium text-caption-medium text-white">Portail Conforme</span><span class="font-caption text-caption text-text-muted">RGPD &amp; CSE</span></div></div><span class="material-symbols-outlined text-text-muted text-[16px]">info</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-card/90 backdrop-blur-xl z-40 border-b border-border-default shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-0"><div class="hidden lg:flex items-center gap-space-xs text-text-secondary font-caption-medium text-caption-medium whitespace-nowrap"><span class="hover:text-text-primary cursor-pointer transition-colors">Portail SIRH</span><span class="material-symbols-outlined text-[14px] text-text-muted">chevron_right</span><span class="text-text-primary font-body-semibold">Vue opérationnelle</span></div><div class="relative w-64 md:w-80 lg:w-96"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[18px]">search</span><input class="w-full h-9 pl-9 pr-space-md bg-bg-canvas border border-border-default rounded-lg font-body-default text-body-default text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent transition-all" placeholder="Rechercher une demande, un candidat, un employé… (Cmd+K)" type="text"/></div></div><div class="flex items-center gap-space-md"><div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-success-dark font-caption-medium text-caption-medium"><span class="inline-block w-2 h-2 rounded-full bg-success-emerald"></span><span>SLA Recrutement 98.4%</span></div><div class="relative"><button aria-label="Notifications" class="p-space-xs text-text-secondary hover:text-text-primary hover:bg-bg-canvas rounded-lg transition-colors relative flex items-center justify-center" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-0.5 right-0.5 inline-flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-danger-red text-white font-caption-medium text-[10px] leading-none">3</span></button></div><div class="h-6 w-px bg-border-default hidden sm:block"></div><div class="relative flex items-center gap-space-sm pl-space-xs group"><div class="flex items-center gap-space-sm cursor-pointer"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-border-default" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvHn7ByONVuWkUfXdHtm55rnRCgM68Z9Dz8p0kbux9QnTRzIpsdjtjjPi6pWgjgUofwAJT0lft84zbYZc6Xnrvmb81DVbMea_lQ5H0MMWMV022jownE5B4vJCiXtYd20aWr1RU3kZ8On2FD8tsOBUXXjsP1uUHrqPzKPBaOHXnUWkqnAy6Umi33tg3bIWXh7hFNl9bh9KNmmRhKdNUSLXewEFCrnQYdny7CM4NNkMa-0OR8R-rioHP"/><div class="hidden md:flex flex-col text-left"><span class="font-body-semibold text-body-semibold text-text-primary leading-tight">Claire Delorme</span><span class="font-caption text-caption text-text-secondary leading-tight">Responsable RH &amp; Recrutement</span></div><span class="material-symbols-outlined text-text-muted text-[18px] group-hover:text-text-primary transition-colors">expand_more</span></div><div class="absolute right-0 top-full mt-2 w-56 bg-surface-card border border-border-default rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-space-xs hidden group-hover:block transition-all z-50"><div class="px-space-md py-space-sm border-b border-border-default"><p class="font-body-semibold text-body-semibold text-text-primary">Claire Delorme</p><p class="font-caption text-caption text-text-muted truncate">c.delorme@entreprise.fr</p></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-text-secondary hover:bg-bg-canvas hover:text-text-primary transition-colors" data-path="mon-profil" href="#"><span class="material-symbols-outlined text-[18px]">person</span>Mon profil</a><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-text-secondary hover:bg-bg-canvas hover:text-text-primary transition-colors" data-path="preferences" href="#"><span class="material-symbols-outlined text-[18px]">tune</span>Préférences</a><div class="my-space-xs border-t border-border-default"></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-default text-body-default text-danger-red hover:bg-red-50 transition-colors" data-path="connexion" href="#"><span class="material-symbols-outlined text-[18px]">logout</span>Déconnexion</a></div></div></div></div></header><main class="w-full pt-16 bg-bg-canvas flex-1"><div class="flex flex-col w-full">
+<div class="w-full max-w-7xl mx-auto px-margin py-space-lg flex flex-col gap-space-lg">
+<!-- Top Action & Meta Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-text-secondary font-caption-medium text-caption-medium">
+<span class="hover:text-text-primary cursor-pointer transition-colors">Demandes à évaluer</span>
+<span class="material-symbols-outlined text-[14px] text-text-muted">chevron_right</span>
+<span class="text-text-primary font-body-semibold">REQ-2026-0042</span>
+</div>
+<div class="flex items-center flex-wrap gap-space-md">
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Demande REQ-2026-0042 — Évaluation Financière et Budgétaire</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-subtle text-primary-container font-caption-medium text-caption-medium">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+            Validée RH · En attente Finance
+          </span>
+</div>
+</div>
+<!-- Action Toolbar -->
+<div class="flex items-center flex-wrap gap-space-sm self-start md:self-auto">
+<button class="h-9 px-space-md rounded-lg font-body-medium text-body-medium text-danger-red hover:bg-error-container hover:text-on-error-container transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Refuser la demande</span>
+</button>
+<button class="h-9 px-space-md rounded-lg font-body-medium text-body-medium text-warning-text bg-warning-amber/15 hover:bg-warning-amber/25 transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Demander une modification</span>
+</button>
+<button class="h-9 px-space-md rounded-lg font-body-medium text-body-medium text-white bg-primary-container hover:bg-primary-hover shadow-sm transition-all flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_clock</span>
+<span>Valider le budget et réserver les fonds</span>
+</button>
+</div>
+</div>
+<!-- Workflow Stepper Container -->
+<div class="w-full bg-surface-card rounded-xl p-space-md shadow-sm">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md relative">
+<!-- Step 1: Manager (Completed) -->
+<div class="flex items-start gap-space-sm relative">
+<div class="w-7 h-7 rounded-full bg-success-emerald text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-caption-medium text-caption-medium text-text-secondary">Étape 1 · Manager</span>
+<span class="font-body-semibold text-body-semibold text-text-primary truncate">Marc Lefebvre</span>
+<span class="font-caption text-caption text-text-muted">Soumis le 14/10/2026</span>
+</div>
+</div>
+<!-- Step 2: RH (Completed) -->
+<div class="flex items-start gap-space-sm relative">
+<div class="w-7 h-7 rounded-full bg-success-emerald text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-caption-medium text-caption-medium text-text-secondary">Étape 2 · Ressources Humaines</span>
+<span class="font-body-semibold text-body-semibold text-text-primary truncate">Claire Delorme</span>
+<span class="font-caption text-caption text-text-muted">Conforme fiche G5 le 16/10/2026</span>
+</div>
+</div>
+<!-- Step 3: Finance (Active Pulsing) -->
+<div class="flex items-start gap-space-sm relative">
+<div class="relative flex items-center justify-center shrink-0 w-7 h-7">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-25"></span>
+<div class="w-7 h-7 rounded-full bg-primary-container text-white font-caption-medium text-caption-medium flex items-center justify-center shadow-sm">
+              3
+            </div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-caption-medium text-caption-medium text-primary-container">Étape 3 · Finance (En cours)</span>
+<span class="inline-flex px-1.5 py-0.2 rounded font-caption text-[11px] bg-warning-amber/15 text-warning-text font-medium">SLA J-1</span>
+</div>
+<span class="font-body-semibold text-body-semibold text-text-primary truncate">Analyste Finance</span>
+<span class="font-caption text-caption text-text-secondary">Évaluation d'arbitrage requise</span>
+</div>
+</div>
+<!-- Step 4: Direction (Pending) -->
+<div class="flex items-start gap-space-sm relative opacity-60">
+<div class="w-7 h-7 rounded-full bg-bg-canvas text-text-muted font-caption-medium text-caption-medium flex items-center justify-center shrink-0">
+            4
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-caption-medium text-caption-medium text-text-muted">Étape 4 · Direction Générale</span>
+<span class="font-body-semibold text-body-semibold text-text-muted truncate">Approbation finale</span>
+<span class="font-caption text-caption text-text-muted">En attente des arbitrages</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Workspace Split-Panel -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT PANEL: 40% Desktop Split (approx 5 of 12 columns) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Summary Card -->
+<div class="bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between pb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Synthèse de la demande</h2>
+<span class="font-caption text-caption text-text-muted font-mono">REQ-2026-0042</span>
+</div>
+<!-- Position Details -->
+<div class="flex flex-col gap-space-sm bg-bg-canvas p-space-md rounded-lg">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-text-muted">Intitulé du poste</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Ingénieur DevSecOps Senior</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption text-caption text-text-muted">Département &amp; Imputation</span>
+<span class="font-body-default text-body-default text-text-primary">Direction des Systèmes d'Information (DSI) · Code 4100</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption text-caption text-text-muted">Motif de la réquisition</span>
+<span class="font-body-default text-body-default text-text-primary">Création de poste stratégique (Renfort Cloud)</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-text-muted">Date cible début</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">01/12/2026</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption text-caption text-text-muted">Demandeur</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Marc Lefebvre</span>
+</div>
+</div>
+</div>
+<!-- Qualification RH Check & Review -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-secondary">Validation RH Préalable</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-success-dark font-caption-medium text-caption-medium">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                Qualifié &amp; conforme RH
+              </span>
+</div>
+<div class="flex flex-col gap-space-xs p-space-sm bg-emerald-50/50 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success-emerald text-[18px]">check_circle</span>
+<span class="font-body-default text-body-default text-text-primary">Fiche de poste conforme au référentiel G5</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success-emerald text-[18px]">check_circle</span>
+<span class="font-body-default text-body-default text-text-primary">Grade salarial G5 validé par Claire Delorme</span>
+</div>
+<div class="mt-space-xs p-space-sm bg-surface-card rounded text-text-secondary font-caption text-caption italic">
+                « Compétences rares sur le marché, tension de recrutement forte justifiant le haut de fourchette. »
+              </div>
+</div>
+</div>
+<!-- Documents Attachment Box -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-secondary">Pièce jointe contractuelle</span>
+<div class="flex items-center justify-between p-space-sm bg-bg-canvas rounded-lg hover:bg-slate-100 transition-colors cursor-pointer group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-red-100 text-danger-red flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-semibold text-body-semibold text-text-primary truncate group-hover:text-primary-container transition-colors">Fiche_Poste_DevSecOps_G5.pdf</span>
+<span class="font-caption text-caption text-text-muted">245 Ko · Document signé RH</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary-container font-caption-medium text-caption-medium shrink-0 ml-space-sm">
+<span>Consulter</span>
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</div>
+</div>
+</div>
+<!-- Quick HR Context Specs -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center gap-space-sm text-text-secondary font-caption text-caption">
+<span class="material-symbols-outlined text-primary-container text-[20px]">policy</span>
+<span>Contrat CDI cadre temps plein · Forfait jour 218 j · Coefficient convention collective Syntec 3.1</span>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL: 60% Desktop Split (approx 7 of 12 columns) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Main Decision Banner (Amber Derogation Required) -->
+<div class="bg-amber-50/90 rounded-xl p-space-md shadow-sm flex flex-col sm:flex-row gap-space-md items-start">
+<div class="w-10 h-10 rounded-full bg-warning-amber text-warning-text flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-sm text-headline-sm text-warning-text">RÉSULTAT : À MODIFIER (Dépassement de grille départementale)</span>
+</div>
+<p class="font-body-default text-body-default text-text-secondary leading-relaxed">
+              La demande excède la grille du département (<strong class="text-text-primary font-body-semibold">+200 €/m</strong>) et génère un dépassement de <strong class="text-danger-red font-body-semibold">480,00 €</strong> sur le budget disponible (tolérance admise : 10%). Vous pouvez valider avec dérogation formelle ou demander un ajustement.
+            </p>
+</div>
+</div>
+<!-- Widget: Salary & Multi-Criteria Floating Bar -->
+<div class="bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Comparaison Salariale &amp; Budgétaire Multicritères</h3>
+<span class="font-caption text-caption text-text-secondary">Positionnement du brut mensuel demandé face aux référentiels en vigueur</span>
+</div>
+<span class="material-symbols-outlined text-text-muted text-[20px]">tune</span>
+</div>
+<!-- Multi-Bar Floating Track Visualization (2 000 € to 4 000 € scale) -->
+<div class="flex flex-col gap-space-md pt-space-xs pb-space-sm">
+<!-- Grid X-Axis Legend -->
+<div class="w-full flex justify-between font-caption text-caption text-text-muted px-1 border-b border-border-default/50 pb-1 tabular-nums">
+<span>2 000 €</span>
+<span>2 500 €</span>
+<span>3 000 €</span>
+<span>3 500 €</span>
+<span>4 000 €</span>
+</div>
+<!-- Track 1: Grille du Poste Grade G5 [2500 - 3500] => 25% to 75% width -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-caption-medium text-caption-medium">
+<span class="text-text-secondary">1. Grille du poste (Grade G5)</span>
+<span class="text-text-primary tabular-nums">2 500,00 € — 3 500,00 €</span>
+</div>
+<div class="relative w-full h-7 bg-bg-canvas rounded-lg overflow-hidden flex items-center">
+<!-- Visual Range Bar -->
+<div class="absolute h-4 rounded bg-slate-400/80 shadow-xs flex items-center justify-between px-2 text-white font-caption text-[11px]" style="left: 25%; width: 50%;">
+<span>Min</span>
+<span>Max</span>
+</div>
+</div>
+</div>
+<!-- Track 2: Grille Département DSI [2600 - 3400] => 30% to 70% width -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-caption-medium text-caption-medium">
+<span class="text-text-secondary">2. Grille département DSI</span>
+<span class="text-text-primary tabular-nums">2 600,00 € — 3 400,00 €</span>
+</div>
+<div class="relative w-full h-7 bg-bg-canvas rounded-lg overflow-hidden flex items-center">
+<!-- Visual Range Bar -->
+<div class="absolute h-4 rounded bg-indigo-300 shadow-xs flex items-center justify-between px-2 text-text-primary font-caption text-[11px]" style="left: 30%; width: 40%;">
+<span>Seuil min</span>
+<span>Seuil max</span>
+</div>
+</div>
+</div>
+<!-- Track 3: Demande Manager [3000 - 3600] => 50% to 80% width with hatched red section from 70% to 80% -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-caption-medium text-caption-medium">
+<span class="text-text-primary font-body-semibold">3. Demande Manager (Soumis)</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-text-primary font-body-semibold tabular-nums">3 000,00 € — 3 600,00 €</span>
+<span class="px-1.5 py-0.5 rounded bg-red-100 text-danger-red font-caption-medium text-[11px] tabular-nums">+200 € / mois</span>
+</div>
+</div>
+<div class="relative w-full h-8 bg-bg-canvas rounded-lg overflow-hidden flex items-center">
+<!-- In-range portion: 3000 to 3400 (50% to 70%) -->
+<div class="absolute h-5 rounded-l bg-primary-container flex items-center px-2 text-white font-caption text-[11px]" style="left: 50%; width: 20%;">
+<span>3 000 €</span>
+</div>
+<!-- Overlap excess portion: 3400 to 3600 (70% to 80%) with red stripe styling -->
+<div class="absolute h-5 rounded-r bg-danger-red flex items-center justify-end px-2 text-white font-caption text-[11px] font-semibold" style="left: 70%; width: 10%; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.15) 0, rgba(255,255,255,0.15) 4px, transparent 0, transparent 8px);">
+<span>3 600 €</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dual Financial Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-space-xs">
+<!-- Card 1: DSI Budget Status -->
+<div class="p-space-md rounded-xl bg-bg-canvas flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-caption-medium text-caption-medium text-text-secondary uppercase tracking-wider">Budget Département DSI (Année 2026)</span>
+<span class="font-headline-sm text-headline-sm text-text-primary tabular-nums mt-0.5">120 000,00 €</span>
+</div>
+<div class="flex flex-col gap-1 text-caption font-caption text-text-secondary">
+<div class="flex justify-between">
+<span>Déjà engagé :</span>
+<span class="text-text-primary font-medium tabular-nums">60 000,00 €</span>
+</div>
+<div class="flex justify-between">
+<span>Budget disponible avant réservation :</span>
+<span class="text-text-primary font-medium tabular-nums">60 000,00 €</span>
+</div>
+</div>
+<!-- Stacked visual progress bar -->
+<div class="w-full flex flex-col gap-1 pt-1">
+<div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden flex">
+<div class="h-full bg-slate-400" style="width: 50%" title="Engagé: 50%"></div>
+<div class="h-full bg-danger-red" style="width: 0.4%" title="Dépassement projeté"></div>
+</div>
+<div class="flex justify-between text-[11px] font-caption text-text-muted">
+<span>50% engagé</span>
+<span class="text-danger-red font-medium">50,4% projeté (+480 €)</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Cost Calculation Formula & Excess -->
+<div class="p-space-md rounded-xl bg-bg-canvas flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-caption-medium text-caption-medium text-text-secondary uppercase tracking-wider">Formule &amp; Coût Annuel Estimé</span>
+<div class="flex items-baseline gap-space-xs mt-0.5">
+<span class="font-headline-sm text-headline-sm text-text-primary tabular-nums">60 480,00 €</span>
+<span class="px-1.5 py-0.5 rounded font-caption-medium text-[11px] bg-red-100 text-danger-red tabular-nums">− 480,00 €</span>
+</div>
+</div>
+<div class="p-space-xs bg-surface-card rounded text-caption font-mono text-text-primary">
+                3 600,00 € × 12 mois × 1,40 = 60 480,00 €
+              </div>
+<div class="flex flex-col gap-0.5 text-caption font-caption text-text-muted">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+<span>Charges patronales 40% incluses</span>
+</div>
+<div>Tolérance dépassement : 10% (max 6 000,00 €) · 12 mois</div>
+</div>
+</div>
+</div>
+<!-- Automated Compliance Checks (Checklist) -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-caption-medium text-caption-medium uppercase tracking-wider text-text-secondary">Contrôles Automatiques du Moteur de Règles</span>
+<div class="flex flex-col gap-space-xs bg-bg-canvas p-space-sm rounded-lg">
+<!-- Item 1 -->
+<div class="flex items-start gap-space-sm p-1.5 rounded hover:bg-surface-card transition-colors">
+<span class="material-symbols-outlined text-success-emerald text-[20px] shrink-0">check_circle</span>
+<div class="flex flex-col">
+<span class="font-body-semibold text-body-semibold text-text-primary">Contrôle A - Demande dans la grille du poste</span>
+<span class="font-caption text-caption text-text-secondary">Fourchette demandée jusqu'à 3 600,00 €, acceptable au vu du grade G5 étendu (3 500 € + marge).</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start gap-space-sm p-1.5 rounded hover:bg-surface-card transition-colors">
+<span class="material-symbols-outlined text-warning-amber text-[20px] shrink-0">warning</span>
+<div class="flex flex-col">
+<span class="font-body-semibold text-body-semibold text-warning-text">Contrôle B - Demande dans la grille du département</span>
+<span class="font-caption text-caption text-text-secondary">Dépassement de 200,00 € / mois par rapport au plafond départemental DSI (3 400,00 €).</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-start gap-space-sm p-1.5 rounded hover:bg-surface-card transition-colors">
+<span class="material-symbols-outlined text-warning-amber text-[20px] shrink-0">info</span>
+<div class="flex flex-col">
+<span class="font-body-semibold text-body-semibold text-warning-text">Contrôle C - Coût annuel dans le budget disponible</span>
+<span class="font-caption text-caption text-text-secondary">Dépassement net de 480,00 € sur le reliquat disponible, intégralement couvert par la clause de tolérance de 10% (6 000,00 € maxi).</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Formal Derogation Text Area (Pre-filled for Demo) -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-default text-label-default text-text-primary font-medium" for="derogation-motive">
+                Motif de la dérogation budgétaire <span class="text-danger-red">*</span>
+</label>
+<span class="font-caption text-caption text-text-muted">Requis pour validation avec arbitrage</span>
+</div>
+<textarea class="w-full p-space-sm bg-surface-card rounded-lg font-body-default text-body-default text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 transition-all shadow-inner" id="derogation-motive" rows="2">Validation autorisée au titre de la tolérance budgétaire de 10% compte tenu du profil critique DevSecOps.</textarea>
+<span class="font-caption text-caption text-text-muted italic">Ce motif sera consigné dans l'historique d'audit immuable et transmis à la Direction Générale.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>
