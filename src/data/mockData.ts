@@ -150,7 +150,7 @@ export const SAVED_LOGIN_PRESETS: SavedLoginEmail[] = [
   },
 ];
 
-export const DEPARTMENTS_DATA: Department[] = [
+export const DEPARTMENTS_DATA: Department[] = [ 
   {
     id: 'dept-dsi-cloud',
     code: 'DSI-4100',
