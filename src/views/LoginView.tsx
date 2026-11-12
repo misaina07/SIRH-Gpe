@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SavedLoginEmail, UserProfile } from '../types/sirh';
 import { SAVED_LOGIN_PRESETS, USER_PROFILES } from '../data/mockData';
+import { apiPost } from '../services/api';
 
 interface LoginViewProps {
-  onLogin: (user: UserProfile) => void;
+  onLogin: (user: UserProfile, token: string) => void;
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
+  const localDemoPasswords: Record<string, string> = import.meta.env.DEV
+    ? { 'usr-1': 'rh', 'usr-2': 'manager', 'usr-3': 'finance', 'usr-4': 'codir', 'usr-5': 'manager' }
+    : {};
   const [savedLogins, setSavedLogins] = useState<SavedLoginEmail[]>(() => {
     try {
       const stored = localStorage.getItem('sirh_saved_login_emails');
@@ -91,41 +95,46 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
     setInfoMessage(null);
     setIsLoading(true);
 
-    setTimeout(() => {
-      const foundUser = USER_PROFILES.find(
-        (u) =>
-          u.email.toLowerCase().trim() === email.toLowerCase().trim() &&
-          (u.password === password || password === 'password' || password === `${u.password}2026`)
-      );
-
-      if (foundUser) {
-        setIsLoading(false);
-        saveLoginEmailOnly(foundUser);
-        onLogin(foundUser);
-      } else {
-        setIsLoading(false);
-        setErrorMessage(
-          'Identifiants non reconnus ou mot de passe incorrect. Pour les tests, consultez les mots de passe indiqués sur les cartes ci-contre.'
-        );
-      }
-    }, 450);
+    try {
+      const result = await apiPost<{ token: string; user: UserProfile }>('/auth/login', { email, password });
+      saveLoginEmailOnly(result.user);
+      onLogin(result.user, result.token);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Connexion impossible.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleQuickLogin = (user: UserProfile) => {
+  const handleQuickLogin = async (user: UserProfile) => {
     setEmail(user.email);
-    setPassword(user.password || '');
+    const localPassword = localDemoPasswords[user.id];
+    if (!localPassword) {
+      setPassword('');
+      setInfoMessage('Saisissez le mot de passe de votre compte pour vous connecter.');
+      return;
+    }
+    setPassword(localPassword);
     setIsLoading(true);
-    setTimeout(() => {
+    setErrorMessage(null);
+    try {
+      const result = await apiPost<{ token: string; user: UserProfile }>('/auth/login', {
+        email: user.email,
+        password: localPassword,
+      });
+      saveLoginEmailOnly(result.user);
+      onLogin(result.user, result.token);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Connexion impossible.');
+    } finally {
       setIsLoading(false);
-      saveLoginEmailOnly(user);
-      onLogin(user);
-    }, 300);
+    }
   };
 
   return (

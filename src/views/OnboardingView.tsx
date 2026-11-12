@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ViewMode } from '../types/sirh';
 import { ONBOARDING_LIST } from '../data/mockData';
+import { OnboardingPerson } from '../types/sirh';
+import { apiGet } from '../services/api';
 
 interface OnboardingViewProps {
   onNavigate: (view: ViewMode) => void;
 }
 
 export const OnboardingView: React.FC<OnboardingViewProps> = ({ onNavigate }) => {
-  const [onboardings, setOnboardings] = useState(ONBOARDING_LIST);
+  const [onboardings, setOnboardings] = useState<OnboardingPerson[]>(ONBOARDING_LIST);
   const [selectedOnboarding, setSelectedOnboarding] = useState(ONBOARDING_LIST[0]);
+  useEffect(() => {
+    apiGet<OnboardingPerson[]>('/onboarding').then((items) => {
+      setOnboardings(items);
+      if (items.length) setSelectedOnboarding(items[0]);
+    }).catch(() => undefined);
+  }, []);
 
   const [tasks, setTasks] = useState([
     { id: 1, title: 'Création des accès SSO, e-mail et compte Slack', done: true, category: 'IT' },
