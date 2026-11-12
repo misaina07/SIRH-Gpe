@@ -18,8 +18,8 @@ import { ExecutiveApprovalView } from './views/ExecutiveApprovalView';
 import { RecruitmentKanbanView } from './views/RecruitmentKanbanView';
 import { DemandesListView } from './views/DemandesListView';
 import { OnboardingView } from './views/OnboardingView';
+import { EmployeeDossierView } from './views/EmployeeDossierView';
 import { ReferentielsAdminView } from './views/ReferentielsAdminView';
-import { EmployeeDirectoryView } from './views/EmployeeDirectoryView';
 import { LoginView } from './views/LoginView';
 import { CANDIDATES_DATA, USER_PROFILES } from './data/mockData';
 import { UserProfile, ViewMode } from './types/sirh';
@@ -223,11 +223,7 @@ export default function App() {
               )}
 
               {currentView === 'employes-contrats' && (
-                <EmployeeDirectoryView
-                  onNavigate={setCurrentView}
-                  onOpenDocModal={() => setIsDocModalOpen(true)}
-                  currentUser={currentUser}
-                />
+                <EmployeeDossierView onNavigate={setCurrentView} currentUser={currentUser} />
               )}
             </>
           )}
