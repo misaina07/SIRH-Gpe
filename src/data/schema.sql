@@ -9,8 +9,8 @@ CREATE TABLE users (
     role_type VARCHAR(30) NOT NULL CHECK (role_type IN ('RH', 'Manager', 'Finance', 'Direction')),
     role_display_name VARCHAR(100) NOT NULL,
     -- tsy azoko tsara inona reto
-    avatar_url VARCHAR(255),
-    initials VARCHAR(10) NOT NULL,
+    -- avatar_url VARCHAR(255),
+    -- initials VARCHAR(10) NOT NULL,
     --
     primary_department VARCHAR(150) NOT NULL,
     password_hash VARCHAR(255),
