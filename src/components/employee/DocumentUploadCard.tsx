@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { apiBlob, apiGet, apiPatch, apiUpload } from '../../services/api';
-import { EmployeeDocument } from '../../types/employee';
+import { EmployeeDossierDocument } from '../../types/employee';
 import { UserRole } from '../../types/sirh';
 
-const documentTypes: Array<[EmployeeDocument['documentType'], string]> = [
+const documentTypes: Array<[EmployeeDossierDocument['documentType'], string]> = [
   ['CNI', 'Carte nationale d’identite'], ['TITRE_SEJOUR', 'Titre de sejour'], ['RIB', 'RIB'],
   ['PERMIS_CONDUIRE', 'Permis de conduire'], ['VISITE_MEDICALE', 'Attestation aptitude'],
   ['DIPLOME', 'Diplome'], ['CONTRAT_SIGNE', 'Contrat signe'],
 ];
-const badgeStyle: Record<EmployeeDocument['validity'], string> = {
+const badgeStyle: Record<EmployeeDossierDocument['validity'], string> = {
   valide: 'bg-emerald-100 text-emerald-800', en_attente: 'bg-slate-100 text-slate-700',
   expire_bientot: 'bg-amber-100 text-amber-900', expire: 'bg-red-100 text-red-800', rejete: 'bg-rose-100 text-rose-800',
 };
@@ -16,8 +16,8 @@ const badgeStyle: Record<EmployeeDocument['validity'], string> = {
 interface Props { employeeId: number; role: UserRole; }
 
 export const DocumentUploadCard: React.FC<Props> = ({ employeeId, role }) => {
-  const [documents, setDocuments] = useState<EmployeeDocument[]>([]);
-  const [documentType, setDocumentType] = useState<EmployeeDocument['documentType']>('CNI');
+  const [documents, setDocuments] = useState<EmployeeDossierDocument[]>([]);
+  const [documentType, setDocumentType] = useState<EmployeeDossierDocument['documentType']>('CNI');
   const [expirationDate, setExpirationDate] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [note, setNote] = useState('');
@@ -27,7 +27,7 @@ export const DocumentUploadCard: React.FC<Props> = ({ employeeId, role }) => {
   const canVerify = role === 'RH';
   const canRead = ['RH', 'Direction', 'Employee'].includes(role);
 
-  const refresh = async () => setDocuments(await apiGet<EmployeeDocument[]>(`/employees/${employeeId}/documents`));
+  const refresh = async () => setDocuments(await apiGet<EmployeeDossierDocument[]>(`/employees/${employeeId}/documents`));
   useEffect(() => { if (canRead) refresh().catch((cause) => setError(cause instanceof Error ? cause.message : 'Chargement GED impossible.')); }, [employeeId, canRead]);
 
   const upload = async (event: React.FormEvent) => {
@@ -39,14 +39,14 @@ export const DocumentUploadCard: React.FC<Props> = ({ employeeId, role }) => {
       form.append('documentType', documentType);
       if (expirationDate) form.append('expirationDate', expirationDate);
       form.append('file', file);
-      await apiUpload<EmployeeDocument>(`/employees/${employeeId}/documents`, form);
+      await apiUpload<EmployeeDossierDocument>(`/employees/${employeeId}/documents`, form);
       setFile(null); setExpirationDate('');
       await refresh();
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Televersement impossible.'); }
     finally { setBusy(false); }
   };
 
-  const download = async (document: EmployeeDocument) => {
+  const download = async (document: EmployeeDossierDocument) => {
     try {
       const content = await apiBlob(`/employees/${employeeId}/documents/${document.id}/content`);
       const url = URL.createObjectURL(content);
@@ -55,7 +55,7 @@ export const DocumentUploadCard: React.FC<Props> = ({ employeeId, role }) => {
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Telechargement impossible.'); }
   };
 
-  const verify = async (document: EmployeeDocument, status: 'valide' | 'rejete') => {
+  const verify = async (document: EmployeeDossierDocument, status: 'valide' | 'rejete') => {
     setBusy(true); setError(null);
     try { await apiPatch(`/employees/${employeeId}/documents/${document.id}/verification`, { status, note }); await refresh(); }
     catch (cause) { setError(cause instanceof Error ? cause.message : 'Verification impossible.'); }
@@ -68,7 +68,7 @@ export const DocumentUploadCard: React.FC<Props> = ({ employeeId, role }) => {
     <div><h3 className="text-lg font-semibold text-slate-900">GED administrative</h3><p className="text-sm text-slate-500">Les fichiers sont verifies, chiffrés au stockage et accessibles selon les habilitations.</p></div>
     {error && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-800">{error}</p>}
     {canUpload && <form onSubmit={upload} className="grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 md:grid-cols-2">
-      <label className="flex flex-col gap-1 text-sm">Type de document<select value={documentType} onChange={(e) => setDocumentType(e.target.value as EmployeeDocument['documentType'])} className="rounded-lg border border-slate-300 bg-white p-2">{documentTypes.map(([value,label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+      <label className="flex flex-col gap-1 text-sm">Type de document<select value={documentType} onChange={(e) => setDocumentType(e.target.value as EmployeeDossierDocument['documentType'])} className="rounded-lg border border-slate-300 bg-white p-2">{documentTypes.map(([value,label]) => <option key={value} value={value}>{label}</option>)}</select></label>
       <label className="flex flex-col gap-1 text-sm">Date d’expiration{documentType==='TITRE_SEJOUR'&&<span className="text-red-600"> requise</span>}<input type="date" required={documentType==='TITRE_SEJOUR'} value={expirationDate} onChange={(e)=>setExpirationDate(e.target.value)} className="rounded-lg border border-slate-300 bg-white p-2" /></label>
       <label className="flex flex-col gap-1 text-sm md:col-span-2">Fichier PDF, JPG ou PNG (8 Mo max)<input type="file" accept="application/pdf,image/jpeg,image/png" required onChange={(e)=>setFile(e.target.files?.[0]??null)} className="rounded-lg border border-slate-300 bg-white p-2" /></label>
       <button disabled={busy||!file} className="justify-self-start rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{busy?'Envoi…':'Deposer le document'}</button>

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { apiGet, apiPost, apiPatch } from '../services/api';
 import { Candidate, Department, UserProfile, ViewMode } from '../types/sirh';
-import { EmployeeCareerEvent, EmployeeChangeRequest, EmployeeContract, EmployeeDocument, EmployeeManagerOption, EmployeeProfile, PageResult } from '../types/employee';
+import { EmployeeCareerEvent, EmployeeChangeRequest, EmployeeContract, EmployeeManagerOption, EmployeeProfile, PageResult } from '../types/employee';
 import { DocumentUploadCard } from '../components/employee/DocumentUploadCard';
 import { CareerTimeline } from '../components/employee/CareerTimeline';
 import { EmployeeChangePanel, EmployeeContractPanel, EmployeeEditPanel, RetentionPolicyPanel } from '../components/employee/EmployeeAdministrationPanels';
