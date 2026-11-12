@@ -123,7 +123,9 @@ public class DirectoryService {
             SELECT id, full_name AS name, initials, role_title AS \"roleTitle\", experience_years AS \"experienceYears\",
                    score, skills, kanban_stage AS stage, received_days_ago AS \"receivedDaysAgo\", status_badge AS \"statusBadge\",
                    milestone, sla, notes, rejection_reason AS \"rejectionReason\", salary_expectation AS \"salaryExpectation\"
-            FROM candidates ORDER BY applied_at DESC
+            FROM candidates c
+            WHERE NOT EXISTS (SELECT 1 FROM employees e WHERE e.source_candidate_id=c.id)
+            ORDER BY applied_at DESC
             """).stream().map(this::normalizeArrays).toList();
     }
 

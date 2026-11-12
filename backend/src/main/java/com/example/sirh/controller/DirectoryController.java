@@ -7,7 +7,10 @@ import com.example.sirh.dto.FinanceValidationRequest;
 import com.example.sirh.dto.RhValidationRequest;
 import com.example.sirh.dto.DirectionApprovalRequest;
 import com.example.sirh.dto.CandidateStageRequest;
+import com.example.sirh.dto.ConvertCandidateToEmployeeRequest;
+import com.example.sirh.dto.EmployeeProfileResponse;
 import com.example.sirh.service.RequisitionWorkflowService;
+import com.example.sirh.service.EmployeeCoreService;
 import jakarta.validation.Valid;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +31,14 @@ public class DirectoryController {
     private final DirectoryService directory;
     private final JdbcTemplate jdbc;
     private final RequisitionWorkflowService workflow;
+    private final EmployeeCoreService employees;
 
-    public DirectoryController(DirectoryService directory, JdbcTemplate jdbc, RequisitionWorkflowService workflow) {
+    public DirectoryController(DirectoryService directory, JdbcTemplate jdbc, RequisitionWorkflowService workflow,
+            EmployeeCoreService employees) {
         this.directory = directory;
         this.jdbc = jdbc;
         this.workflow = workflow;
+        this.employees = employees;
     }
 
     @GetMapping("/health")
@@ -128,6 +134,32 @@ public class DirectoryController {
             throw new com.example.sirh.service.ForbiddenOperationException("Gestion des candidats non autorisée.");
         directory.changeCandidateStage(id, request.stage(), request.reason());
         return Map.of("id", id, "stage", request.stage(), "message", "Étape du candidat mise à jour.");
+    }
+    @GetMapping("/employees")
+    public List<EmployeeProfileResponse> employees(@RequestParam(required = false) String departmentId,
+            @RequestParam(required = false) String search, Authentication actor) {
+        return employees.list(departmentId, search, actor);
+    }
+    @GetMapping("/employees/managers")
+    public List<EmployeeCoreService.ManagerOption> employeeManagers(@RequestParam String departmentId, Authentication actor) {
+        return employees.managers(departmentId, actor);
+    }
+    @GetMapping("/employees/{id}")
+    public EmployeeProfileResponse employee(@PathVariable int id, Authentication actor) { return employees.get(id, actor); }
+    @GetMapping("/employees/{id}/career")
+    public List<EmployeeCoreService.CareerEvent> employeeCareer(@PathVariable int id, Authentication actor) {
+        return employees.career(id, actor);
+    }
+    @GetMapping("/employees/{id}/contracts")
+    public List<EmployeeCoreService.ContractRecord> employeeContracts(@PathVariable int id, Authentication actor) {
+        return employees.contracts(id, actor);
+    }
+    @PostMapping("/candidates/{id}/employee")
+    public EmployeeProfileResponse convertCandidate(@PathVariable String id,
+            @Valid @RequestBody ConvertCandidateToEmployeeRequest request, Authentication actor) {
+        if (!has(actor, "CAN_MANAGE_CANDIDATES"))
+            throw new com.example.sirh.service.ForbiddenOperationException("Conversion candidat-salarié réservée aux RH autorisées.");
+        return employees.createFromCandidate(id, request, actor);
     }
     @GetMapping("/onboarding") public List<Map<String, Object>> onboarding(Authentication actor) {
         if (!has(actor, "ROLE_RH"))

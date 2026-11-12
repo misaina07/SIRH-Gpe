@@ -11,7 +11,7 @@ export type ViewMode =
   | 'referentiels-admin'
   | 'connexion';
 
-export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction';
+export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction' | 'Employee';
 
 export interface AvailablePosition {
   id: string;
