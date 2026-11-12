@@ -12,7 +12,7 @@ export type ViewMode =
   | 'referentiels-admin'
   | 'connexion';
 
-export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction';
+export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction' | 'Employee';
 
 export interface AvailablePosition {
   id: string;
@@ -89,6 +89,8 @@ export type CandidateStage = 'recue' | 'preselectionne' | 'entretien' | 'retenu'
 
 export interface Candidate {
   id: string;
+  positionId?: string | null;
+  departmentId?: string | null;
   name: string;
   initials: string;
   roleTitle: string;
