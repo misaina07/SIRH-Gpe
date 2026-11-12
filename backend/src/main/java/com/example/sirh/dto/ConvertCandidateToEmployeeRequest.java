@@ -33,6 +33,14 @@ public record ConvertCandidateToEmployeeRequest(
         @Size(max = 12) String addressZip,
         @Size(max = 150) String emergencyContactName,
         @Size(max = 50) String emergencyContactPhone,
+        @Size(max = 150) String personalEmail,
+        @Size(max = 30) String coefficient,
+        @DecimalMin("0.00") BigDecimal fixedBonus,
+        @DecimalMin("0.00") BigDecimal variableBonus,
+        Boolean companyVehicle,
+        Boolean companyHealthPlan,
+        Boolean mealVouchers,
+        @Size(max = 150) String officeLocation,
         LocalDate trialPeriodEnd,
         LocalDate contractEndDate
 ) { }
