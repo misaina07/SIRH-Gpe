@@ -2,6 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { EMPLOYEE } from '../data/employeeMockData';
 import { Employee } from '../types/employee';
 import { ViewMode, UserProfile } from '../types/sirh';
+import { DocumentUploadCard } from './DocumentUploadCard';
+import { CareerTimeline } from '../components/employee/CareerTimeline';
+import { GlobalTeamCalendar } from '../components/planning/GlobalTeamCalendar';
 
 interface EmployeeDirectoryViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -14,6 +17,7 @@ export const EmployeeDirectoryView: React.FC<EmployeeDirectoryViewProps> = () =>
   const [status, setStatus] = useState<Employee['status'] | 'all'>('all');
   const [department, setDepartment] = useState('all');
   const [contract, setContract] = useState('all');
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(null);
 
   const departments = useMemo(
     () => [...new Set(EMPLOYEE.map((employee) => employee.departmentId))],
@@ -51,6 +55,8 @@ export const EmployeeDirectoryView: React.FC<EmployeeDirectoryViewProps> = () =>
     setDepartment('all');
     setContract('all');
   };
+
+  const selectedEmployee = EMPLOYEE.find((employee) => employee.id === selectedEmployeeId);
 
   return (
     <section className="min-h-full bg-bg-canvas px-6 py-8 lg:px-10">
@@ -129,7 +135,11 @@ export const EmployeeDirectoryView: React.FC<EmployeeDirectoryViewProps> = () =>
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
                     {employee.firstName.charAt(0)}{employee.lastName.charAt(0)}
                   </span>
-                  <div className="min-w-0">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedEmployeeId(employee.id)}
+                    className="min-w-0 text-left"
+                  >
                     <p className="font-semibold text-text-primary">
                       {employee.firstName} {employee.lastName}
                     </p>
@@ -137,12 +147,24 @@ export const EmployeeDirectoryView: React.FC<EmployeeDirectoryViewProps> = () =>
                     <p className="text-xs text-text-muted">
                       {employee.emailPro} · {employee.contractType} · {employee.status}
                     </p>
-                  </div>
+                  </button>
                 </li>
               ))}
             </ul>
           )}
         </div>
+
+        {selectedEmployee && (
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <DocumentUploadCard
+              employeeId={selectedEmployee.id}
+              documents={selectedEmployee.documents}
+            />
+            <CareerTimeline events={selectedEmployee.careerEvents} />
+          </div>
+        )}
+
+        <GlobalTeamCalendar />
       </div>
     </section>
   );

@@ -101,7 +101,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </span>
             )}
           </button>
-
+   
           {/* Recrutement */}
           <button
             onClick={() => handleNavClick('recrutement')}
