@@ -3,9 +3,85 @@
 > **Projet :** SIRH Entreprise — Extension des Modules Opérationnels  
 > **Source :** Spécifications de cadrage (Bloc 5 : Dossier Salarié, Bloc 6 : Temps de Travail & Pointage, Bloc 7 : Congés & Absences)  
 > **Organisation d'Équipe :** 5 Développeurs (MISAINA, MIARANTSOA, MIRADO, DYLAN, TONTON)  
-> **Stratégie Git :** Découpage modulaire strict anti-conflits (Feature Branching & Clean Architecture)
+> **Stratégie de travail visée :** Découpage modulaire anti-conflits par branches feature. L’architecture applicative réellement présente dans le dépôt est décrite dans la section « Mise en situation avec l’architecture actuelle du dépôt ».
 
 ---
+
+## Mise en situation avec l’architecture actuelle du dépôt
+
+**État observé le 12 novembre 2026.** Cette section décrit le socle existant pour préparer les blocs 5, 6 et 7. Elle ne signifie pas que ces blocs sont implémentés et ne remplace pas leurs exigences détaillées plus bas.
+
+### Architecture réellement en place
+
+```text
+React 19 + TypeScript + Vite (racine du dépôt)
+  src/views, src/components, src/types/sirh.ts
+  src/services/api.ts  ── HTTP / JSON + jeton Bearer
+                  │
+                  ▼
+Spring Boot / Java 21 (backend/)
+  config → security → controller → service
+  AuthController, DirectoryController
+  JdbcTemplate vers PostgreSQL
+                  │
+                  ▼
+PostgreSQL `sirh`
+  src/data/schema-possible.sql
+  src/data/02-test-data.sql
+```
+
+- Le backend est organisé par couches sous `backend/src/main/java/com/example/sirh/` : `config`, `security`, `controller`, `dto`, `service` et `exception`.
+- La persistance actuellement utilisée par les services est `JdbcTemplate`. La dépendance Spring Data JPA est présente, mais le projet ne contient pas encore d’entités JPA ni de repositories. Ne pas décrire le code courant comme une architecture JPA ou « Clean Architecture » déjà réalisée.
+- Les endpoints actuels couvrent l’authentification, la lecture des utilisateurs/départements/postes/demandes/candidats/onboarding, les décisions du workflow de recrutement, l’historique et les indicateurs de dashboard. Ils constituent le socle partagé sur lequel les futurs blocs pourront s’appuyer.
+- Le client React commun est `src/services/api.ts`. Les vues des blocs 5–7 (dossier salarié, pointage et congés) ne sont pas présentes dans l’arborescence actuelle. Ne pas les considérer comme développées parce que des tables portant ces noms existent dans PostgreSQL.
+- Les valeurs de démonstration d’authentification sont activables uniquement en local par variables d’environnement. Le secret JWT et les paramètres PostgreSQL sont configurables hors du code source.
+
+Les routes actuellement exposées se trouvent surtout dans `AuthController` et `DirectoryController` :
+
+- Authentification : `POST /api/auth/login`, `GET /api/auth/me`.
+- Lecture : `/api/users`, `/api/departments`, `/api/positions`, `/api/requisitions`, `/api/candidates`, `/api/onboarding`, `/api/dashboard` et `/api/dashboard/summary`.
+- Workflow recrutement : création/soumission/correction d’une demande, validation RH, validation Finance, approbation Direction, détail et historique.
+- Kanban : lecture du candidat et `PATCH /api/candidates/{id}/stage` avec contrôle de transition et motif obligatoire pour un refus.
+- Aucune API d’entretien persisté, de modification des tâches onboarding, de dossier salarié, de pointage ou de congé n’est définie actuellement.
+
+### Correspondance des chemins mentionnés dans les spécifications
+
+Les chemins historiques de ce TODO décrivent parfois des services TypeScript côté backend. Dans ce dépôt, la logique serveur doit suivre Java/Spring Boot; React ne garde que l’interface et les appels HTTP.
+
+| Chemin ou nom cité dans le cadrage | Emplacement à utiliser dans ce dépôt pour une future implémentation |
+|---|---|
+| `src/services/employeeService.ts`, `timeTrackingService.ts`, `leaveService.ts` | Services Java sous `backend/src/main/java/com/example/sirh/service/`, avec contrôleurs et DTO dans les packages existants |
+| `src/services/api.ts` | Client HTTP React existant; ajouter ici les appels API frontend sans y placer les règles métier |
+| `src/types/employee.ts`, `timeTracking.ts`, `leaves.ts` | Types d’interface à créer sous `src/types/` uniquement pour les données affichées/échangées par React |
+| `src/middleware/rbacGuard.ts` | Les autorisations serveur doivent être appliquées dans Spring Security et les services backend; un contrôle React ne remplace jamais cette vérification |
+| `src/db/schema.sql` | Les schémas existants sont sous `src/data/`; choisir et configurer une stratégie de migration avant d’ajouter le DDL cible |
+| `src/views/EmployeeProfileView.tsx`, `TimeTrackingView.tsx`, `LeaveManagementView.tsx` | Écrans futurs sous `src/views/`; aucun de ces écrans n’existe actuellement |
+
+### Écart à résoudre avant toute implémentation des blocs 5–7
+
+Le modèle SQL détaillé proposé dans ce document n’est pas le schéma actuellement installé. Par exemple, le document propose des identifiants UUID et des tables `employee_contracts`, `career_logs` et `audit_logs`; `src/data/schema-possible.sql` utilise notamment des identifiants `employees` entiers et n’a pas ces trois tables. Les colonnes et états de `time_clock_events`, `daily_time_sheets` et `leave_requests` diffèrent également du modèle proposé ici.
+
+Avant d’ajouter une entité, un repository ou un endpoint pour ces modules :
+
+1. comparer les tables réellement utilisées (`src/data/schema-possible.sql`, `src/data/schema.sql`) avec le modèle cible décrit dans la section 3;
+2. décider et documenter un schéma cible unique, les identifiants, les contraintes et la stratégie de migration;
+3. créer une migration additive et testable, sans réinitialiser ni écraser les données locales existantes;
+4. seulement ensuite, ajouter les entités/repositories JPA ou conserver JDBC selon une décision d’architecture explicite;
+5. ajouter les DTO, services métier, contrôleurs Spring, autorisations et tests d’intégration PostgreSQL;
+6. brancher les nouveaux écrans React au client `src/services/api.ts` sans refaire le design du portail existant.
+
+Les cases à cocher des blocs 5–7 restent un cahier des charges futur. Les tables de base présentes dans le schéma ne suffisent pas à considérer ces blocs comme opérationnels.
+
+### État du dépôt à cette date
+
+| Domaine | Présent dans le dépôt | À ne pas confondre avec |
+|---|---|---|
+| Blocs recrutement 1–4 | Écrans React existants, API Spring Boot, authentification et workflow avec PostgreSQL | Une preuve que tous les critères de recette du portail sont déjà satisfaits |
+| Bloc 5 — dossier salarié | Tables SQL de base seulement | GED, contrats successifs, carrière, audit RGPD ou conversion complète d’un candidat en salarié |
+| Bloc 6 — temps et pointage | Tables SQL de base seulement | Pointeuse, calcul du temps, anomalies légales, régularisations ou export paie |
+| Bloc 7 — congés et absences | Tables SQL de base seulement | Soldes, calcul des jours, anti-chevauchement, workflow manager/RH ou liaison paie |
+
+Les contrôles `npm run lint`, `npm run build` et les tests Maven ont été exécutés pendant la mise en place du socle. Ils valident ces commandes au moment de leur exécution, mais ne remplacent pas les tests fonctionnels et PostgreSQL à ajouter pour chaque futur module.
 
 ## 📑 Sommaire Général
 1. [Vue d'Ensemble & Alignement Stratégique](#1-vue-densemble--alignement-stratégique)
@@ -460,10 +536,10 @@ main (Production stable)
 | **Sprint 4 : Intégration & Clôture Paie** | Workflow N+1/RH, liaison variables de paie, audit RGPD. | TONTON & TOUS | Circuit complet opérationnel de bout en bout. |
 
 ### Définition du « Terminé » (Definition of Done - DoD) :
-- ✅ Le code compile avec zéro erreur TypeScript (`npm run build`).
-- ✅ Le linter passe avec succès sans avertissement bloquant (`npm run lint`).
-- ✅ Les 3 blocs communiquent sans rupture : un salarié créé dans le Bloc 5 peut pointer dans le Bloc 6 et poser ses congés dans le Bloc 7.
-- ✅ Les règles de sécurité (RGPD, contrôle d'impartialité, validation N+1) sont vérifiées et infranchissables.
+- [ ] Le code des modules concernés compile avec zéro erreur TypeScript (`npm run build`) et Java (`cd backend && ./mvnw test`).
+- [ ] Le linter passe avec succès (`npm run lint`). Ces commandes ont été exécutées pour le socle existant, mais doivent être rejouées après chaque changement.
+- [ ] Les 3 blocs communiquent sans rupture : un salarié créé dans le Bloc 5 peut pointer dans le Bloc 6 et poser ses congés dans le Bloc 7. **Critère non satisfait à ce jour : ces modules applicatifs ne sont pas présents.**
+- [ ] Les règles de sécurité, l’audit des données sensibles, l’anti-chevauchement et les validations sont couverts par des tests backend et PostgreSQL. **Critère non satisfait à ce jour pour les blocs 5–7.**
 
 ---
 
