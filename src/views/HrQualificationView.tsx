@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { UserProfile, ViewMode } from '../types/sirh';
+import React, { useEffect, useState } from 'react';
+import { Requisition, UserProfile, ViewMode } from '../types/sirh';
+import { apiGet, apiPost } from '../services/api';
 
 interface HrQualificationViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -19,44 +20,69 @@ export const HrQualificationView: React.FC<HrQualificationViewProps> = ({
     'Besoin hautement prioritaire pour la conformité DSI. Le profil DevSecOps étant rare et en forte tension marché, je valide la fiche de poste et confirme le rattachement au Grade G5. Transmission à la Finance pour arbitrage budgétaire.'
   );
   const [isValidating, setIsValidating] = useState<boolean>(false);
+  const [requisitionId, setRequisitionId] = useState('req-0048');
+
+  useEffect(() => {
+    apiGet<Requisition[]>('/requisitions?status=en_cours_rh').then((items) => {
+      if (items.length) setRequisitionId(items[0].id);
+    }).catch(() => undefined);
+  }, []);
 
   const canValidate = currentUser ? (currentUser.canValidateRH ?? (currentUser.roleType === 'RH')) : true;
   const isRequester = currentUser?.name === 'Marc Lefebvre' || currentUser?.roleType === 'Manager';
 
-  const handleValidateAndSubmit = () => {
+  const handleValidateAndSubmit = async () => {
     if (!canValidate) {
       alert(`Action réservée au pôle RH (Claire Delorme). Votre profil (${currentUser?.name || 'Inconnu'}) est en consultation seule.`);
       return;
     }
     setIsValidating(true);
-    setTimeout(() => {
-      setIsValidating(false);
+    try {
+      await apiPost(`/requisitions/${requisitionId}/rh-validation`, {
+        approved: true,
+        checkFiche: ficheConforme,
+        checkGrade: gradeConfirme,
+        checkCoherence: coherenceFourchette,
+        observations: comment,
+      });
       onNavigate('validation-finance');
-    }, 800);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Validation RH impossible.');
+    } finally {
+      setIsValidating(false);
+    }
   };
 
-  const handleReturnToManager = () => {
+  const handleReturnToManager = async () => {
     if (!canValidate) {
       alert(`Action réservée au pôle RH. Votre profil est en consultation seule.`);
       return;
     }
-    const reason = window.prompt('Motif du renvoi au manager Marc Lefebvre :', 'Préciser les astreintes et les prérequis de certification CKA.');
-    if (reason) {
-      alert(`Demande renvoyée au manager avec le motif : "${reason}"`);
-      onNavigate('tableau-de-bord');
-    }
+    const reason = window.prompt('Motif du renvoi au manager pour correction :', 'Préciser les astreintes et les prérequis de certification CKA.');
+    if (!reason) return;
+    try {
+      await apiPost(`/requisitions/${requisitionId}/rh-validation`, {
+        approved: false, checkFiche: ficheConforme, checkGrade: gradeConfirme,
+        checkCoherence: coherenceFourchette, observations: reason,
+      });
+      onNavigate('mes-demandes');
+    } catch (error) { window.alert(error instanceof Error ? error.message : 'Renvoi au manager impossible.'); }
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!canValidate) {
       alert(`Action réservée au pôle RH. Votre profil est en consultation seule.`);
       return;
     }
-    const confirmReject = window.confirm('Confirmez-vous le rejet définitif de cette réquisition RH ?');
-    if (confirmReject) {
-      alert('Demande REQ-2026-0042 rejetée et archivée.');
-      onNavigate('tableau-de-bord');
-    }
+    const reason = window.prompt('Motif du retour au manager pour correction :');
+    if (!reason) return;
+    try {
+      await apiPost(`/requisitions/${requisitionId}/rh-validation`, {
+        approved: false, checkFiche: ficheConforme, checkGrade: gradeConfirme,
+        checkCoherence: coherenceFourchette, observations: reason,
+      });
+      onNavigate('mes-demandes');
+    } catch (error) { window.alert(error instanceof Error ? error.message : 'Retour au manager impossible.'); }
   };
 
   return (

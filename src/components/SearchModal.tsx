@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ViewMode } from '../types/sirh';
+import { Candidate, Requisition, ViewMode } from '../types/sirh';
 import { CANDIDATES_DATA, INITIAL_REQUISITIONS } from '../data/mockData';
+import { apiGet } from '../services/api';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -10,6 +11,13 @@ interface SearchModalProps {
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNavigate }) => {
   const [query, setQuery] = useState('');
+  const [requisitions, setRequisitions] = useState<Requisition[]>(INITIAL_REQUISITIONS);
+  const [candidates, setCandidates] = useState<Candidate[]>(CANDIDATES_DATA);
+
+  useEffect(() => {
+    apiGet<Requisition[]>('/requisitions').then(setRequisitions).catch(() => undefined);
+    apiGet<Candidate[]>('/candidates').then(setCandidates).catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -27,7 +35,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNav
 
   if (!isOpen) return null;
 
-  const filteredRequisitions = INITIAL_REQUISITIONS.filter(
+  const filteredRequisitions = requisitions.filter(
     (r) =>
       r.title.toLowerCase().includes(query.toLowerCase()) ||
       r.code.toLowerCase().includes(query.toLowerCase()) ||
@@ -35,7 +43,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNav
       r.requesterName.toLowerCase().includes(query.toLowerCase())
   );
 
-  const filteredCandidates = CANDIDATES_DATA.filter(
+  const filteredCandidates = candidates.filter(
     (c) =>
       c.name.toLowerCase().includes(query.toLowerCase()) ||
       c.roleTitle.toLowerCase().includes(query.toLowerCase()) ||

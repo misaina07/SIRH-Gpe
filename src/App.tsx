@@ -23,27 +23,19 @@ import { EmployeeDirectoryView } from './views/EmployeeDirectoryView';
 import { LoginView } from './views/LoginView';
 import { CANDIDATES_DATA, USER_PROFILES } from './data/mockData';
 import { UserProfile, ViewMode } from './types/sirh';
+import { apiGet } from './services/api';
 
 export default function App() {
-  // Authentication state persisted in localStorage
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    try {
-      const stored = localStorage.getItem('sirh_auth');
-      return stored === 'true';
-    } catch {
-      return false;
-    }
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserProfile>(USER_PROFILES[0]);
 
-  const [currentUser, setCurrentUser] = useState<UserProfile>(() => {
-    try {
-      const storedId = localStorage.getItem('sirh_user_id');
-      const found = USER_PROFILES.find((u) => u.id === storedId);
-      return found || USER_PROFILES[0];
-    } catch {
-      return USER_PROFILES[0];
-    }
-  });
+  useEffect(() => {
+    if (!sessionStorage.getItem('sirh_access_token')) return;
+    apiGet<UserProfile>('/auth/me').then((profile) => {
+      setCurrentUser(profile);
+      setIsAuthenticated(true);
+    }).catch(() => sessionStorage.removeItem('sirh_access_token'));
+  }, []);
 
   const [currentView, setCurrentView] = useState<ViewMode>('tableau-de-bord');
   const [candidates, setCandidates] = useState(CANDIDATES_DATA);
@@ -76,12 +68,11 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleLogin = (user: UserProfile) => {
+  const handleLogin = (user: UserProfile, token: string) => {
     setCurrentUser(user);
     setIsAuthenticated(true);
     try {
-      localStorage.setItem('sirh_auth', 'true');
-      localStorage.setItem('sirh_user_id', user.id);
+      sessionStorage.setItem('sirh_access_token', token);
     } catch {}
 
     const primaryView = user.allowedViews.includes('tableau-de-bord')
@@ -94,7 +85,7 @@ export default function App() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     try {
-      localStorage.setItem('sirh_auth', 'false');
+      sessionStorage.removeItem('sirh_access_token');
     } catch {}
     setCurrentView('connexion');
     showToast('Vous avez été déconnecté avec succès.');
@@ -109,8 +100,8 @@ export default function App() {
   if (!isAuthenticated || currentView === 'connexion') {
     return (
       <LoginView
-        onLogin={(user) => {
-          handleLogin(user);
+        onLogin={(user, token) => {
+          handleLogin(user, token);
         }}
       />
     );
@@ -144,13 +135,9 @@ export default function App() {
           }}
           currentUser={currentUser}
           onSelectUser={(u) => {
-            setCurrentUser(u);
-            try {
-              localStorage.setItem('sirh_user_id', u.id);
-            } catch {}
-            showToast(`Profil actif basculé sur : ${u.name} (${u.role})`);
-            if (!u.allowedViews.includes(currentView)) {
-              showToast(`Attention : La page actuelle n'est pas autorisée pour le rôle ${u.roleType}.`);
+            if (u.id !== currentUser.id) {
+              handleLogout();
+              showToast(`Reconnectez-vous avec le compte ${u.email} pour changer de rôle.`);
             }
           }}
           onOpenSearch={() => setIsSearchModalOpen(true)}

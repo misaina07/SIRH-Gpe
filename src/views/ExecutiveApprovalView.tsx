@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { UserProfile, ViewMode } from '../types/sirh';
+import React, { useEffect, useState } from 'react';
+import { AvailablePosition, Requisition, UserProfile, ViewMode } from '../types/sirh';
+import { apiGet, apiPost } from '../services/api';
 
 interface ExecutiveApprovalViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -13,34 +14,57 @@ export const ExecutiveApprovalView: React.FC<ExecutiveApprovalViewProps> = ({
   currentUser,
 }) => {
   const [approvalStatus, setApprovalStatus] = useState<'idle' | 'approving' | 'approved' | 'rejected'>('idle');
+  const [requisitionId, setRequisitionId] = useState('req-0042');
+  const [positionId, setPositionId] = useState('pos-cloud-1');
+
+  useEffect(() => {
+    apiGet<Requisition[]>('/requisitions?status=en_cours_direction').then(async (items) => {
+      if (!items.length) return;
+      const requisition = items[0];
+      setRequisitionId(requisition.id);
+      const positions = await apiGet<AvailablePosition[]>('/positions');
+      const match = positions.find((position) => position.departmentId === requisition.departmentId
+        && position.title === requisition.title && position.grade === requisition.grade
+        && position.contractType === requisition.contractType && position.salaryMin === requisition.salaryMin
+        && position.salaryMax === requisition.salaryMax);
+      if (match) setPositionId(match.id);
+    }).catch(() => undefined);
+  }, []);
 
   const isDirection = currentUser.roleType === 'Direction';
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     if (!isDirection) {
       alert(`Action réservée à la Direction Générale. Votre rôle actuel est : ${currentUser.roleType}`);
       return;
     }
     setApprovalStatus('approving');
-    setTimeout(() => {
+    try {
+      await apiPost(`/requisitions/${requisitionId}/direction-approval`, {
+        approved: true, positionId, comments: 'Demande approuvée par la Direction.',
+      });
       setApprovalStatus('approved');
       setTimeout(() => {
         onNavigate('recrutement');
-      }, 1400);
-    }, 1000);
+      }, 500);
+    } catch (error) {
+      setApprovalStatus('idle');
+      window.alert(error instanceof Error ? error.message : 'Approbation Direction impossible.');
+    }
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!isDirection) {
       alert(`Action réservée à la Direction Générale. Votre rôle actuel est : ${currentUser.roleType}`);
       return;
     }
-    const confirmed = window.confirm(
-      'Confirmez-vous le rejet de cette demande ?\nLes fonds réservés de 60 480 € seront automatiquement restitués au budget DSI non-alloué.'
-    );
-    if (confirmed) {
+    const comments = window.prompt('Motif du retour au manager pour correction :');
+    if (!comments) return;
+    try {
+      await apiPost(`/requisitions/${requisitionId}/direction-approval`, { approved: false, comments });
       setApprovalStatus('rejected');
-    }
+      onNavigate('mes-demandes');
+    } catch (error) { window.alert(error instanceof Error ? error.message : 'Retour au manager impossible.'); }
   };
 
   return (
