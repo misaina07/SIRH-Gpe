@@ -21,6 +21,7 @@ import { OnboardingView } from './views/OnboardingView';
 import { EmployeeDossierView } from './views/EmployeeDossierView';
 import { ReferentielsAdminView } from './views/ReferentielsAdminView';
 import { LoginView } from './views/LoginView';
+import { TimeTrackingView } from './views/TimeTrackingView';
 import { CANDIDATES_DATA, USER_PROFILES } from './data/mockData';
 import { UserProfile, ViewMode } from './types/sirh';
 import { apiGet } from './services/api';
@@ -108,7 +109,9 @@ export default function App() {
   }
 
   // Check RBAC permission for current view
-  const isViewAllowed = currentUser.allowedViews?.includes(currentView) ?? true;
+  const isViewAllowed = currentView === 'pointage'
+    ? ['RH', 'Manager', 'Employee'].includes(currentUser.roleType)
+    : currentUser.allowedViews?.includes(currentView) ?? true;
 
   return (
     <div className="bg-bg-canvas min-h-screen text-text-primary antialiased font-body-default flex">
@@ -224,6 +227,10 @@ export default function App() {
 
               {currentView === 'employes-contrats' && (
                 <EmployeeDossierView onNavigate={setCurrentView} currentUser={currentUser} />
+              )}
+
+              {currentView === 'pointage' && (
+                <TimeTrackingView role={currentUser.roleType} />
               )}
             </>
           )}

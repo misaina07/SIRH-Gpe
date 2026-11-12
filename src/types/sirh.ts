@@ -10,6 +10,7 @@ export type ViewMode =
   | 'employes-contrats'
   | 'onboarding'
   | 'referentiels-admin'
+  | 'pointage'
   | 'connexion';
 
 export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction' | 'Employee';
