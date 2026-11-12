@@ -3,6 +3,7 @@ export type ViewMode =
   | 'mes-demandes'
   | 'nouvelle-demande'
   | 'recrutement'
+  | 'liste des employe'
   | 'validation-finance'
   | 'qualification-rh'
   | 'approbation-direction'
