@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Candidate, CandidateStage, ViewMode } from '../types/sirh';
 import { CANDIDATES_DATA } from '../data/mockData';
+import { apiGet, apiPatch } from '../services/api';
 
 interface RecruitmentKanbanViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -13,16 +14,24 @@ export const RecruitmentKanbanView: React.FC<RecruitmentKanbanViewProps> = ({
   onOpenScheduleModal,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>(CANDIDATES_DATA);
+  useEffect(() => {
+    apiGet<Candidate[]>('/candidates').then(setCandidates).catch(() => undefined);
+  }, []);
   const [viewMode, setViewMode] = useState<'kanban' | 'table'>('kanban');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedExpFilter, setSelectedExpFilter] = useState<string>('all');
   const [selectedScoreFilter, setSelectedScoreFilter] = useState<string>('all');
   const [selectedCandidateForDetails, setSelectedCandidateForDetails] = useState<Candidate | null>(null);
 
-  const moveCandidate = (id: string, newStage: CandidateStage) => {
-    setCandidates((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, stage: newStage } : c))
-    );
+  const moveCandidate = async (id: string, newStage: CandidateStage) => {
+    const reason = newStage === 'refuse' ? window.prompt('Motif obligatoire du refus :') : undefined;
+    if (newStage === 'refuse' && !reason?.trim()) return;
+    try {
+      await apiPatch(`/candidates/${id}/stage`, { stage: newStage, reason });
+      setCandidates((prev) => prev.map((candidate) => candidate.id === id ? { ...candidate, stage: newStage } : candidate));
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Mise à jour du candidat impossible.');
+    }
   };
 
   const filteredCandidates = candidates.filter((c) => {

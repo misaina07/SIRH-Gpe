@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { UserProfile, ViewMode } from '../types/sirh';
+import React, { useEffect, useState } from 'react';
+import { Requisition, UserProfile, ViewMode } from '../types/sirh';
+import { apiGet, apiPost } from '../services/api';
 
 interface FinanceValidationViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -17,43 +18,64 @@ export const FinanceValidationView: React.FC<FinanceValidationViewProps> = ({
     'Validation autorisée au titre de la tolérance budgétaire de 10% compte tenu du profil critique DevSecOps.'
   );
   const [actionStatus, setActionStatus] = useState<'idle' | 'validating' | 'approved' | 'rejected' | 'modified'>('idle');
+  const [requisitionId, setRequisitionId] = useState('req-0042');
+
+  useEffect(() => {
+    apiGet<Requisition[]>('/requisitions?status=en_cours_finance').then((items) => {
+      if (items.length) setRequisitionId(items[0].id);
+    }).catch(() => undefined);
+  }, []);
 
   const canValidate = currentUser.roleType === 'Finance' || currentUser.roleType === 'Direction';
 
-  const handleValidateFunds = () => {
+  const handleValidateFunds = async () => {
     if (!canValidate) {
       alert(`Action réservée au Contrôle de Gestion (Gilles Vaudon) ou à la Direction. Votre rôle est : ${currentUser.roleType}`);
       return;
     }
     setActionStatus('validating');
-    setTimeout(() => {
+    try {
+      await apiPost(`/requisitions/${requisitionId}/finance-validation`, {
+        approved: true,
+        derogationMotive,
+        comments: derogationMotive || 'Budget validé par la Finance.',
+      });
       setActionStatus('approved');
       setTimeout(() => {
         onNavigate('approbation-direction');
-      }, 900);
-    }, 800);
+      }, 400);
+    } catch (error) {
+      setActionStatus('idle');
+      window.alert(error instanceof Error ? error.message : 'Validation Finance impossible.');
+    }
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!canValidate) {
       alert(`Action réservée au Contrôle de Gestion. Votre rôle est : ${currentUser.roleType}`);
       return;
     }
-    const ok = window.confirm('Êtes-vous sûr de vouloir refuser le déblocage des fonds pour cette demande ?');
-    if (ok) {
+    const comments = window.prompt('Motif du retour au manager pour correction :');
+    if (!comments) return;
+    try {
+      await apiPost(`/requisitions/${requisitionId}/finance-validation`, { approved: false, comments });
       setActionStatus('rejected');
-    }
+      onNavigate('mes-demandes');
+    } catch (error) { window.alert(error instanceof Error ? error.message : 'Retour Finance impossible.'); }
   };
 
-  const handleRequestModif = () => {
+  const handleRequestModif = async () => {
     if (!canValidate) {
       alert(`Action réservée au Contrôle de Gestion. Votre rôle est : ${currentUser.roleType}`);
       return;
     }
     const feedback = window.prompt('Indiquez les ajustements demandés au Manager :', 'Merci de revoir le plafond à 3 400 € pour respecter le barème DSI standard.');
     if (feedback) {
-      alert(`Demande de modification transmise à Marc Lefebvre : "${feedback}"`);
-      setActionStatus('modified');
+      try {
+        await apiPost(`/requisitions/${requisitionId}/finance-validation`, { approved: false, comments: feedback });
+        setActionStatus('modified');
+        onNavigate('mes-demandes');
+      } catch (error) { window.alert(error instanceof Error ? error.message : 'Retour au manager impossible.'); }
     }
   };
 
