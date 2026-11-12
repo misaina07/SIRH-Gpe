@@ -1,0 +1,6 @@
+com/testApi/demo/service/FormationService.class
+com/testApi/demo/config/CorsConfig.class
+com/testApi/demo/controller/FormationController.class
+com/testApi/demo/DemoApplication.class
+com/testApi/demo/repository/FormationRepository.class
+com/testApi/demo/model/Formation.class
