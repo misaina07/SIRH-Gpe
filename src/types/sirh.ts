@@ -75,7 +75,6 @@ export interface UserProfile {
   department: string;
   managedDepartmentIds?: string[]; // A manager can oversee multiple departments
   managedDepartmentNames?: string[];
-  password?: string;
   description?: string;
   allowedViews: ViewMode[];
   canValidateRH?: boolean;

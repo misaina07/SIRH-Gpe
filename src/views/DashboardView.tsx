@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserProfile, ViewMode } from '../types/sirh';
 import { DepartmentPositionsDropdown } from '../components/DepartmentPositionsDropdown';
+import { apiGet } from '../services/api';
+
+interface DashboardSummary {
+  toQualify: number;
+  activeCandidates: number;
+  onboardingInProgress: number;
+  urgent: number;
+}
 
 interface DashboardViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -14,6 +22,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenScheduleModal,
   currentUser,
 }) => {
+  const [summary, setSummary] = useState<DashboardSummary>({ toQualify: 0, activeCandidates: 0, onboardingInProgress: 0, urgent: 0 });
+  useEffect(() => {
+    apiGet<DashboardSummary>('/dashboard').then(setSummary).catch(() => undefined);
+  }, []);
+
   return (
     <div className="flex flex-col w-full pb-16">
       <div className="w-full max-w-7xl mx-auto px-margin py-space-lg flex flex-col gap-space-lg">
@@ -32,7 +45,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </h1>
             <p className="font-body-default text-body-default text-text-secondary max-w-2xl">
               {currentUser?.roleType === 'Manager'
-                ? `Espace Demandeur & Responsable de ${currentUser.managedDepartmentNames?.length || 3} départements (Infra Cloud, Cyber-Sécurité, Architecture).`
+                ? `Espace Demandeur & Responsable de ${currentUser.managedDepartmentNames?.length || 0} départements.`
                 : 'Voici un aperçu de vos recrutements, demandes à qualifier et intégrations en cours.'}
             </p>
           </div>
@@ -68,7 +81,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </span>
             </div>
             <div className="mt-space-md">
-              <div className="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">4</div>
+              <div className="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">{summary.toQualify}</div>
               <p className="font-caption-medium text-caption-medium text-text-secondary mt-1">Demandes à qualifier</p>
             </div>
           </div>
@@ -83,11 +96,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <span className="material-symbols-outlined text-[22px]">group</span>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-red-50 text-danger-red font-caption-medium text-caption-medium font-medium">
-                3 urgentes
+                {summary.urgent} urgentes
               </span>
             </div>
             <div className="mt-space-md">
-              <div className="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">18</div>
+              <div className="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">{summary.activeCandidates}</div>
               <p className="font-caption-medium text-caption-medium text-text-secondary mt-1">Candidatures à traiter</p>
             </div>
           </div>
@@ -125,7 +138,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </span>
             </div>
             <div className="mt-space-md">
-              <div className="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">5</div>
+              <div className="font-headline-lg text-headline-lg text-text-primary leading-none tabular-nums font-semibold">{summary.onboardingInProgress}</div>
               <p className="font-caption-medium text-caption-medium text-text-secondary mt-1">Onboardings en cours</p>
             </div>
           </div>

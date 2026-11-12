@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Requisition, UserProfile, ViewMode } from '../types/sirh';
 import { INITIAL_REQUISITIONS, DEPARTMENTS_DATA } from '../data/mockData';
 import { DepartmentPositionsDropdown } from '../components/DepartmentPositionsDropdown';
+import { apiGet } from '../services/api';
 
 interface DemandesListViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -14,6 +15,10 @@ export const DemandesListView: React.FC<DemandesListViewProps> = ({
   onOpenDocModal,
   currentUser,
 }) => {
+  const [requisitions, setRequisitions] = useState<Requisition[]>(INITIAL_REQUISITIONS);
+  useEffect(() => {
+    apiGet<Requisition[]>('/requisitions').then(setRequisitions).catch(() => undefined);
+  }, []);
   // Maximum Filter States
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -29,7 +34,7 @@ export const DemandesListView: React.FC<DemandesListViewProps> = ({
 
   // Filter application
   const filteredRequisitions = useMemo(() => {
-    return INITIAL_REQUISITIONS.filter((r) => {
+    return requisitions.filter((r) => {
       // Quick preset filter
       if (quickPreset === 'marc') {
         if (r.managerInCharge !== 'Marc Lefebvre' && r.requesterName !== 'Marc Lefebvre') return false;
@@ -112,6 +117,7 @@ export const DemandesListView: React.FC<DemandesListViewProps> = ({
     budgetFilter,
     searchTerm,
     sortBy,
+    requisitions,
   ]);
 
   // Count active filters
@@ -153,11 +159,11 @@ export const DemandesListView: React.FC<DemandesListViewProps> = ({
   }, [filteredRequisitions]);
 
   // Metrics for comprehension
-  const totalCount = INITIAL_REQUISITIONS.length;
-  const urgentCount = INITIAL_REQUISITIONS.filter((r) => r.priority === 'urgente').length;
-  const financeWaitingCount = INITIAL_REQUISITIONS.filter((r) => r.status === 'en_cours_finance').length;
-  const rhWaitingCount = INITIAL_REQUISITIONS.filter((r) => r.status === 'en_cours_rh').length;
-  const publishedCount = INITIAL_REQUISITIONS.filter((r) => r.status === 'publiee').length;
+  const totalCount = requisitions.length;
+  const urgentCount = requisitions.filter((r) => r.priority === 'urgente').length;
+  const financeWaitingCount = requisitions.filter((r) => r.status === 'en_cours_finance').length;
+  const rhWaitingCount = requisitions.filter((r) => r.status === 'en_cours_rh').length;
+  const publishedCount = requisitions.filter((r) => r.status === 'publiee').length;
 
   const handleNavigateRequisition = (code: string) => {
     if (code === 'REQ-2026-0042') {

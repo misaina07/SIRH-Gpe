@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ViewMode } from '../types/sirh';
+import { apiPost } from '../services/api';
 
 interface NewRequisitionViewProps {
   onNavigate: (view: ViewMode) => void;
@@ -14,6 +15,8 @@ export const NewRequisitionView: React.FC<NewRequisitionViewProps> = ({ onNaviga
   const [activeStep, setActiveStep] = useState<number>(2);
   const [isSaved, setIsSaved] = useState<boolean>(true);
   const [saveTime, setSaveTime] = useState<string>('14:32');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftId, setDraftId] = useState<string | null>(null);
 
   // Mathematical constraints for G5 & IT Dept
   const deptCeiling = 3400;
@@ -52,11 +55,48 @@ export const NewRequisitionView: React.FC<NewRequisitionViewProps> = ({ onNaviga
     setIsSaved(false);
   };
 
-  const handleSaveDraft = () => {
+  const requestPayload = (submit: boolean) => ({
+    title: 'Ingénieur DevSecOps Senior',
+    departmentId: selectedDept,
+    priority: salMax > deptCeiling ? 'urgente' : 'normale',
+    contractType: 'CDI — Cadre',
+    location: 'Paris (Hybride)',
+    targetStartDate: '2027-01-01',
+    reason: 'Renforcer l’équipe et répondre au besoin de recrutement présenté dans la demande.',
+    salaryMin: salMin,
+    salaryMax: salMax,
+    grade: 'G5',
+    submit,
+  });
+
+  const handleSaveDraft = async () => {
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    setSaveTime(timeStr);
-    setIsSaved(true);
+    try {
+      if (draftId) {
+        await apiPost(`/requisitions/${draftId}/resubmit`, requestPayload(false));
+      } else {
+        const result = await apiPost<{ id: string }>('/requisitions', requestPayload(false));
+        setDraftId(result.id);
+      }
+      setSaveTime(timeStr);
+      setIsSaved(true);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Enregistrement du brouillon impossible.');
+    }
+  };
+
+  const handleSubmitRequisition = async () => {
+    setIsSubmitting(true);
+    try {
+      if (draftId) await apiPost(`/requisitions/${draftId}/resubmit`, requestPayload(true));
+      else await apiPost('/requisitions', requestPayload(true));
+      onNavigate('mes-demandes');
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'La demande n’a pas pu être envoyée.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Bar calculations
@@ -166,7 +206,8 @@ export const NewRequisitionView: React.FC<NewRequisitionViewProps> = ({ onNaviga
 
             {/* Step 3: Upcoming */}
             <button
-              onClick={() => onNavigate('qualification-rh')}
+              onClick={handleSubmitRequisition}
+              disabled={isSubmitting}
               className="flex items-center gap-space-md md:pl-space-md md:border-l md:border-border-default opacity-70 text-left hover:opacity-100 transition-opacity"
             >
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container text-text-muted flex items-center justify-center border border-border-default">
@@ -774,8 +815,8 @@ export const NewRequisitionView: React.FC<NewRequisitionViewProps> = ({ onNaviga
               onClick={() => onNavigate('qualification-rh')}
               className="h-9 px-space-md rounded-md bg-primary-container text-white hover:bg-primary-hover font-body-semibold text-body-semibold transition-all flex items-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2"
             >
-              <span>Étape suivante : Justification</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              <span>{isSubmitting ? 'Envoi en cours…' : 'Soumettre la demande'}</span>
+              <span className="material-symbols-outlined text-[18px]">{isSubmitting ? 'hourglass_top' : 'arrow_forward'}</span>
             </button>
           </div>
         </div>

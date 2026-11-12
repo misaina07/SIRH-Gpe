@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { AvailablePosition, Department, UserProfile, ViewMode } from '../types/sirh';
 import { DEPARTMENTS_DATA, USER_PROFILES } from '../data/mockData';
+import { apiGet } from '../services/api';
 
 interface DepartmentPositionsDropdownProps {
   onNavigate: (view: ViewMode) => void;
@@ -16,7 +17,12 @@ export const DepartmentPositionsDropdown: React.FC<DepartmentPositionsDropdownPr
   const [selectedManagerId, setSelectedManagerId] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<'all' | 'ouvert' | 'en_validation' | 'pourvu'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [departments, setDepartments] = useState<Department[]>(DEPARTMENTS_DATA);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    apiGet<Department[]>('/departments').then(setDepartments).catch(() => undefined);
+  }, []);
 
   // Close when clicking outside
   useEffect(() => {
@@ -30,7 +36,7 @@ export const DepartmentPositionsDropdown: React.FC<DepartmentPositionsDropdownPr
   }, []);
 
   // Compute all available positions flat list
-  const allPositions: AvailablePosition[] = DEPARTMENTS_DATA.flatMap((d) => d.positions);
+  const allPositions: AvailablePosition[] = departments.flatMap((d) => d.positions);
   const totalOpenCount = allPositions.filter((p) => p.status === 'ouvert' || p.status === 'en_validation').length;
 
   // Filter positions based on filters
@@ -63,11 +69,11 @@ export const DepartmentPositionsDropdown: React.FC<DepartmentPositionsDropdownPr
   });
 
   // Get active department if one is specifically selected
-  const activeDepartment: Department | undefined = DEPARTMENTS_DATA.find((d) => d.id === selectedDeptId);
+  const activeDepartment: Department | undefined = departments.find((d) => d.id === selectedDeptId);
 
   // Quick helper to see if manager has multiple departments
   const getManagerDepartmentCount = (managerName: string) => {
-    return DEPARTMENTS_DATA.filter((d) => d.primaryManagerName.toLowerCase().includes(managerName.toLowerCase())).length;
+    return departments.filter((d) => d.primaryManagerName.toLowerCase().includes(managerName.toLowerCase())).length;
   };
 
   const handleActionClick = (pos: AvailablePosition) => {
@@ -161,8 +167,8 @@ export const DepartmentPositionsDropdown: React.FC<DepartmentPositionsDropdownPr
                 onChange={(e) => setSelectedDeptId(e.target.value)}
                 className="w-full h-8.5 px-2 bg-surface-card border border-border-default rounded-lg text-xs text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-container font-medium cursor-pointer"
               >
-                <option value="all">Tous les départements ({DEPARTMENTS_DATA.length})</option>
-                {DEPARTMENTS_DATA.map((d) => (
+                <option value="all">Tous les départements ({departments.length})</option>
+                {departments.map((d) => (
                   <option key={d.id} value={d.id}>
                     {d.shortName} · {d.code} ({d.positions.length} postes)
                   </option>
