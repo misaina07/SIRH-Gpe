@@ -22,17 +22,22 @@ public class NationalIdCryptoService {
 
     public String encrypt(String value) {
         if (value == null || value.isBlank()) return null;
+        return Base64.getEncoder().encodeToString(encryptBytes(value.trim().getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+    }
+
+    public byte[] encryptBytes(byte[] value) {
+        if (value == null || value.length == 0) throw new IllegalArgumentException("Encrypted content cannot be empty.");
         byte[] key = key();
         byte[] nonce = new byte[NONCE_BYTES];
         random.nextBytes(nonce);
         try {
             Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
             cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "AES"), new GCMParameterSpec(TAG_BITS, nonce));
-            byte[] encrypted = cipher.doFinal(value.trim().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            byte[] encrypted = cipher.doFinal(value);
             byte[] result = new byte[nonce.length + encrypted.length];
             System.arraycopy(nonce, 0, result, 0, nonce.length);
             System.arraycopy(encrypted, 0, result, nonce.length, encrypted.length);
-            return Base64.getEncoder().encodeToString(result);
+            return result;
         } catch (Exception exception) {
             throw new IllegalStateException("Chiffrement du NIR impossible.", exception);
         }
@@ -50,6 +55,20 @@ public class NationalIdCryptoService {
             return new String(cipher.doFinal(encrypted), java.nio.charset.StandardCharsets.UTF_8);
         } catch (Exception exception) {
             throw new IllegalStateException("Déchiffrement du NIR impossible; vérifiez la clé locale configurée.", exception);
+        }
+    }
+
+    public byte[] decryptBytes(byte[] payload) {
+        if (payload == null || payload.length <= NONCE_BYTES)
+            throw new IllegalStateException("Encrypted content is invalid.");
+        try {
+            byte[] nonce = java.util.Arrays.copyOfRange(payload, 0, NONCE_BYTES);
+            byte[] encrypted = java.util.Arrays.copyOfRange(payload, NONCE_BYTES, payload.length);
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key(), "AES"), new GCMParameterSpec(TAG_BITS, nonce));
+            return cipher.doFinal(encrypted);
+        } catch (Exception exception) {
+            throw new IllegalStateException("Decryption of protected document failed; verify SIRH_NATIONAL_ID_KEY.", exception);
         }
     }
 

@@ -88,6 +88,8 @@ export type CandidateStage = 'recue' | 'preselectionne' | 'entretien' | 'retenu'
 
 export interface Candidate {
   id: string;
+  positionId?: string | null;
+  departmentId?: string | null;
   name: string;
   initials: string;
   roleTitle: string;
