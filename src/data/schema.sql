@@ -1,6 +1,9 @@
+CREATE DATABASE sirh;
+\c sirh;
+
 -- Table des utilisateurs / profils (RH, Manager, Finance, Direction)
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id INT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     role_type VARCHAR(30) NOT NULL CHECK (role_type IN ('RH', 'Manager', 'Finance', 'Direction')),
@@ -26,7 +29,7 @@ CREATE TABLE departments (
     name VARCHAR(150) NOT NULL, -- Ex: 'DSI · Infrastructure Cloud & DevOps'
     short_name VARCHAR(50) NOT NULL, -- Ex: 'Infra Cloud'
     category VARCHAR(50) NOT NULL CHECK (category IN ('Technique', 'Finance', 'RH', 'Direction', 'Opérations', 'Marketing')),
-    primary_manager_id UUID REFERENCES users(id),
+    primary_manager_id INT REFERENCES users(id),
     allocated_budget_annual NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
     consumed_budget_annual NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
     headcount_current INT DEFAULT 0,
@@ -36,16 +39,16 @@ CREATE TABLE departments (
 
 -- Table de liaison pour les managers multi-départements (ex: Marc Lefebvre supervise 3 départements)
 CREATE TABLE manager_departments (
-    manager_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    department_id VARCHAR(50) REFERENCES departments(id) ON DELETE CASCADE,
-    PRIMARY KEY (manager_id, department_id)
+    id INT PRIMARY KEY,
+    manager_id INT REFERENCES users(id) ON DELETE CASCADE,
+    department_id VARCHAR(50) REFERENCES departments(id) ON DELETE CASCADE
 );
 
 
 -- 2. BLOC 1 : CRÉATION DE POSTE PAR LE MANAGER (REQUISITIONS)
 
 CREATE TABLE available_positions (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id INT PRIMARY KEY,
     code_req VARCHAR(30) UNIQUE NOT NULL, -- Ex: 'REQ-2026-0042'
     title VARCHAR(200) NOT NULL, -- Ex: 'Ingénieur DevOps Senior'
     department_id VARCHAR(50) REFERENCES departments(id) NOT NULL,
@@ -58,7 +61,7 @@ CREATE TABLE available_positions (
     -- 
     fte NUMERIC(3, 2) DEFAULT 1.00, -- Équivalent Temps Plein (ex: 1.0 ETP)
     --
-    manager_id UUID REFERENCES users(id) NOT NULL,
+    manager_id INT REFERENCES users(id) NOT NULL,
     location VARCHAR(150) NOT NULL, -- Ex: 'Paris (Hybride)'
     target_date DATE NOT NULL,
     skills TEXT[], -- Tableau de compétences (ex: ARRAY['Kubernetes', 'Terraform', 'Vault'])
@@ -73,10 +76,10 @@ CREATE TABLE available_positions (
 
 -- Historique et suivi immuable des approbations du workflow (RH, Finance, Direction)
 CREATE TABLE position_approvals (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    position_id UUID REFERENCES available_positions(id) ON DELETE CASCADE,
+    id INT PRIMARY KEY,
+    position_id INT REFERENCES available_positions(id) ON DELETE CASCADE,
     step_name VARCHAR(50) NOT NULL CHECK (step_name IN ('QUALIFICATION_RH', 'ARBITRAGE_FINANCE', 'APPROBATION_DIRECTION')),
-    validator_id UUID REFERENCES users(id),
+    validator_id INT REFERENCES users(id),
     status VARCHAR(30) NOT NULL DEFAULT 'en_attente' CHECK (status IN ('en_attente', 'approuve', 'refuse')),
     comments TEXT, -- Observations obligatoires ou motif de dérogation salariale
     validated_at TIMESTAMP,
@@ -89,8 +92,8 @@ CREATE TABLE position_approvals (
 -- ========================================================
 
 CREATE TABLE candidates (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    position_id UUID REFERENCES available_positions(id) ON DELETE SET NULL, -- Rattachement au poste vacant
+    id INT PRIMARY KEY,
+    position_id INT REFERENCES available_positions(id) ON DELETE SET NULL, -- Rattachement au poste vacant
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
@@ -113,9 +116,9 @@ CREATE INDEX idx_approvals_position ON position_approvals(position_id);
 -- ========================================================
 
 CREATE TABLE employees (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id INT PRIMARY KEY,
     matricule VARCHAR(20) UNIQUE NOT NULL, -- Ex: 'EMP-2026-0142'
-    user_id UUID REFERENCES users(id) ON DELETE SET NULL, -- Lien vers le compte utilisateur s'il se connecte au portail
+    user_id INT REFERENCES users(id) ON DELETE SET NULL, -- Lien vers le compte utilisateur s'il se connecte au portail
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email_pro VARCHAR(150) UNIQUE NOT NULL,
@@ -123,7 +126,7 @@ CREATE TABLE employees (
     birth_date DATE NOT NULL,
     hire_date DATE NOT NULL,
     department_id VARCHAR(50) REFERENCES departments(id) NOT NULL,
-    manager_id UUID REFERENCES users(id),
+    manager_id INT REFERENCES users(id),
     contract_type VARCHAR(20) NOT NULL, -- Ex: 'CDI', 'CDD'
     monthly_salary NUMERIC(10, 2) NOT NULL,
     status VARCHAR(30) DEFAULT 'actif' CHECK (status IN ('actif', 'suspendu', 'sorti')),
@@ -132,8 +135,8 @@ CREATE TABLE employees (
 
 -- Documents administratifs du salarié (GED)
 CREATE TABLE employee_documents (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    employee_id UUID REFERENCES employees(id) ON DELETE CASCADE,
+    id INT PRIMARY KEY,
+    employee_id INT REFERENCES employees(id) ON DELETE CASCADE,
     document_type VARCHAR(50) NOT NULL, -- Ex: 'CNI', 'RIB', 'VISITE_MEDICALE', 'CONTRAT'
     file_url VARCHAR(500) NOT NULL, -- Tsy mbola voatery url
     expiration_date DATE, -- Pour les alertes J-30 (titres de séjour, visites médicales)
@@ -147,16 +150,16 @@ CREATE TABLE employee_documents (
 
 -- Enregistrements bruts des pointages (Arrivée, Pause, Départ)
 CREATE TABLE time_clock_events (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    employee_id UUID REFERENCES employees(id) ON DELETE CASCADE,
+    id INT PRIMARY KEY,
+    employee_id INT REFERENCES employees(id) ON DELETE CASCADE,
     event_type VARCHAR(30) NOT NULL CHECK (event_type IN ('IN', 'BREAK', 'OUT')),
     event_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Feuilles de temps journalières consolidées (avec détection d'anomalies)
 CREATE TABLE daily_time_sheets (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    employee_id UUID REFERENCES employees(id) ON DELETE CASCADE,
+    id INT PRIMARY KEY,
+    employee_id INT REFERENCES employees(id) ON DELETE CASCADE,
     work_date DATE NOT NULL,
     effective_worked_minutes INT NOT NULL DEFAULT 0,
     overtime_minutes INT DEFAULT 0, -- Heures supplémentaires
@@ -180,8 +183,8 @@ CREATE TABLE leave_types (
 
 -- Soldes de congés par collaborateur et par année
 CREATE TABLE leave_balances (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    employee_),id UUID REFERENCES employees(id) ON DELETE CASCADE,
+    id INT PRIMARY KEY,
+    employee_id INT REFERENCES employees(id) ON DELETE CASCADE,
     leave_type_id VARCHAR(30) REFERENCES leave_types(id),
     period_year INT NOT NULL, -- Ex: 2026
     acquired_days NUMERIC(4,1) DEFAULT 0.0,
@@ -192,8 +195,8 @@ CREATE TABLE leave_balances (
 
 -- Demandes de congés et d'absences
 CREATE TABLE leave_requests (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    employee_id UUID REFERENCES employees(id) ON DELETE CASCADE,
+    id INT PRIMARY KEY,
+    employee_id INT REFERENCES employees(id) ON DELETE CASCADE,
     leave_type_id VARCHAR(30) REFERENCES leave_types(id),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
