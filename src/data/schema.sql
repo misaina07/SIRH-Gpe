@@ -86,6 +86,14 @@ CREATE TABLE position_approvals (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+demande_manager (
+    id_manager,
+    id_position,
+    date_demande,
+    date_target_date
+    etape
+)
+
 
 -- ========================================================
 -- 4. BLOC 4 : VIVIER CANDIDATS & TABLEAU KANBAN DE RECRUTEMENT
