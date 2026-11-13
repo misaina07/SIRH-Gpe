@@ -1,6 +1,6 @@
 # Backend SIRH
 
-API Spring Boot disponible sur `http://localhost:8080/api`. La base attendue est PostgreSQL `sirh`, initialisée avec `src/data/schema-possible.sql`, `src/data/02-test-data.sql`, puis les migrations additives `src/data/03-bloc5-misaina.sql` et `src/data/04-bloc5-dossier-complet.sql` depuis la racine du dépôt.
+API Spring Boot disponible sur `http://localhost:8080/api`. La base attendue est PostgreSQL `sirh`, initialisée avec `src/data/schema-possible.sql`, `src/data/02-test-data.sql`, puis les migrations additives `src/data/03-bloc5-misaina.sql` à `src/data/07-tonton-paie.sql` depuis la racine du dépôt.
 
 ## Configuration locale
 
@@ -40,6 +40,7 @@ $env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot'
 - `GET /api/employee-document-notifications`, `POST /api/employee-documents/check-expirations` (RH)
 - `/api/employees/{id}/change-requests`, `/api/employee-change-requests` (demandes salarié et validation RH)
 - `/api/gdpr/retention-policies`, `POST /api/employees/{id}/anonymize` (RH)
+- `GET /api/payroll/{yyyy-MM}`, `GET /api/payroll/{yyyy-MM}/export.csv` (RH/Finance)
 
 Le contrôle quotidien des dates d’expiration est exécuté à 07:00 selon le fuseau horaire local du backend et peut être déclenché manuellement par les RH. Les échéances J-30, J-7 et J-0 créent des notifications consultables dans le module. Les politiques de conservation sont vides après migration et doivent être fixées par le responsable de traitement pour chaque catégorie (`DOSSIER`, `DOCUMENTS`, `CONTRATS`, `CARRIERE`) avant d’autoriser une anonymisation.
 

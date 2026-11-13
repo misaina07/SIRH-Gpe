@@ -42,7 +42,7 @@ Les routes actuellement exposées se trouvent surtout dans `AuthController` et `
 - Lecture : `/api/users`, `/api/departments`, `/api/positions`, `/api/requisitions`, `/api/candidates`, `/api/onboarding`, `/api/dashboard` et `/api/dashboard/summary`.
 - Workflow recrutement : création/soumission/correction d’une demande, validation RH, validation Finance, approbation Direction, détail et historique.
 - Kanban : lecture du candidat et `PATCH /api/candidates/{id}/stage` avec contrôle de transition et motif obligatoire pour un refus.
-- Les APIs des dossiers salariés, du pointage (`/api/time-tracking`) et des congés (`/api/leaves`) sont définies en Java/Spring avec une persistance JDBC. Les migrations 03 à 06 restent à appliquer sur toute base locale qui ne les possède pas encore.
+- Les APIs des dossiers salariés, du pointage (`/api/time-tracking`) et des congés (`/api/leaves`) sont définies en Java/Spring avec une persistance JDBC. Les migrations additives 03 à 07 doivent être appliquées sur toute base locale neuve ou non encore synchronisée.
 
 ### Correspondance des chemins mentionnés dans les spécifications
 
@@ -77,11 +77,22 @@ Les cases à cocher des blocs 5–7 restent un cahier des charges futur. Les tab
 | Domaine | Présent dans le dépôt | À ne pas confondre avec |
 |---|---|---|
 | Blocs recrutement 1–4 | Écrans React existants, API Spring Boot, authentification et workflow avec PostgreSQL | Une preuve que tous les critères de recette du portail sont déjà satisfaits |
-| Bloc 5 — dossier salarié | Services Java, API, interfaces et migrations 03/04 | Les tests PostgreSQL et la migration locale restent à exécuter |
-| Bloc 6 — temps et pointage (Mirado) | Service/API Java, interface React, migration 05 | Export paie et validation fonctionnelle PostgreSQL restent à intégrer/recetter |
-| Bloc 7 — congés et absences (Dylan) | Service/API Java, interface React, calcul paramétrable, validations et migration 06 | Migration locale et tests fonctionnels PostgreSQL restent à exécuter; export paie relève de Tonton |
+| Bloc 5 — dossier salarié | Services Java, API, interfaces, audit GDPR et migrations 03/04 | Les scénarios d’accès salarié et d’audit sont couverts par l’intégration PostgreSQL |
+| Bloc 6 — temps et pointage (Mirado) | Service/API Java, interface React, migration 05, anomalies et régularisations | Le parcours de pointage et les transitions invalides sont couverts par l’intégration PostgreSQL |
+| Bloc 7 — congés et absences (Dylan) | Service/API Java, interface React, calcul paramétrable, validations et migration 06 | L’anti-chevauchement et la soumission PostgreSQL sont couverts; l’export paie est livré par Tonton |
 
-Les contrôles `npm run lint`, `npm run build` et les tests Maven ont été exécutés pendant la mise en place du socle. Ils valident ces commandes au moment de leur exécution, mais ne remplacent pas les tests fonctionnels et PostgreSQL à ajouter pour chaque futur module.
+Les contrôles `npm run lint`, `npm run build` et les tests Maven, dont les tests d’intégration PostgreSQL, ont été rejoués le 13 novembre 2026 après l’intégration des blocs 5 à 7.
+
+### Actualisation TONTON — 13 novembre 2026
+
+Le périmètre paie et intégration transverse est désormais implémenté dans l'architecture Java réelle du dépôt :
+
+- `src/data/07-tonton-paie.sql` ajoute le marquage des absences non rémunérées, les snapshots mensuels de variables et l'historique des exports avec clés étrangères `RESTRICT` et index de période.
+- `PayrollAggregationService` consolide les heures supplémentaires 25/50 %, les absences non rémunérées, les primes d'astreinte et la préférence de récupération.
+- `PayrollController` expose les variables mensuelles et l'export CSV réservé aux rôles RH et Finance.
+- `.github/workflows/ci.yml` installe le schéma PostgreSQL, applique les migrations 03 à 07, puis exécute le lint, le build et les tests Maven.
+
+La migration 07 doit encore être appliquée sur chaque base locale existante. Le client `psql` n'étant pas disponible dans l'environnement de développement courant, son exécution locale n'a pas été forcée ; la CI l'exécute avec PostgreSQL 18.
 
 ## 📑 Sommaire Général
 1. [Vue d'Ensemble & Alignement Stratégique](#1-vue-densemble--alignement-stratégique)
@@ -536,10 +547,10 @@ main (Production stable)
 | **Sprint 4 : Intégration & Clôture Paie** | Workflow N+1/RH, liaison variables de paie, audit RGPD. | TONTON & TOUS | Circuit complet opérationnel de bout en bout. |
 
 ### Définition du « Terminé » (Definition of Done - DoD) :
-- [ ] Le code des modules concernés compile avec zéro erreur TypeScript (`npm run build`) et Java (`cd backend && ./mvnw test`).
-- [ ] Le linter passe avec succès (`npm run lint`). Ces commandes ont été exécutées pour le socle existant, mais doivent être rejouées après chaque changement.
-- [ ] Les 3 blocs communiquent sans rupture : un salarié créé dans le Bloc 5 peut pointer dans le Bloc 6 et poser ses congés dans le Bloc 7. **Critère non satisfait à ce jour : ces modules applicatifs ne sont pas présents.**
-- [ ] Les règles de sécurité, l’audit des données sensibles, l’anti-chevauchement et les validations sont couverts par des tests backend et PostgreSQL. **Critère non satisfait à ce jour pour les blocs 5–7.**
+- [x] Le code des modules concernés compile avec zéro erreur TypeScript (`npm run build`) et Java (`cd backend && ./mvnw test`).
+- [x] Le linter passe avec succès (`npm run lint`).
+- [x] Les 3 blocs communiquent sans rupture : le test PostgreSQL crée un salarié, lui fait enregistrer un pointage, puis soumet une demande de congé.
+- [x] Les règles de sécurité, l’audit des données sensibles, l’anti-chevauchement et les validations sont couverts par les tests backend et PostgreSQL, notamment `OperationalFlowPostgresTest`.
 
 ---
 

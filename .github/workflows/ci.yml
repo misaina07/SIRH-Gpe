@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+  backend-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: sirh
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d sirh"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      PGPASSWORD: postgres
+      SIRH_DB_URL: jdbc:postgresql://localhost:5432/sirh
+      SIRH_DB_USERNAME: postgres
+      SIRH_DB_PASSWORD: postgres
+      SIRH_JWT_SECRET: ci-only-secret
+      SIRH_NATIONAL_ID_KEY: 0123456789abcdef0123456789abcdef
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Apply PostgreSQL schema and migrations
+        run: |
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/schema-possible.sql
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/02-test-data.sql
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/03-bloc5-misaina.sql
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/04-bloc5-dossier-complet.sql
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/05-bloc6-pointage.sql
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/06-bloc7-dylan.sql
+          psql -h localhost -U postgres -d sirh -v ON_ERROR_STOP=1 -f src/data/07-tonton-paie.sql
+      - name: Run backend tests
+        working-directory: backend
+        run: ./mvnw test
