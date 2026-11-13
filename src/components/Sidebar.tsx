@@ -240,6 +240,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           </button>
 
+          <button
+            onClick={() => handleNavClick('pointage')}
+            className={`flex items-center justify-between px-space-md py-space-sm rounded-lg transition-colors text-left w-full cursor-pointer ${currentView === 'pointage' ? 'bg-primary-container text-white font-body-semibold shadow-sm' : 'text-text-muted hover:bg-slate-800 hover:text-white'}`}
+          >
+            <span className="flex items-center gap-space-sm"><span className="material-symbols-outlined text-[20px]">schedule</span><span className="font-body-medium text-body-medium">Pointage</span></span>
+          </button>
+
+          <button
+            onClick={() => handleNavClick('conges')}
+            className={`flex items-center justify-between px-space-md py-space-sm rounded-lg transition-colors text-left w-full cursor-pointer ${currentView === 'conges' ? 'bg-primary-container text-white font-body-semibold shadow-sm' : 'text-text-muted hover:bg-slate-800 hover:text-white'}`}
+          >
+            <span className="flex items-center gap-space-sm"><span className="material-symbols-outlined text-[20px]">event_available</span><span className="font-body-medium text-body-medium">Congés & absences</span></span>
+          </button>
+
           {/* Référentiels & Admin */}
           <button
             onClick={() => handleNavClick('referentiels-admin')}
