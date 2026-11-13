@@ -3,10 +3,10 @@
 BEGIN;
 
 INSERT INTO users (id,name,email,role_type,role_display_name,initials,primary_department,allowed_views,can_validate_rh,can_validate_finance,can_validate_direction,can_create_requisition,can_manage_candidates) VALUES
-('usr-1','Claire Delorme','c.delorme@entreprise.fr','RH','Responsable RH & Recrutement','CD','Direction des Ressources Humaines',ARRAY['tableau-de-bord','mes-demandes','nouvelle-demande','recrutement','qualification-rh','onboarding','referentiels-admin'],TRUE,FALSE,FALSE,TRUE,TRUE),
-('usr-2','Marc Lefebvre','m.lefebvre@entreprise.fr','Manager','Engineering Manager','ML','Direction des Systèmes d''Information',ARRAY['tableau-de-bord','mes-demandes','nouvelle-demande','recrutement'],FALSE,FALSE,FALSE,TRUE,FALSE),
-('usr-3','Gilles Vaudon','g.vaudon@entreprise.fr','Finance','Contrôleur de Gestion DSI','GV','Direction Financière',ARRAY['tableau-de-bord','mes-demandes','validation-finance'],FALSE,TRUE,FALSE,FALSE,FALSE),
-('usr-4','Direction Générale','direction@entreprise.fr','Direction','Direction Exécutive & CODIR','DG','Comité de Direction',ARRAY['tableau-de-bord','mes-demandes','approbation-direction'],FALSE,FALSE,TRUE,FALSE,FALSE),
+('usr-1','Claire Delorme','c.delorme@entreprise.fr','RH','Responsable RH & Recrutement','CD','Direction des Ressources Humaines',ARRAY['tableau-de-bord','mes-demandes','nouvelle-demande','recrutement','qualification-rh','onboarding','conges-absences','referentiels-admin'],TRUE,FALSE,FALSE,TRUE,TRUE),
+('usr-2','Marc Lefebvre','m.lefebvre@entreprise.fr','Manager','Engineering Manager','ML','Direction des Systèmes d''Information',ARRAY['tableau-de-bord','mes-demandes','nouvelle-demande','recrutement','conges-absences'],FALSE,FALSE,FALSE,TRUE,FALSE),
+('usr-3','Gilles Vaudon','g.vaudon@entreprise.fr','Finance','Contrôleur de Gestion DSI','GV','Direction Financière',ARRAY['tableau-de-bord','mes-demandes','validation-finance','conges-absences'],FALSE,TRUE,FALSE,FALSE,FALSE),
+('usr-4','Direction Générale','direction@entreprise.fr','Direction','Direction Exécutive & CODIR','DG','Comité de Direction',ARRAY['tableau-de-bord','mes-demandes','approbation-direction','conges-absences'],FALSE,FALSE,TRUE,FALSE,FALSE),
 ('usr-5','Laurent Fabre','l.fabre@entreprise.fr','Manager','Head of Data & AI Engineering','LF','DSI Data Platform',ARRAY['tableau-de-bord','mes-demandes','nouvelle-demande','recrutement'],FALSE,FALSE,FALSE,TRUE,FALSE);
 
 INSERT INTO departments (id,code,name,short_name,category,primary_manager_id,allocated_budget_annual,consumed_budget_annual,headcount_current,headcount_target) VALUES

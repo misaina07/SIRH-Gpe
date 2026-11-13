@@ -8,6 +8,7 @@ export type ViewMode =
   | 'approbation-direction'
   | 'employes-contrats'
   | 'onboarding'
+  | 'conges-absences'
   | 'referentiels-admin'
   | 'connexion';
 

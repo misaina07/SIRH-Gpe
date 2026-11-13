@@ -20,6 +20,7 @@ import { DemandesListView } from './views/DemandesListView';
 import { OnboardingView } from './views/OnboardingView';
 import { ReferentielsAdminView } from './views/ReferentielsAdminView';
 import { LoginView } from './views/LoginView';
+import { LeaveManagementView } from './views/LeaveManagementView';
 import { CANDIDATES_DATA, USER_PROFILES } from './data/mockData';
 import { UserProfile, ViewMode } from './types/sirh';
 import { apiGet } from './services/api';
@@ -215,6 +216,10 @@ export default function App() {
 
               {currentView === 'onboarding' && (
                 <OnboardingView onNavigate={setCurrentView} />
+              )}
+
+              {currentView === 'conges-absences' && (
+                <LeaveManagementView currentUser={currentUser} />
               )}
 
               {currentView === 'referentiels-admin' && (
