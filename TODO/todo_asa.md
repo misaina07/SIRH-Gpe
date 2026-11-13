@@ -9,7 +9,7 @@
 
 ## Mise en situation avec l’architecture actuelle du dépôt
 
-**État observé le 12 novembre 2026.** Cette section décrit le socle existant pour préparer les blocs 5, 6 et 7. Elle ne signifie pas que ces blocs sont implémentés et ne remplace pas leurs exigences détaillées plus bas.
+**État initial observé le 12 novembre 2026; actualisation le 13 novembre 2026.** Les notes d’état initial décrivent le socle avant les modules opérationnels. L’actualisation ci-dessous suit leur mise en œuvre sur la branche courante.
 
 ### Architecture réellement en place
 
@@ -33,7 +33,7 @@ PostgreSQL `sirh`
 - Le backend est organisé par couches sous `backend/src/main/java/com/example/sirh/` : `config`, `security`, `controller`, `dto`, `service` et `exception`.
 - La persistance actuellement utilisée par les services est `JdbcTemplate`. La dépendance Spring Data JPA est présente, mais le projet ne contient pas encore d’entités JPA ni de repositories. Ne pas décrire le code courant comme une architecture JPA ou « Clean Architecture » déjà réalisée.
 - Les endpoints actuels couvrent l’authentification, la lecture des utilisateurs/départements/postes/demandes/candidats/onboarding, les décisions du workflow de recrutement, l’historique et les indicateurs de dashboard. Ils constituent le socle partagé sur lequel les futurs blocs pourront s’appuyer.
-- Le client React commun est `src/services/api.ts`. Les vues des blocs 5–7 (dossier salarié, pointage et congés) ne sont pas présentes dans l’arborescence actuelle. Ne pas les considérer comme développées parce que des tables portant ces noms existent dans PostgreSQL.
+- Le client React commun est `src/services/api.ts`. Les vues du pointage et des congés sont désormais présentes dans `src/views/`; le dossier salarié est également livré avec ses services Java.
 - Les valeurs de démonstration d’authentification sont activables uniquement en local par variables d’environnement. Le secret JWT et les paramètres PostgreSQL sont configurables hors du code source.
 
 Les routes actuellement exposées se trouvent surtout dans `AuthController` et `DirectoryController` :
@@ -42,7 +42,7 @@ Les routes actuellement exposées se trouvent surtout dans `AuthController` et `
 - Lecture : `/api/users`, `/api/departments`, `/api/positions`, `/api/requisitions`, `/api/candidates`, `/api/onboarding`, `/api/dashboard` et `/api/dashboard/summary`.
 - Workflow recrutement : création/soumission/correction d’une demande, validation RH, validation Finance, approbation Direction, détail et historique.
 - Kanban : lecture du candidat et `PATCH /api/candidates/{id}/stage` avec contrôle de transition et motif obligatoire pour un refus.
-- Aucune API d’entretien persisté, de modification des tâches onboarding, de dossier salarié, de pointage ou de congé n’est définie actuellement.
+- Les APIs des dossiers salariés, du pointage (`/api/time-tracking`) et des congés (`/api/leaves`) sont définies en Java/Spring avec une persistance JDBC. Les migrations 03 à 06 restent à appliquer sur toute base locale qui ne les possède pas encore.
 
 ### Correspondance des chemins mentionnés dans les spécifications
 
@@ -77,9 +77,9 @@ Les cases à cocher des blocs 5–7 restent un cahier des charges futur. Les tab
 | Domaine | Présent dans le dépôt | À ne pas confondre avec |
 |---|---|---|
 | Blocs recrutement 1–4 | Écrans React existants, API Spring Boot, authentification et workflow avec PostgreSQL | Une preuve que tous les critères de recette du portail sont déjà satisfaits |
-| Bloc 5 — dossier salarié | Tables SQL de base seulement | GED, contrats successifs, carrière, audit RGPD ou conversion complète d’un candidat en salarié |
-| Bloc 6 — temps et pointage | Tables SQL de base seulement | Pointeuse, calcul du temps, anomalies légales, régularisations ou export paie |
-| Bloc 7 — congés et absences | Tables SQL de base seulement | Soldes, calcul des jours, anti-chevauchement, workflow manager/RH ou liaison paie |
+| Bloc 5 — dossier salarié | Services Java, API, interfaces et migrations 03/04 | Les tests PostgreSQL et la migration locale restent à exécuter |
+| Bloc 6 — temps et pointage (Mirado) | Service/API Java, interface React, migration 05 | Export paie et validation fonctionnelle PostgreSQL restent à intégrer/recetter |
+| Bloc 7 — congés et absences (Dylan) | Service/API Java, interface React, calcul paramétrable, validations et migration 06 | Migration locale et tests fonctionnels PostgreSQL restent à exécuter; export paie relève de Tonton |
 
 Les contrôles `npm run lint`, `npm run build` et les tests Maven ont été exécutés pendant la mise en place du socle. Ils valident ces commandes au moment de leur exécution, mais ne remplacent pas les tests fonctionnels et PostgreSQL à ajouter pour chaque futur module.
 

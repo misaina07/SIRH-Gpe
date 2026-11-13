@@ -3,28 +3,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DocumentModal } from './components/DocumentModal';
 import { ScheduleInterviewModal } from './components/ScheduleInterviewModal';
 import { SearchModal } from './components/SearchModal';
 import { AccessDeniedView } from './components/AccessDeniedView';
-import { DashboardView } from './views/DashboardView';
-import { NewRequisitionView } from './views/NewRequisitionView';
-import { HrQualificationView } from './views/HrQualificationView';
-import { FinanceValidationView } from './views/FinanceValidationView';
-import { ExecutiveApprovalView } from './views/ExecutiveApprovalView';
-import { RecruitmentKanbanView } from './views/RecruitmentKanbanView';
-import { DemandesListView } from './views/DemandesListView';
-import { OnboardingView } from './views/OnboardingView';
-import { EmployeeDossierView } from './views/EmployeeDossierView';
-import { ReferentielsAdminView } from './views/ReferentielsAdminView';
-import { LoginView } from './views/LoginView';
-import { TimeTrackingView } from './views/TimeTrackingView';
 import { CANDIDATES_DATA, USER_PROFILES } from './data/mockData';
 import { UserProfile, ViewMode } from './types/sirh';
 import { apiGet } from './services/api';
+
+const DashboardView = lazy(() => import('./views/DashboardView').then(({ DashboardView }) => ({ default: DashboardView })));
+const NewRequisitionView = lazy(() => import('./views/NewRequisitionView').then(({ NewRequisitionView }) => ({ default: NewRequisitionView })));
+const HrQualificationView = lazy(() => import('./views/HrQualificationView').then(({ HrQualificationView }) => ({ default: HrQualificationView })));
+const FinanceValidationView = lazy(() => import('./views/FinanceValidationView').then(({ FinanceValidationView }) => ({ default: FinanceValidationView })));
+const ExecutiveApprovalView = lazy(() => import('./views/ExecutiveApprovalView').then(({ ExecutiveApprovalView }) => ({ default: ExecutiveApprovalView })));
+const RecruitmentKanbanView = lazy(() => import('./views/RecruitmentKanbanView').then(({ RecruitmentKanbanView }) => ({ default: RecruitmentKanbanView })));
+const DemandesListView = lazy(() => import('./views/DemandesListView').then(({ DemandesListView }) => ({ default: DemandesListView })));
+const OnboardingView = lazy(() => import('./views/OnboardingView').then(({ OnboardingView }) => ({ default: OnboardingView })));
+const EmployeeDossierView = lazy(() => import('./views/EmployeeDossierView').then(({ EmployeeDossierView }) => ({ default: EmployeeDossierView })));
+const ReferentielsAdminView = lazy(() => import('./views/ReferentielsAdminView').then(({ ReferentielsAdminView }) => ({ default: ReferentielsAdminView })));
+const LoginView = lazy(() => import('./views/LoginView').then(({ LoginView }) => ({ default: LoginView })));
+const TimeTrackingView = lazy(() => import('./views/TimeTrackingView').then(({ TimeTrackingView }) => ({ default: TimeTrackingView })));
+const LeaveManagementView = lazy(() => import('./views/LeaveManagementView').then(({ LeaveManagementView }) => ({ default: LeaveManagementView })));
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -100,16 +102,18 @@ export default function App() {
   // If unauthenticated or in connexion view, render the dedicated login screen
   if (!isAuthenticated || currentView === 'connexion') {
     return (
-      <LoginView
-        onLogin={(user, token) => {
-          handleLogin(user, token);
-        }}
-      />
+      <Suspense fallback={<div className="min-h-screen bg-bg-canvas" />}>
+        <LoginView
+          onLogin={(user, token) => {
+            handleLogin(user, token);
+          }}
+        />
+      </Suspense>
     );
   }
 
   // Check RBAC permission for current view
-  const isViewAllowed = currentView === 'pointage'
+  const isViewAllowed = currentView === 'pointage' || currentView === 'conges'
     ? ['RH', 'Manager', 'Employee'].includes(currentUser.roleType)
     : currentUser.allowedViews?.includes(currentView) ?? true;
 
@@ -160,7 +164,8 @@ export default function App() {
               }}
             />
           ) : (
-            <>
+            <Suspense fallback={<div className="flex-1 bg-bg-canvas" />}>
+              <>
               {currentView === 'tableau-de-bord' && (
                 <DashboardView
                   onNavigate={setCurrentView}
@@ -232,7 +237,12 @@ export default function App() {
               {currentView === 'pointage' && (
                 <TimeTrackingView role={currentUser.roleType} />
               )}
-            </>
+
+              {currentView === 'conges' && (
+                <LeaveManagementView role={currentUser.roleType} />
+              )}
+              </>
+            </Suspense>
           )}
         </main>
       </div>

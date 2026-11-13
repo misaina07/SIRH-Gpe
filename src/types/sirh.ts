@@ -11,6 +11,7 @@ export type ViewMode =
   | 'onboarding'
   | 'referentiels-admin'
   | 'pointage'
+  | 'conges'
   | 'connexion';
 
 export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction' | 'Employee';
