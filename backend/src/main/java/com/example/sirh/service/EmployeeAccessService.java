@@ -17,6 +17,7 @@ public class EmployeeAccessService {
     }
 
     public boolean isHr(Authentication actor) { return has(actor, "ROLE_RH"); }
+    public boolean isFinance(Authentication actor) { return has(actor, "ROLE_Finance"); }
     public boolean isDirection(Authentication actor) { return has(actor, "ROLE_Direction"); }
     public boolean isManager(Authentication actor) { return has(actor, "ROLE_Manager"); }
     public boolean isEmployee(Authentication actor) { return has(actor, "ROLE_Employee"); }
