@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.*;
+import com.example.sirh.dto.PayrollCalculationResult;
+import com.example.sirh.dto.PayrollLine;
 
 @Service
 public class PayrollCollectionService {
@@ -21,6 +23,7 @@ public class PayrollCollectionService {
     }
 
     public List<Map<String, Object>> periods(Authentication actor) {
+        // Lecture réservée aux RH de toutes les périodes mensuelles existantes.
         access.requireHr(actor);
         return jdbc.queryForList("""
                 SELECT id,annee,mois,date_debut,date_fin,verrouillee,statut
@@ -30,6 +33,7 @@ public class PayrollCollectionService {
 
     @Transactional
     public Map<String, Object> openPeriod(int year, int month, Authentication actor) {
+        // Crée une période mensuelle ou la conserve si elle existe déjà.
         access.requireHr(actor);
         if (month < 1 || month > 12) throw new IllegalArgumentException("Mois invalide.");
         LocalDate start = LocalDate.of(year, month, 1);
@@ -40,6 +44,104 @@ public class PayrollCollectionService {
                 ON CONFLICT(annee,mois) DO UPDATE SET annee=EXCLUDED.annee
                 RETURNING id,annee,mois,date_debut,date_fin,verrouillee,statut
                 """, year, month, start, end);
+    }
+
+    @Transactional
+    public Map<String, Object> lockPeriod(int periodId, Authentication actor) {
+        // Ferme une période validée: aucune saisie ou correction ne peut
+        // ensuite modifier les variables utilisées pour le bulletin.
+        access.requireHr(actor);
+        var existing = jdbc.query("""
+                SELECT verrouillee FROM periode_paie WHERE id=?
+                """, (rs, row) -> rs.getBoolean("verrouillee"), periodId);
+        if (existing.isEmpty())
+            throw new WorkflowConflictException("Période de paie introuvable.");
+        if (Boolean.TRUE.equals(existing.getFirst()))
+            return jdbc.queryForMap("""
+                    SELECT id,annee,mois,date_debut,date_fin,verrouillee,statut
+                    FROM periode_paie WHERE id=?
+                    """, periodId);
+        int updated = jdbc.update("""
+                UPDATE periode_paie
+                SET verrouillee=true,statut='VERROUILLE'
+                WHERE id=? AND verrouillee=false
+                """, periodId);
+        if (updated != 1)
+            throw new WorkflowConflictException("Période introuvable ou déjà verrouillée.");
+        return jdbc.queryForMap("""
+                SELECT id,annee,mois,date_debut,date_fin,verrouillee,statut
+                FROM periode_paie WHERE id=?
+                """, periodId);
+    }
+
+    @Transactional
+    public Map<String, Object> saveBulletin(int periodId, PayrollCalculationResult result, Authentication actor) {
+        // Persiste le total du bulletin puis remplace ses lignes détaillées
+        // afin que chaque recalcul garde une seule version cohérente.
+        access.requireHr(actor);
+        var period = jdbc.query("""
+                SELECT verrouillee FROM periode_paie WHERE id=?
+                """, (rs, row) -> rs.getBoolean("verrouillee"), periodId);
+        if (period.isEmpty()) throw new ResourceNotFoundException("Période de paie introuvable.");
+        if (Boolean.TRUE.equals(period.getFirst()))
+            throw new WorkflowConflictException("Une période verrouillée ne peut pas être modifiée.");
+
+        Long bulletinId = jdbc.queryForObject("""
+                INSERT INTO bulletin_paie(
+                    periode_id,employee_id,salaire_brut,cnaps_salarie,ostie_salarie,
+                    base_imposable,irsa,net_a_payer
+                )
+                VALUES (?,?,?,?,?,?,?,?)
+                ON CONFLICT(periode_id,employee_id) DO UPDATE SET
+                    salaire_brut=EXCLUDED.salaire_brut,
+                    cnaps_salarie=EXCLUDED.cnaps_salarie,
+                    ostie_salarie=EXCLUDED.ostie_salarie,
+                    base_imposable=EXCLUDED.base_imposable,
+                    irsa=EXCLUDED.irsa,
+                    net_a_payer=EXCLUDED.net_a_payer
+                RETURNING id
+                """, Long.class, periodId, result.employeeId(), result.grossSalary(),
+                result.cnapsEmployee(), result.ostieEmployee(), result.taxableIncome(),
+                result.irsa(), result.netSalary());
+
+        jdbc.update("DELETE FROM ligne_bulletin WHERE bulletin_id=?", bulletinId);
+        for (PayrollLine line : result.lines()) {
+            jdbc.update("""
+                    INSERT INTO ligne_bulletin(
+                        bulletin_id,rubrique_code,quantite,taux,montant
+                    ) VALUES (?,?,?,?,?)
+                    """, bulletinId, line.code(), line.quantity(), line.rate(), line.amount());
+        }
+        return Map.of("bulletinId", bulletinId, "periodId", periodId,
+                "employeeId", result.employeeId(), "netSalary", result.netSalary());
+    }
+
+    public List<Map<String, Object>> bulletins(Integer periodId, Authentication actor) {
+        // RH: bulletin global. Employé: uniquement les bulletins liés à
+        // son compte via employees.user_id, jamais aux autres salariés.
+        String sql = """
+                SELECT b.id,b.periode_id,b.employee_id,e.matricule,e.first_name,e.last_name,
+                       b.salaire_brut,b.cnaps_salarie,b.ostie_salarie,b.base_imposable,
+                       b.irsa,b.net_a_payer
+                FROM bulletin_paie b
+                JOIN employees e ON e.id=b.employee_id
+                WHERE 1=1
+                """;
+        List<Object> params = new ArrayList<>();
+        if (periodId != null) {
+            sql += " AND b.periode_id=?";
+            params.add(periodId);
+        }
+        if (access.isHr(actor)) {
+            sql += " ORDER BY e.last_name,e.first_name";
+            return jdbc.queryForList(sql, params.toArray());
+        }
+        if (!access.isEmployee(actor))
+            throw new ForbiddenOperationException("Consultation réservée aux RH ou au salarié concerné.");
+        sql += " AND e.user_id=?";
+        params.add(actor.getName());
+        sql += " ORDER BY b.periode_id DESC";
+        return jdbc.queryForList(sql, params.toArray());
     }
 
     public Map<String, Object> collect(LocalDate from, LocalDate to, Integer employeeId, Authentication actor) {
