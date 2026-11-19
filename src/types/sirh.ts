@@ -12,6 +12,7 @@ export type ViewMode =
   | 'referentiels-admin'
   | 'pointage'
   | 'conges'
+  | 'paie'
   | 'connexion';
 
 export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction' | 'Employee';
