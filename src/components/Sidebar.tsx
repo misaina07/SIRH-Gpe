@@ -254,6 +254,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span className="flex items-center gap-space-sm"><span className="material-symbols-outlined text-[20px]">event_available</span><span className="font-body-medium text-body-medium">Congés & absences</span></span>
           </button>
 
+          <button
+            onClick={() => handleNavClick('paie')}
+            className={`flex items-center justify-between px-space-md py-space-sm rounded-lg transition-colors text-left w-full cursor-pointer ${currentView === 'paie' ? 'bg-primary-container text-white font-body-semibold shadow-sm' : isAllowed('paie') ? 'text-text-muted hover:bg-slate-800 hover:text-white' : 'text-slate-500 hover:bg-slate-800/50'}`}
+          >
+            <span className="flex items-center gap-space-sm">
+              <span className="material-symbols-outlined text-[20px]">payments</span>
+              <span className="font-body-medium text-body-medium">Paie</span>
+            </span>
+            {!isAllowed('paie') && <span className="material-symbols-outlined text-[16px] text-slate-500">lock</span>}
+          </button>
+
           {/* Référentiels & Admin */}
           <button
             onClick={() => handleNavClick('referentiels-admin')}

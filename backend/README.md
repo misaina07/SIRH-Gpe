@@ -2,6 +2,12 @@
 
 API Spring Boot disponible sur `http://localhost:8080/api`. La base attendue est PostgreSQL `sirh`, initialisée avec `src/data/schema-possible.sql`, `src/data/02-test-data.sql`, puis les migrations additives `src/data/03-bloc5-misaina.sql` et `src/data/04-bloc5-dossier-complet.sql` depuis la racine du dépôt.
 
+Pour charger les employés de démonstration du Bloc 8, exécuter après les migrations 03 à 08 :
+
+```bash
+psql -d sirh -f src/data/09-donnees-paie.sql
+```
+
 ## Configuration locale
 
 Valeurs par défaut : `jdbc:postgresql://localhost:5432/sirh`, utilisateur `postgres`, mot de passe vide. On peut les remplacer avec `SIRH_DB_URL`, `SIRH_DB_USERNAME`, `SIRH_DB_PASSWORD`, `SIRH_CORS_ORIGINS` et `SIRH_JWT_SECRET`. Ne pas enregistrer de secret local dans Git. Hibernate est en validation de schéma (`ddl-auto=validate`) et ne doit pas créer ni modifier les tables.

@@ -61,26 +61,26 @@ Exemple de l'Excel : 3 000 000 − 10 080 − 30 000 = 2 959 920.
 - [x] Gérer les saisies manuelles : indemnités, rappels, autres, avances.
 
 ### 2.3 Moteur de calcul (une ligne de bulletin par étape)
-- [ ] Salaire de base du mois = base − retenues sur absence.
-- [ ] Taux horaire = base ÷ 173,33 (ou ÷ 200 en secteur agricole).
-- [ ] Heures supplémentaires et majorations (voir 2.4).
-- [ ] Salaire brut = base du mois + indemnités + rappels + autres + HS.
-- [ ] CNaPS salarié 1 % et patronal 8 %, plafonnés.
-- [ ] OSTIE salarié 1 % et patronal 5 % (plafond à vérifier).
-- [ ] Revenu imposable = brut − CNaPS 1 % − OSTIE 1 %.
-- [ ] IRSA : barème, réduction pour charges, minimum.
-- [ ] Total retenues = CNaPS + OSTIE + IRSA + avances.
-- [ ] Salaire net = brut − total retenues.
-- [ ] Coût employeur = brut + cotisations patronales.
+- [x] Salaire de base du mois = base − retenues sur absence.
+- [x] Taux horaire = base ÷ 173,33 (ou ÷ 200 en secteur agricole).
+- [x] Heures supplémentaires et majorations (voir 2.4).
+- [x] Salaire brut = base du mois + indemnités + rappels + autres + HS.
+- [x] CNaPS salarié 1 % et patronal 8 %, plafonnés.
+- [x] OSTIE salarié 1 % et patronal 5 % (plafond à vérifier).
+- [x] Revenu imposable = brut − CNaPS 1 % − OSTIE 1 %.
+- [x] IRSA : barème, réduction pour charges, minimum.
+- [x] Total retenues = CNaPS + OSTIE + IRSA + avances.
+- [x] Salaire net = brut − total retenues.
+- [x] Coût employeur = brut + cotisations patronales.
 
 ### 2.4 Heures supplémentaires et majorations
-- [ ] Plafond de 20 h supplémentaires par semaine : refus ou alerte au-delà.
-- [ ] Tranche 1 : 8 premières heures à +30 % (×1,3).
-- [ ] Tranche 2 : 12 heures suivantes à +50 % (×1,5).
-- [ ] Coefficients paramétrables : week-end (×1,4 dans l'Excel), dimanche, jours fériés (×2).
-- [ ] Travail de nuit de 22 h à 4 h : majoration paramétrable (×1,5 selon la note).
-- [ ] Calcul hebdomadaire sur 4 à 5 semaines, comme la feuille « calcul hs ».
-- [ ] Vérifier avec l'exemple : base 250 000 → taux horaire 1 442,34 ; 8 h × 1,3 ≈ 15 000 ; 4 h × 1,5 ≈ 8 654 ; total HS ≈ 23 654,30.
+- [x] Plafond de 20 h supplémentaires par semaine : refus ou alerte au-delà.
+- [x] Tranche 1 : 8 premières heures à +30 % (×1,3).
+- [x] Tranche 2 : 12 heures suivantes à +50 % (×1,5).
+- [x] Coefficients paramétrables : week-end (×1,4 dans l'Excel), dimanche, jours fériés (×2).
+- [x] Travail de nuit de 22 h à 4 h : majoration paramétrable (×1,5 selon la note).
+- [x] Calcul hebdomadaire sur 4 à 5 semaines, comme la feuille « calcul hs ».
+- [x] Vérifier avec l'exemple : base 250 000 → taux horaire 1 442,34 ; 8 h × 1,3 ≈ 15 000 ; 4 h × 1,5 ≈ 8 654 ; total HS ≈ 23 654,30.
 
 ### 2.5 Exports
 - [ ] **Fiche de paie en PDF** : en-tête société, identité, matricule, N° CNaPS, date d'embauche, ancienneté, classification, désignations/nombre/taux/montant, brut, retenues, net.

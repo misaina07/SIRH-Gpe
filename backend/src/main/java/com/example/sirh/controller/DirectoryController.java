@@ -137,11 +137,11 @@ public class DirectoryController {
     }
     @GetMapping("/requisitions/{id}/history") public List<Map<String, Object>> history(@PathVariable String id, Authentication actor) {
         requisition(id, actor);
-        return jdbc.queryForList("""
-            SELECT id, step_name AS \"stepName\", author_name AS author, author_title AS \"authorTitle\",
-                   display_date AS \"dateStr\", quote, color FROM requisition_audit_events
-            WHERE requisition_id=? ORDER BY id
-            """, id);
+        return jdbc.queryForList(
+            "SELECT id, step_name AS \"stepName\", author_name AS author, author_title AS \"authorTitle\", "
+            + "display_date AS \"dateStr\", quote, color FROM requisition_audit_events "
+            + "WHERE requisition_id=? ORDER BY id",
+            id);
     }
     @GetMapping("/candidates") public List<Map<String, Object>> candidates(Authentication actor) {
         if (!has(actor, "CAN_MANAGE_CANDIDATES"))
@@ -272,13 +272,12 @@ public class DirectoryController {
         return directory.onboarding();
     }
     @GetMapping({"/dashboard", "/dashboard/summary"}) public Map<String, Object> dashboard() {
-        var result = jdbc.queryForMap("""
-            SELECT count(*) AS total,
-              count(*) FILTER (WHERE status IN ('en_cours_rh','en_cours_finance','en_cours_direction')) AS \"inProgress\",
-              count(*) FILTER (WHERE priority='urgente') AS urgent,
-              count(*) FILTER (WHERE status='publiee') AS published
-            FROM requisitions
-            """);
+        var result = jdbc.queryForMap(
+            "SELECT count(*) AS total, "
+            + "count(*) FILTER (WHERE status IN ('en_cours_rh','en_cours_finance','en_cours_direction')) AS \"inProgress\", "
+            + "count(*) FILTER (WHERE priority='urgente') AS urgent, "
+            + "count(*) FILTER (WHERE status='publiee') AS published "
+            + "FROM requisitions");
         result.put("toQualify", jdbc.queryForObject("SELECT count(*) FROM requisitions WHERE status='en_cours_rh'", Long.class));
         result.put("activeCandidates", jdbc.queryForObject("SELECT count(*) FROM candidates WHERE kanban_stage NOT IN ('retenu','refuse')", Long.class));
         result.put("onboardingInProgress", jdbc.queryForObject("SELECT count(*) FROM onboarding_people", Long.class));
