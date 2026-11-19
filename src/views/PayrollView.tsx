@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { apiGet, apiPost } from '../services/api';
+import { apiGet, apiPatch, apiPost } from '../services/api';
 import { PayrollEmployee,PayrollLine,PayrollResult} from '../types/paie';
 
 export function PayrollView({ role }: { role:string }) {
@@ -8,9 +8,11 @@ export function PayrollView({ role }: { role:string }) {
   const [selected,setSelected]=useState<number|null>(null);
   const [result,setResult]=useState<PayrollResult|null>(null);
   const [error,setError]=useState('');
+  const [periodId,setPeriodId]=useState<number|null>(null);
   const canManage=role==='RH';
 
   const refresh=useCallback(async()=> {
+    // Charge les données de collecte et retrouve la période du mois affiché.
     if(!canManage)return;
     const [year,monthNumber]=month.split('-').map(Number);
     const from=`${year}-${String(monthNumber).padStart(2,'0')}-01`;
@@ -20,12 +22,16 @@ export function PayrollView({ role }: { role:string }) {
       setError('');
       const data=await apiGet<{employees:PayrollEmployee[]}>(`/payroll/collection?from=${from}&to=${to}`);
       setEmployees(data.employees);
+      const periods=await apiGet<Array<{id:number;annee:number;mois:number;verrouillee:boolean}>>('/payroll/periods');
+      setPeriodId(periods.find(p=>p.annee===year&&p.mois===monthNumber)?.id??null);
     } catch(e) { setError(e instanceof Error?e.message:'Erreur de chargement'); }
   },[month,canManage]);
 
   useEffect(()=>{void refresh();},[refresh]);
 
   const calculate=async(employee:PayrollEmployee)=>{
+    // Transforme les données collectées en PayrollInput puis demande
+    // au backend d'appliquer les règles de calcul de paie.
     setSelected(employee.id);
     setError('');
     try {
@@ -64,6 +70,36 @@ export function PayrollView({ role }: { role:string }) {
     } catch(e) { setError(e instanceof Error?e.message:'Calcul impossible'); }
   };
 
+  const openPeriod=async()=>{
+    // Crée ou ouvre la période mensuelle avant toute saisie de paie.
+    const [year,monthNumber]=month.split('-').map(Number);
+    try{
+      const period=await apiPost<{id:number}>('/payroll/periods',{year,month:monthNumber});
+      setPeriodId(period.id);
+      setError('Période de paie ouverte.');
+    }catch(e){setError(e instanceof Error?e.message:'Ouverture impossible');}
+  };
+
+  const lockPeriod=async()=>{
+    // Verrouille définitivement les valeurs de la période sélectionnée.
+    if(periodId==null){setError('Ouvrez d’abord la période.');return;}
+    try{
+      await apiPatch(`/payroll/periods/${periodId}/lock`,{});
+      setError('Période verrouillée.');
+      await refresh();
+    }catch(e){setError(e instanceof Error?e.message:'Verrouillage impossible');}
+  };
+
+  const saveBulletin=async()=>{
+    // Persiste le résultat calculé pour rendre le bulletin consultable
+    // après rechargement de la page ou redémarrage du serveur.
+    if(periodId==null||result==null){setError('Calculez et ouvrez une période avant de sauvegarder.');return;}
+    try{
+      await apiPost(`/payroll/periods/${periodId}/bulletins`,result);
+      setError('Bulletin enregistré.');
+    }catch(e){setError(e instanceof Error?e.message:'Enregistrement impossible');}
+  };
+
   if(!canManage)return <div className="p-8"><p className="rounded-lg border border-amber-300 bg-amber-50 p-4">Accès réservé aux RH.</p></div>;
 
   return <main className="mx-auto w-full max-w-7xl space-y-6 p-6 md:p-8">
@@ -76,6 +112,10 @@ export function PayrollView({ role }: { role:string }) {
       <label className="text-sm font-medium">Période
         <input type="month" value={month} onChange={e=>setMonth(e.target.value)} className="ml-3 rounded-lg border px-3 py-2"/>
       </label>
+      <div className="mt-3 flex gap-2">
+        <button onClick={()=>void openPeriod()} className="rounded-lg border px-3 py-2 text-sm">Ouvrir</button>
+        <button onClick={()=>void lockPeriod()} className="rounded-lg border border-amber-300 px-3 py-2 text-sm text-amber-800">Verrouiller</button>
+      </div>
     </section>
     <section className="grid gap-4 md:grid-cols-[1fr_22rem]">
       <div className="overflow-hidden rounded-xl border bg-white">
@@ -100,6 +140,7 @@ export function PayrollView({ role }: { role:string }) {
         </dl>
         <h3 className="mt-5 text-sm font-semibold">Lignes du bulletin</h3>
         <div className="mt-2 max-h-80 space-y-1 overflow-auto">{result.lines.map((line,i)=><div key={`${line.code}-${i}`} className="flex justify-between border-b py-2 text-xs"><span>{line.label}</span><b>{line.amount?.toLocaleString()} Ar</b></div>)}</div>
+        <button onClick={()=>void saveBulletin()} className="mt-4 w-full rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white">Enregistrer le bulletin</button>
       </aside>}
     </section>
   </main>;

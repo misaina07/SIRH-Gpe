@@ -88,10 +88,10 @@ Exemple de l'Excel : 3 000 000 − 10 080 − 30 000 = 2 959 920.
 - [ ] Export mensuel global pour la comptabilité.
 
 ### 2.6 Sécurité et tests
-- [ ] Verrouiller une période validée.
-- [ ] Bulletin visible uniquement par l'employé concerné et la RH.
-- [ ] Tests unitaires : 3 000 000 (plafond CNaPS), 250 000 avec 12 HS, 300 000.
-- [ ] Cas limites : salaire sous 350 000 (minimum IRSA), salaire au-dessus de 4 000 000 (tranche 25 %).
+- [x] Verrouiller une période validée.
+- [x] Bulletin visible uniquement par l'employé concerné et la RH.
+- [x] Tests unitaires : 3 000 000 (plafond CNaPS), 250 000 avec 12 HS, 300 000.
+- [x] Cas limites : salaire sous 350 000 (minimum IRSA), salaire au-dessus de 4 000 000 (tranche 25 %).
 
 ## 3. Bloc 9 — Évaluation, compétences et formation
 

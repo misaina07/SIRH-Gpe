@@ -23,6 +23,10 @@ public class PayrollCalculationService {
     private static final BigDecimal IRSA_MINIMUM = new BigDecimal("3000");
     private static final BigDecimal IRSA_DEPENDENT_REDUCTION = new BigDecimal("2000");
 
+    /**
+     * Calcule tous les gains, retenues, cotisations, l'IRSA et le coût employeur
+     * d'un bulletin à partir des données déjà validées côté serveur.
+     */
     public PayrollCalculationResult calculate(PayrollInput input) {
         if (input == null) throw new IllegalArgumentException("Les données de paie sont obligatoires.");
         if (input.monthlyBaseSalary() == null)

@@ -34,12 +34,20 @@ public class PayrollController {
 
     @GetMapping("/periods")
     public List<Map<String, Object>> periods(Authentication actor) {
+        // Liste les périodes disponibles pour l'écran de paie.
         return service.periods(actor);
     }
 
     @PostMapping("/periods")
     public Map<String, Object> openPeriod(@Valid @RequestBody PeriodRequest body, Authentication actor) {
+        // Ouvre ou retourne la période correspondant au mois demandé.
         return service.openPeriod(body.year(), body.month(), actor);
+    }
+
+    @PatchMapping("/periods/{periodId}/lock")
+    public Map<String, Object> lockPeriod(@PathVariable int periodId, Authentication actor) {
+        // Route HTTP vers le verrouillage définitif géré dans le service.
+        return service.lockPeriod(periodId, actor);
     }
 
     @GetMapping("/collection")
@@ -72,8 +80,26 @@ public class PayrollController {
 
     @PostMapping("/calculate")
     public PayrollCalculationResult calculate(@Valid @RequestBody PayrollInput input, Authentication actor) {
+        // Un calcul de paie est réservé aux RH; les règles restent
+        // vérifiées même si un utilisateur appelle directement l'API.
         access.requireHr(actor);
         return calculationService.calculate(input);
+    }
+
+    @PostMapping("/periods/{periodId}/bulletins")
+    public Map<String, Object> saveBulletin(@PathVariable int periodId,
+                                            @Valid @RequestBody PayrollCalculationResult result,
+                                            Authentication actor) {
+        // Reçoit un résultat déjà calculé et délègue la persistance au service.
+        return service.saveBulletin(periodId, result, actor);
+    }
+
+    @GetMapping("/bulletins")
+    public List<Map<String, Object>> bulletins(
+            @RequestParam(required = false) Integer periodId,
+            Authentication actor) {
+        // Retourne les bulletins selon les droits calculés côté backend.
+        return service.bulletins(periodId, actor);
     }
 
     public record PeriodRequest(@NotNull Integer year, @NotNull Integer month) {}
