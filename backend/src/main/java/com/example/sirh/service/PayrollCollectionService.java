@@ -213,9 +213,9 @@ public class PayrollCollectionService {
         var day = start.toLocalDate();
         while (!day.isAfter(end.toLocalDate())) {
             var zone = start.getOffset();
-            var a = start.toInstant().isBefore(day.atTime(nightStart).atOffset(zone).toInstant())
-                    ? day.atTime(nightStart).atOffset(zone) : start;
-            var b = day.plusDays(1).atTime(nightEnd).atOffset(zone);
+            var a = start.toInstant().isBefore(day.atTime(java.time.LocalTime.of(nightStart, 0)).atOffset(zone).toInstant())
+                    ? day.atTime(java.time.LocalTime.of(nightStart, 0)).atOffset(zone) : start;
+            var b = day.plusDays(1).atTime(java.time.LocalTime.of(nightEnd, 0)).atOffset(zone);
             if (end.isBefore(b)) b = end;
             if (b.isAfter(a)) total += (int) java.time.Duration.between(a, b).toMinutes();
             day = day.plusDays(1);

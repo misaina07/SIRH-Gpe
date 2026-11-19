@@ -1,6 +1,10 @@
 package com.example.sirh.controller;
 
 import com.example.sirh.service.PayrollCollectionService;
+import com.example.sirh.dto.PayrollInput;
+import com.example.sirh.dto.PayrollCalculationResult;
+import com.example.sirh.service.PayrollCalculationService;
+import com.example.sirh.service.EmployeeAccessService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -18,9 +22,14 @@ import java.util.Map;
 @RequestMapping("/api/payroll")
 public class PayrollController {
     private final PayrollCollectionService service;
+    private final PayrollCalculationService calculationService;
+    private final EmployeeAccessService access;
 
-    public PayrollController(PayrollCollectionService service) {
+    public PayrollController(PayrollCollectionService service, PayrollCalculationService calculationService,
+                             EmployeeAccessService access) {
         this.service = service;
+        this.calculationService = calculationService;
+        this.access = access;
     }
 
     @GetMapping("/periods")
@@ -59,6 +68,12 @@ public class PayrollController {
     @DeleteMapping("/variables/{id}")
     public void deleteVariable(@PathVariable long id, Authentication actor) {
         service.deleteVariable(id, actor);
+    }
+
+    @PostMapping("/calculate")
+    public PayrollCalculationResult calculate(@Valid @RequestBody PayrollInput input, Authentication actor) {
+        access.requireHr(actor);
+        return calculationService.calculate(input);
     }
 
     public record PeriodRequest(@NotNull Integer year, @NotNull Integer month) {}

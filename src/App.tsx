@@ -27,6 +27,7 @@ const ReferentielsAdminView = lazy(() => import('./views/ReferentielsAdminView')
 const LoginView = lazy(() => import('./views/LoginView').then(({ LoginView }) => ({ default: LoginView })));
 const TimeTrackingView = lazy(() => import('./views/TimeTrackingView').then(({ TimeTrackingView }) => ({ default: TimeTrackingView })));
 const LeaveManagementView = lazy(() => import('./views/LeaveManagementView').then(({ LeaveManagementView }) => ({ default: LeaveManagementView })));
+const PayrollView = lazy(() => import('./views/PayrollView').then(({ PayrollView }) => ({ default: PayrollView })));
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -113,8 +114,8 @@ export default function App() {
   }
 
   // Check RBAC permission for current view
-  const isViewAllowed = currentView === 'pointage' || currentView === 'conges'
-    ? ['RH', 'Manager', 'Employee'].includes(currentUser.roleType)
+  const isViewAllowed = currentView === 'pointage' || currentView === 'conges' || currentView === 'paie'
+    ? (currentView === 'paie' ? currentUser.roleType === 'RH' : ['RH', 'Manager', 'Employee'].includes(currentUser.roleType))
     : currentUser.allowedViews?.includes(currentView) ?? true;
 
   return (
@@ -240,6 +241,9 @@ export default function App() {
 
               {currentView === 'conges' && (
                 <LeaveManagementView role={currentUser.roleType} />
+              )}
+              {currentView === 'paie' && (
+                <PayrollView role={currentUser.roleType} />
               )}
               </>
             </Suspense>
