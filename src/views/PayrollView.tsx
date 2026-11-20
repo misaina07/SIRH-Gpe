@@ -80,11 +80,38 @@ export function PayrollView({ role }: { role:string }) {
     }catch(e){setError(e instanceof Error?e.message:'Ouverture impossible');}
   };
 
+  const exportPdf=()=>{
+    if(result==null){setError('Calculez d’abord un bulletin avant l’export PDF.');return;}
+    const lines=result.lines.map(line=>`
+      <tr><td>${line.label}</td><td>${line.quantity?.toLocaleString('fr-FR')??'-'}</td><td>${line.rate?.toLocaleString('fr-FR')??'-'}</td><td>${line.amount?.toLocaleString('fr-FR')??'0'} Ar</td></tr>
+    `).join('');
+    const html=`<!doctype html><html><head><meta charset="utf-8"><title>Fiche de paie ${result.matricule}</title>
+      <style>@page{size:A4;margin:12mm}body{font-family:Arial,sans-serif;color:#172033;font-size:12px}h1{font-size:20px;margin:0 0 4px}.muted{color:#64748b}.header{display:flex;justify-content:space-between;border-bottom:2px solid #1e293b;padding-bottom:10px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}.card{border:1px solid #cbd5e1;padding:10px;border-radius:6px}.right{text-align:right}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #e2e8f0;padding:7px;text-align:left}th:nth-child(n+2),td:nth-child(n+2){text-align:right}.total{font-size:16px;font-weight:bold;border-top:2px solid #1e293b}</style></head>
+      <body><div class="header"><div><h1>Fiche de paie</h1><div class="muted">Période : ${month}</div></div><div class="right"><b>SIRH Entreprise</b><br><span class="muted">Bulletin individuel</span></div></div>
+      <div class="grid"><div class="card"><b>Salarié</b><br>${result.firstName} ${result.lastName}<br><span class="muted">${result.matricule}</span></div><div class="card"><b>Paie</b><br>Brut : ${result.grossSalary?.toLocaleString('fr-FR')} Ar<br>Net : ${result.netSalary?.toLocaleString('fr-FR')} Ar</div></div>
+      <table><thead><tr><th>Désignation</th><th>Quantité</th><th>Taux</th><th>Montant</th></tr></thead><tbody>${lines}</tbody></table>
+      <p class="total right">Salaire net à payer : ${result.netSalary?.toLocaleString('fr-FR')} Ar</p>
+      <p class="muted">CNaPS employé : ${result.cnapsEmployee?.toLocaleString('fr-FR')} Ar — OSTIE employé : ${result.ostieEmployee?.toLocaleString('fr-FR')} Ar — IRSA : ${result.irsa?.toLocaleString('fr-FR')} Ar</p>
+      </body></html>`;
+    const blob=new Blob([html],{type:'text/html'});
+    const url=URL.createObjectURL(blob);
+    const popup=window.open(url,'_blank','width=900,height=700');
+    if(popup){popup.addEventListener('load',()=>{popup.focus();popup.print();});setTimeout(()=>URL.revokeObjectURL(url),60000);}
+  };
+
   const lockPeriod=async()=>{
     // Verrouille définitivement les valeurs de la période sélectionnée.
-    if(periodId==null){setError('Ouvrez d’abord la période.');return;}
+    let targetPeriodId=periodId;
+    if(targetPeriodId==null){
+      const [year,monthNumber]=month.split('-').map(Number);
+      try{
+        const period=await apiPost<{id:number}>('/payroll/periods',{year,month:monthNumber});
+        targetPeriodId=period.id;
+        setPeriodId(period.id);
+      }catch(e){setError(e instanceof Error?e.message:'Ouverture impossible');return;}
+    }
     try{
-      await apiPatch(`/payroll/periods/${periodId}/lock`,{});
+      await apiPatch(`/payroll/periods/${targetPeriodId}/lock`,{});
       setError('Période verrouillée.');
       await refresh();
     }catch(e){setError(e instanceof Error?e.message:'Verrouillage impossible');}
@@ -93,9 +120,18 @@ export function PayrollView({ role }: { role:string }) {
   const saveBulletin=async()=>{
     // Persiste le résultat calculé pour rendre le bulletin consultable
     // après rechargement de la page ou redémarrage du serveur.
-    if(periodId==null||result==null){setError('Calculez et ouvrez une période avant de sauvegarder.');return;}
+    if(result==null){setError('Calculez un bulletin avant de sauvegarder.');return;}
+    let targetPeriodId=periodId;
+    if(targetPeriodId==null){
+      const [year,monthNumber]=month.split('-').map(Number);
+      try{
+        const period=await apiPost<{id:number}>('/payroll/periods',{year,month:monthNumber});
+        targetPeriodId=period.id;
+        setPeriodId(period.id);
+      }catch(e){setError(e instanceof Error?e.message:'Ouverture impossible');return;}
+    }
     try{
-      await apiPost(`/payroll/periods/${periodId}/bulletins`,result);
+      await apiPost(`/payroll/periods/${targetPeriodId}/bulletins`,result);
       setError('Bulletin enregistré.');
     }catch(e){setError(e instanceof Error?e.message:'Enregistrement impossible');}
   };
@@ -141,6 +177,7 @@ export function PayrollView({ role }: { role:string }) {
         <h3 className="mt-5 text-sm font-semibold">Lignes du bulletin</h3>
         <div className="mt-2 max-h-80 space-y-1 overflow-auto">{result.lines.map((line,i)=><div key={`${line.code}-${i}`} className="flex justify-between border-b py-2 text-xs"><span>{line.label}</span><b>{line.amount?.toLocaleString()} Ar</b></div>)}</div>
         <button onClick={()=>void saveBulletin()} className="mt-4 w-full rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white">Enregistrer le bulletin</button>
+        <button onClick={exportPdf} className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800">Exporter la fiche PDF</button>
       </aside>}
     </section>
   </main>;

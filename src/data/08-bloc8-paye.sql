@@ -121,7 +121,12 @@ INSERT INTO rubrique_paie(code,libelle,type) VALUES
     ('ABSENCE','Retenue pour absence','RETENUE'),
     ('SANS_SOLDE','Congé sans solde','RETENUE'),
     ('AVANCE','Avance sur salaire','RETENUE'),
-    ('RETENUE_DISC','Retenue disciplinaire','RETENUE')
+    ('RETENUE_DISC','Retenue disciplinaire','RETENUE'),
+    ('CNAPS_SALARIE','CNaPS salarié','RETENUE'),
+    ('CNAPS_EMPLOYEUR','CNaPS employeur','GAIN'),
+    ('OSTIE_SALARIE','OSTIE salarié','RETENUE'),
+    ('OSTIE_EMPLOYEUR','OSTIE employeur','GAIN'),
+    ('IRSA','Impôt retenu à la source','RETENUE')
 ON CONFLICT(code) DO UPDATE SET libelle=EXCLUDED.libelle,type=EXCLUDED.type;
 
 INSERT INTO parametre_legal (code, secteur_id, valeur, date_effet, statut) VALUES
