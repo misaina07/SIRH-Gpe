@@ -160,3 +160,60 @@ Exemple de l'Excel : 3 000 000 − 10 080 − 30 000 = 2 959 920.
 | B10 | Carrière et mobilité | À faire | |
 | B11 | Discipline et sanctions | À faire | |
 | B12 | Rupture et offboarding | À faire | |
+
+## 9. Todo d'utilisation détaillée
+
+### B8 — Paie
+1. Ouvrir PostgreSQL et exécuter `src/data/08-bloc8-paye.sql`.
+2. Démarrer Spring Boot sur le port 8080.
+3. Démarrer React sur le port 3000.
+4. Ouvrir `Paie`, choisir un mois, puis `Ouvrir`.
+5. Vérifier les données collectées, saisir une variable, lancer `Calculer`.
+6. Contrôler brut, CNaPS, OSTIE, IRSA, net et coût employeur.
+7. Enregistrer puis verrouiller le bulletin.
+8. Exécuter `./mvnw test` pour les tests du moteur.
+
+### B9 — Evaluation, compétences et formation
+1. Exécuter `src/data/09-bloc9-evaluation.sql`.
+2. Exécuter `src/data/13-bloc9-donnees-employes-test.sql` pour charger les employés de test.
+3. Vérifier les compétences Java, React et SQL.
+4. Ouvrir `Evaluation & formation`.
+5. Saisir un matricule existant, par exemple `EMP-2026-0001`, une période et un score.
+6. Créer l'évaluation et vérifier son apparition avec le nom et le matricule dans la liste.
+7. Adapter ensuite les objectifs, formations et attestations depuis les tables dédiées.
+
+### B10 — Carrière et mobilité
+1. Exécuter `src/data/10-bloc10-carriere.sql`.
+2. Ouvrir `Carriere & mobilite`.
+3. Saisir un employé, département, poste et date d'effet.
+4. Proposer une mutation puis vérifier la trace créée.
+5. Vérifier qu'une affectation nouvelle ne chevauche pas une période déjà ouverte.
+6. Conserver toute promotion ou changement salarial comme nouvel historique.
+
+### B11 — Discipline et sanctions
+1. Exécuter `src/data/11-bloc11-discipline.sql`.
+2. Ouvrir `Discipline`.
+3. Déclarer un incident avec les faits uniquement.
+4. Créer la procédure, demander une explication et saisir une échéance.
+5. Enregistrer la réponse, la décision puis éventuellement une sanction.
+6. Vérifier l'audit disciplinaire après chaque consultation ou modification.
+7. Réserver les procédures aux RH/direction; le manager ne déclare que l'incident.
+
+### B12 — Rupture et offboarding
+1. Exécuter `src/data/12-bloc12-offboarding.sql`.
+2. Ouvrir `Offboarding`.
+3. Choisir le motif, la date de sortie et la durée de préavis.
+4. Déclarer la rupture et vérifier sa présence dans la liste.
+5. Calculer séparément salaire dû, congés restants, préavis, indemnités, avances et retenues.
+6. Vérifier le STC net avant émission du reçu.
+7. Clore les affectations, contrats et restitutions de matériel à la date de sortie.
+
+## 10. Fiche de suivi mise à jour
+
+| ID | Bloc | Statut | Commentaire |
+|---|---|---|---|
+| B8 | Paie | Implémenté partiellement | Moteur, période, variables et sauvegarde présents; exports PDF/XLSX à finaliser |
+| B9 | Evaluation, compétences, formation | Implémenté partiellement | Schéma, API, écran et création d'évaluations présents |
+| B10 | Carrière et mobilité | Implémenté partiellement | Schéma, frise et création de mutation présents |
+| B11 | Discipline et sanctions | Implémenté partiellement | Schéma, audit et déclaration d'incidents présents |
+| B12 | Rupture et offboarding | Implémenté partiellement | Schéma, STC métier, écran et création de rupture présents |

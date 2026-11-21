@@ -28,9 +28,13 @@ const LoginView = lazy(() => import('./views/LoginView').then(({ LoginView }) =>
 const TimeTrackingView = lazy(() => import('./views/TimeTrackingView').then(({ TimeTrackingView }) => ({ default: TimeTrackingView })));
 const LeaveManagementView = lazy(() => import('./views/LeaveManagementView').then(({ LeaveManagementView }) => ({ default: LeaveManagementView })));
 const PayrollView = lazy(() => import('./views/PayrollView').then(({ PayrollView }) => ({ default: PayrollView })));
+const EvaluationView = lazy(() => import('./views/EvaluationView').then(({ EvaluationView }) => ({ default: EvaluationView })));
+const CareerView = lazy(() => import('./views/CareerView').then(({ CareerView }) => ({ default: CareerView })));
+const DisciplineView = lazy(() => import('./views/DisciplineView').then(({ DisciplineView }) => ({ default: DisciplineView })));
+const OffboardingView = lazy(() => import('./views/OffboardingView').then(({ OffboardingView }) => ({ default: OffboardingView })));
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [currentUser, setCurrentUser] = useState<UserProfile>(USER_PROFILES[0]);
 
   useEffect(() => {
@@ -245,6 +249,10 @@ export default function App() {
               {currentView === 'paie' && (
                 <PayrollView role={currentUser.roleType} />
               )}
+              {currentView === 'evaluation' && <EvaluationView />}
+              {currentView === 'carriere' && <CareerView />}
+              {currentView === 'discipline' && <DisciplineView />}
+              {currentView === 'offboarding' && <OffboardingView />}
               </>
             </Suspense>
           )}

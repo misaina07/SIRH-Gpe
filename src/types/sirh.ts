@@ -13,6 +13,10 @@ export type ViewMode =
   | 'pointage'
   | 'conges'
   | 'paie'
+  | 'evaluation'
+  | 'carriere'
+  | 'discipline'
+  | 'offboarding'
   | 'connexion';
 
 export type UserRole = 'RH' | 'Manager' | 'Finance' | 'Direction' | 'Employee';

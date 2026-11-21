@@ -30,10 +30,14 @@ export interface PayrollLine {
 export interface PayrollResult {
   employeeId:number;
   matricule:string;
+  firstName:string;
+  lastName:string;
   grossSalary:number;
   netSalary:number;
   employerCost:number;
   irsa:number;
+  cnapsEmployee:number;
+  ostieEmployee:number;
   warnings:string[];
   lines:PayrollLine[];
 }
